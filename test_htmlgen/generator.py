@@ -5,7 +5,9 @@ from asserts import assert_equal
 from htmlgen.generator import (Generator,
                                NullGenerator,
                                ChildGenerator,
-                               HTMLChildGenerator)
+                               HTMLChildGenerator,
+                               JoinGenerator,
+                               HTMLJoinGenerator)
 
 
 class _TestingGenerator(Generator):
@@ -111,3 +113,42 @@ class HTMLChildGeneratorTest(TestCase):
         generator.extend(["c2", "c3", NullGenerator()])
         generator.empty()
         assert_equal([], list(iter(generator)))
+
+
+class JoinGeneratorTest(TestCase):
+
+    def test_no_pieces(self):
+        generator = JoinGenerator("!")
+        assert_equal([], list(iter(generator)))
+
+    def test_supplied_pieces(self):
+        generator = JoinGenerator("!", ["foo", "bar"])
+        assert_equal(["foo", "!", "bar"], list(iter(generator)))
+
+    def test_append_extend(self):
+        generator = JoinGenerator("!", ["foo"])
+        generator.append("bar")
+        sub_generator = ChildGenerator()
+        sub_generator.append("baz")
+        generator.extend([sub_generator])
+        assert_equal(["foo", "!", "bar", "!", "baz"], list(iter(generator)))
+
+
+class HTMLJoinGeneratorTest(TestCase):
+
+    def test_no_pieces(self):
+        generator = HTMLJoinGenerator("!")
+        assert_equal([], list(iter(generator)))
+
+    def test_supplied_pieces(self):
+        generator = HTMLJoinGenerator("&", ["<foo>", "bar"])
+        assert_equal(["&lt;foo&gt;", "&amp;", "bar"], list(iter(generator)))
+
+    def test_append_extend(self):
+        generator = HTMLJoinGenerator("!", ["foo"])
+        generator.append("<bar>")
+        sub_generator = ChildGenerator()
+        sub_generator.append("<baz>")
+        generator.extend([sub_generator])
+        assert_equal(["foo", "!", "&lt;bar&gt;", "!", "<baz>"],
+                     list(iter(generator)))

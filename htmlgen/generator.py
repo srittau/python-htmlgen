@@ -215,3 +215,68 @@ class HTMLChildGenerator(Generator):
 
         """
         return iter(self._children)
+
+
+class JoinGenerator(ChildGenerator):
+
+    """Generate the supplied pieces, separated by glue.
+
+        >>> generator = JoinGenerator(", ", ["Hello", "World"])
+        >>> list(iter(generator))
+        ['Hello', ', ', 'World']
+
+    Pieces can be strings or sub-generators:
+
+        >>> generator = JoinGenerator(", ", ["Hello"])
+        >>> sub_generator = ChildGenerator()
+        >>> sub_generator.append("World")
+        >>> generator.append(sub_generator)
+        >>> list(iter(generator))
+        ['Hello', ', ', 'World']
+
+    """
+
+    def __init__(self, glue, pieces=None):
+        super(JoinGenerator, self).__init__()
+        self._glue = glue
+        if pieces:
+            self.extend(pieces)
+
+    def generate(self):
+        pieces = super(JoinGenerator, self).generate()
+        yield next(pieces)
+        while True:
+            piece = next(pieces)
+            yield self._glue
+            yield piece
+
+
+class HTMLJoinGenerator(HTMLChildGenerator):
+
+    """Generate the supplied pieces, separated by glue.
+
+    This works like JoinGenerator, but reserved HTML characters in glue and
+    string pieces are escaped. Sub-generators are not escaped:
+
+        >>> generator = HTMLJoinGenerator(" & ", ["<Hello>"])
+        >>> sub_generator = ChildGenerator()
+        >>> sub_generator.append("<World>")
+        >>> generator.append(sub_generator)
+        >>> list(iter(generator))
+        ['&lt;Hello&gt;', ' &amp; ', '<World>']
+
+    """
+
+    def __init__(self, glue, pieces=None):
+        super(HTMLJoinGenerator, self).__init__()
+        self._glue = escape(glue)
+        if pieces:
+            self.extend(pieces)
+
+    def generate(self):
+        pieces = super(HTMLJoinGenerator, self).generate()
+        yield next(pieces)
+        while True:
+            piece = next(pieces)
+            yield self._glue
+            yield piece
