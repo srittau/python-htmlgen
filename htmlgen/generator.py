@@ -160,7 +160,7 @@ class HTMLChildGenerator(Generator):
 
     def __init__(self):
         super(HTMLChildGenerator, self).__init__()
-        self._children = []
+        self._children = ChildGenerator()
 
     def __len__(self):
         """Return the number of children.
@@ -210,7 +210,7 @@ class HTMLChildGenerator(Generator):
 
     def empty(self):
         """Remove all children."""
-        self._children = []
+        self._children.empty()
 
     def generate(self):
         """Return an iterator over all children, in order.
@@ -219,7 +219,7 @@ class HTMLChildGenerator(Generator):
         if desired.
 
         """
-        return iter(self._children)
+        return self._children.generate()
 
 
 class JoinGenerator(ChildGenerator):
