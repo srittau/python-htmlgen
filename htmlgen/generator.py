@@ -1,3 +1,5 @@
+import sys
+
 try:
     from html import escape
 except ImportError:
@@ -10,7 +12,7 @@ class Generator(object):
 
     Sub-classes must implement the generate() method, which returns an
     iterable containing strings and further generator objects. __iter__()
-    flattens the iterator returned by generate():
+    flattens this iterator and returns a list of UTF-8 encoded byte strings:
 
         >>> class InnerGenerator(Generator):
         ...     def generate(self):
@@ -22,7 +24,7 @@ class Generator(object):
         ...
         >>> generator = OuterGenerator()
         >>> list(iter(generator))
-        ['Foo', 'XXX', 'Bar']
+        [b'Foo', b'XXX', b'Bar']
 
     __str__() returns a concatenated version of the strings returned by
     __iter__():
@@ -46,12 +48,15 @@ class Generator(object):
                 if hasattr(item, "generate"):
                     self._iterator_stack.append(item.generate())
                 else:
-                    yield item
+                    if sys.version_info[0] <= 2 and isinstance(item, str):
+                        yield item
+                    else:
+                        yield item.encode("utf-8")
         raise StopIteration()
 
     def __str__(self):
         """Return a concatenation of the strings returned by __iter__()."""
-        return "".join(self)
+        return "".join(s.decode("utf-8") for s in self)
 
     def generate(self):
         """To be overridden by sub-classes. Return an iterator over strings
@@ -77,12 +82,12 @@ class ChildGenerator(Generator):
         >>> generator.append("String")
         >>> generator.extend(["Lis", "t"])
         >>> list(iter(generator))
-        ['String', 'Lis', 't']
+        [b'String', b'Lis', b't']
         >>> sub_generator = ChildGenerator()
         >>> sub_generator.append("Sub")
         >>> generator.append(sub_generator)
         >>> list(iter(generator))
-        ['String', 'Lis', 't', 'Sub']
+        [b'String', b'Lis', b't', b'Sub']
 
     """
 
@@ -128,12 +133,11 @@ class HTMLChildGenerator(Generator):
     characters in strings appended with append() or extend() are
     escaped:
 
-
         >>> generator = HTMLChildGenerator()
         >>> generator.append("<Test>")
         >>> generator.extend(["x", "&", "y"])
         >>> list(iter(generator))
-        ['&lt;Test&gt;', 'x', '&amp;', 'y']
+        [b'&lt;Test&gt;', b'x', b'&amp;', b'y']
 
     It is also possible to append strings without processing:
 
@@ -141,7 +145,7 @@ class HTMLChildGenerator(Generator):
         >>> generator.append_raw("<Test>")
         >>> generator.extend_raw(["x", "&", "y"])
         >>> list(iter(generator))
-        ['<Test>', 'x', '&', 'y']
+        [b'<Test>', b'x', b'&', b'y']
 
     Strings in sub-generators are not affected:
 
@@ -150,7 +154,7 @@ class HTMLChildGenerator(Generator):
         >>> generator = HTMLChildGenerator()
         >>> generator.extend(["<base>", sub_generator])
         >>> list(iter(generator))
-        ['&lt;base&gt;', '<sub>']
+        [b'&lt;base&gt;', b'<sub>']
 
     """
 
@@ -174,7 +178,7 @@ class HTMLChildGenerator(Generator):
         """
         if not hasattr(child, "generate"):
             child = escape(child)
-        self._children.append(child)
+        self.append_raw(child)
 
     def append_raw(self, child):
         """Append a string or sub generator without escaping it.
@@ -201,7 +205,8 @@ class HTMLChildGenerator(Generator):
         with HTML from trusted sources.
 
         """
-        self._children.extend(children)
+        for child in children:
+            self.append_raw(child)
 
     def empty(self):
         """Remove all children."""
@@ -223,7 +228,7 @@ class JoinGenerator(ChildGenerator):
 
         >>> generator = JoinGenerator(", ", ["Hello", "World"])
         >>> list(iter(generator))
-        ['Hello', ', ', 'World']
+        [b'Hello', b', ', b'World']
 
     Pieces can be strings or sub-generators:
 
@@ -232,7 +237,7 @@ class JoinGenerator(ChildGenerator):
         >>> sub_generator.append("World")
         >>> generator.append(sub_generator)
         >>> list(iter(generator))
-        ['Hello', ', ', 'World']
+        [b'Hello', b', ', b'World']
 
     """
 
@@ -263,7 +268,7 @@ class HTMLJoinGenerator(HTMLChildGenerator):
         >>> sub_generator.append("<World>")
         >>> generator.append(sub_generator)
         >>> list(iter(generator))
-        ['&lt;Hello&gt;', ' &amp; ', '<World>']
+        [b'&lt;Hello&gt;', b' &amp; ', b'<World>']
 
     """
 
