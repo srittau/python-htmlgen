@@ -1,6 +1,9 @@
 Python HTML 5 Generator
 =======================
 
+*This library is currently in development. The API is subject to change.
+Feedback and suggestions are welcome!*
+
 Basic usage:
 
 >>> from htmlgen import Division, Span
