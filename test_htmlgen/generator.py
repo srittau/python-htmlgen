@@ -42,6 +42,11 @@ class GeneratorTest(TestCase):
         generator = _TestingGenerator([u"fooß", inner])
         assert_equal([b"foo\xc3\x9f", b"b\xc3\xa4r"], list(iter(generator)))
 
+    def test_generate_bytes(self):
+        inner = _TestingGenerator([b"bar"])
+        generator = _TestingGenerator([b"foo", inner])
+        assert_equal([b"foo", b"bar"], list(iter(generator)))
+
     def test_generate_sub_generators(self):
         inner1 = _TestingGenerator([u"bar"])
         inner2 = _TestingGenerator([u"foo", inner1])

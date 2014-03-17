@@ -1,5 +1,3 @@
-import sys
-
 try:
     from html import escape
 except ImportError:
@@ -47,7 +45,7 @@ class Generator(object):
                 if hasattr(item, "generate"):
                     self._iterator_stack.append(item.generate())
                 else:
-                    if sys.version_info[0] <= 2 and isinstance(item, str):
+                    if isinstance(item, bytes):
                         yield item
                     else:
                         yield item.encode("utf-8")
