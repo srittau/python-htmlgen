@@ -163,6 +163,10 @@ class ElementTest(TestCase):
                       "color: black",
                       "display: block"], css_classes)
 
+    def test_common_html_attributes(self):
+        element = Element("div")
+        element.id = "test-id"
+        assert_equal([b'<div id="test-id">', b"</div>"], list(iter(element)))
 
 class ShortElementTest(TestCase):
 
