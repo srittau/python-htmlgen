@@ -253,6 +253,9 @@ class Element(_ElementBase):
         super(Element, self).__init__(element_name)
         self.children = HTMLChildGenerator()
 
+    def __bool__(self):
+        return True
+
     def __getattr__(self, item):
         return getattr(self.children, item)
 
@@ -263,6 +266,9 @@ class Element(_ElementBase):
 
         """
         return len(self.children)
+
+    def __nonzero__(self):
+        return True
 
     def generate(self):
         yield self.render_start_tag() + ">"
