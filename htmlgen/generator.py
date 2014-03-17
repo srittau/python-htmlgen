@@ -32,8 +32,12 @@ class Generator(object):
     """
 
     def __iter__(self):
-        """Return a flat iterator over the strings and generators returned
-        by generate()."""
+        """Return a flat iterator over the elements returned by generate().
+
+        __iter__() will only return UTF-8 encoded byte strings. Generators are
+        flattened, Unicode strings are UTF-8 encoded.
+
+        """
         self._iterator_stack = [self.generate()]
         while self._iterator_stack:
             iterator = self._iterator_stack[-1]
@@ -56,8 +60,8 @@ class Generator(object):
         return "".join(s.decode("utf-8") for s in self)
 
     def generate(self):
-        """To be overridden by sub-classes. Return an iterator over strings
-        and generator objects.
+        """To be overridden by sub-classes. Return an iterator over strings,
+        UTF-8-encoded bytes, and generator objects.
 
         """
         raise NotImplementedError()
