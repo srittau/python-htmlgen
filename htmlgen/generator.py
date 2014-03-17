@@ -16,21 +16,20 @@ class Generator(object):
 
         >>> class InnerGenerator(Generator):
         ...     def generate(self):
-        ...         return iter(["XXX"])
-        ...
+        ...         yield "XXX"
         >>> class OuterGenerator(Generator):
         ...     def generate(self):
-        ...         return iter(["Foo", InnerGenerator(), "Bar"])
-        ...
+        ...         yield "Foo"
+        ...         yield InnerGenerator()
         >>> generator = OuterGenerator()
         >>> list(iter(generator))
-        [b'Foo', b'XXX', b'Bar']
+        [b'Foo', b'XXX']
 
     __str__() returns a concatenated version of the strings returned by
     __iter__():
 
         >>> str(generator)
-        'FooXXXBar'
+        'FooXXX'
 
     """
 
