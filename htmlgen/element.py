@@ -205,6 +205,18 @@ class _ElementBase(Generator):
         for cls in css_classes:
             self._css_classes.add(cls)
 
+    def remove_css_classes(self, *css_classes):
+        """Remove CSS classes from this element.
+
+        Unknown classes are ignored.
+
+        """
+        for cls in css_classes:
+            try:
+                self._css_classes.remove(cls)
+            except KeyError:
+                pass
+
     def set_style(self, name, value):
         """Set a CSS style on this element.
 

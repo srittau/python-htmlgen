@@ -179,6 +179,15 @@ class ElementTest(TestCase):
         css_classes.sort()
         assert_equal(["bar", "baz", "foo"], css_classes)
 
+    def test_remove_css_classes(self):
+        element = Element("div")
+        element.add_css_classes("foo", "bar", "baz")
+        element.remove_css_classes("bar", "xxx")
+        matches = re.search(r'class="(.*)"', str(element))
+        css_classes = matches.group(1).split(" ")
+        css_classes.sort()
+        assert_equal(["baz", "foo"], css_classes)
+
     def test_set_one_style(self):
         element = Element("div")
         element.set_style("background-color", "rgb(255, 0, 0)")
