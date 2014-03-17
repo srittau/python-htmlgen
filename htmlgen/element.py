@@ -113,6 +113,47 @@ def int_html_attribute(attribute_name, default=None):
     return property(get, set_)
 
 
+def float_html_attribute(attribute_name, default=None):
+    """Add an attribute to an HTML element that accepts only numbers.
+
+        >>> class MyElement(Element):
+        ...     value = float_html_attribute("data-value")
+        >>> element = MyElement("div")
+        >>> element.value
+        >>> str(element)
+        '<div></div>'
+        >>> element.value = 4.2
+        >>> str(element)
+        '<div data-value="4.2"></div>'
+
+    If the optional default argument is given, the attribute will not be
+    included if the value matches it.
+
+        >>> class MyElement(Element):
+        ...     value = float_html_attribute("data-value", default=0.4)
+        >>> element = MyElement("div")
+        >>> element.value
+        0.4
+        >>> str(element)
+        '<div></div>'
+
+    """
+
+    def get(self):
+        value = self.get_attribute(attribute_name, default=default)
+        if value is None:
+            return None
+        return float(value)
+
+    def set_(self, value):
+        if value is None or value == default:
+            self.remove_attribute(attribute_name)
+        else:
+            self.set_attribute(attribute_name, str(value))
+
+    return property(get, set_)
+
+
 class _ElementBase(Generator):
 
     def __init__(self, element_name):

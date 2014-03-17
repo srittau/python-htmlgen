@@ -6,7 +6,9 @@ from asserts import assert_false, assert_true, assert_equal, assert_is_none
 from htmlgen.element import (Element,
                              html_attribute,
                              boolean_html_attribute,
-                             int_html_attribute, ShortElement)
+                             int_html_attribute,
+                             float_html_attribute,
+                             ShortElement)
 
 
 class HTMLAttributeTest(TestCase):
@@ -80,6 +82,35 @@ class HTMLAttributeTest(TestCase):
         assert_equal('<div></div>', str(element))
         element.attr = None
         assert_equal(42, element.attr)
+        assert_equal('<div></div>', str(element))
+
+    def test_float(self):
+        class MyElement(Element):
+            attr = float_html_attribute("data-attr")
+        element = MyElement("div")
+        assert_is_none(element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = 4.2
+        assert_equal(4.2, element.attr)
+        assert_equal('<div data-attr="4.2"></div>', str(element))
+        element.attr = None
+        assert_is_none(element.attr)
+        assert_equal('<div></div>', str(element))
+
+    def test_float_with_default(self):
+        class MyElement(Element):
+            attr = float_html_attribute("data-attr", default=4.2)
+        element = MyElement("div")
+        assert_equal(4.2, element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = 47.11
+        assert_equal(47.11, element.attr)
+        assert_equal('<div data-attr="47.11"></div>', str(element))
+        element.attr = 4.2
+        assert_equal(4.2, element.attr)
+        assert_equal('<div></div>', str(element))
+        element.attr = None
+        assert_equal(4.2, element.attr)
         assert_equal('<div></div>', str(element))
 
 
@@ -167,6 +198,7 @@ class ElementTest(TestCase):
         element = Element("div")
         element.id = "test-id"
         assert_equal([b'<div id="test-id">', b"</div>"], list(iter(element)))
+
 
 class ShortElementTest(TestCase):
 
