@@ -116,6 +116,9 @@ class HTMLAttributeTest(TestCase):
 
 class ElementTest(TestCase):
 
+    def test_true(self):
+        assert_true(Element("div"))
+
     def test_append_extend(self):
         element = Element("div")
         element.append("Hello")
