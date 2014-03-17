@@ -73,7 +73,7 @@ def boolean_html_attribute(attribute_name):
 
 
 def int_html_attribute(attribute_name, default=None):
-    """Add an attribute to an HTML element that accepts only integers
+    """Add an attribute to an HTML element that accepts only integers.
 
         >>> class MyElement(Element):
         ...     value = int_html_attribute("data-value")
