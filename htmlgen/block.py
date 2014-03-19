@@ -3,7 +3,7 @@ from htmlgen.element import Element
 
 class Division(Element):
 
-    """A html division (<div>) element.
+    """An HTML division (<div>) element.
 
     <div> elements are block-level elements without semantic meaning. They are
     containers for styling or scripting.
@@ -21,7 +21,7 @@ class Division(Element):
 
 class Paragraph(Element):
 
-    """A html paragraph (<p>) element.
+    """An HTML paragraph (<p>) element.
 
     <p> elements are block-level elements that delineate text paragraphs.
 
@@ -39,7 +39,7 @@ class Paragraph(Element):
 
 class Preformatted(Element):
 
-    """A html pre-formatted text (<pre>) element.
+    """An HTML pre-formatted text (<pre>) element.
 
     <pre> elements are block-level elements that contain text which will
     be displayed as is. E.g. all white-space is kept and the text is
