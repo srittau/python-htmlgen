@@ -221,6 +221,10 @@ class _ElementBase(Generator):
             except KeyError:
                 pass
 
+    def has_css_class(self, css_class):
+        """Return whether this element has a CSS class."""
+        return css_class in self._css_classes
+
     def set_style(self, name, value):
         """Set a CSS style on this element.
 
