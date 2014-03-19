@@ -164,7 +164,11 @@ class _ElementBase(Generator):
         self._styles = {}
 
     def set_attribute(self, name, value):
-        """Set a HTML attribute to a given string value.
+        """Set an HTML attribute to a given string value.
+
+        The validity of an attribute name is not checked, please refer to
+        the HTML standard for allowed attribute names. A good guideline is
+        to use only alphanumeric characters and dashes.
 
             >>> element = Element("div")
             >>> element.set_attribute("title", "Test Title")
