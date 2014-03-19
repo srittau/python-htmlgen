@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from .block import Division
+from .block import Division, Paragraph, Preformatted
 from .element import (Element, ShortElement,
                       html_attribute, boolean_html_attribute,
                       int_html_attribute)
