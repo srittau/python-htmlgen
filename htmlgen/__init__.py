@@ -6,4 +6,5 @@ from .element import (Element, ShortElement,
                       int_html_attribute)
 from .generator import (Generator, NullGenerator, ChildGenerator,
                         HTMLChildGenerator, JoinGenerator, HTMLJoinGenerator)
+from .image import Image
 from .inline import Span, Highlight, Strong, Alternate, Emphasis, Small
