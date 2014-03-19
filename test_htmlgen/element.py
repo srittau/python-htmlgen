@@ -8,7 +8,7 @@ from htmlgen.element import (Element,
                              boolean_html_attribute,
                              int_html_attribute,
                              float_html_attribute,
-                             ShortElement)
+                             VoidElement)
 
 
 class HTMLAttributeTest(TestCase):
@@ -215,10 +215,10 @@ class ElementTest(TestCase):
 class ShortElementTest(TestCase):
 
     def test_empty(self):
-        element = ShortElement("br")
+        element = VoidElement("br")
         assert_equal([b'<br/>'], list(iter(element)))
 
     def test_attribute(self):
-        element = ShortElement("br")
+        element = VoidElement("br")
         element.set_attribute("data-foo", "bar")
         assert_equal([b'<br data-foo="bar"/>'], list(iter(element)))

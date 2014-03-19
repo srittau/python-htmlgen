@@ -338,13 +338,13 @@ class Element(_ElementBase):
         return self.children
 
 
-class ShortElement(_ElementBase):
+class VoidElement(_ElementBase):
 
     """Base generator for content-less HTML elements.
 
     These are elements like <br> or <link>.
 
-        >>> link = ShortElement("link")
+        >>> link = VoidElement("link")
         >>> link.set_attribute("rel", "stylesheet")
         >>> str(link)
         '<link rel="stylesheet"/>'

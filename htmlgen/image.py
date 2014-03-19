@@ -1,7 +1,7 @@
-from .element import ShortElement, html_attribute
+from .element import VoidElement, html_attribute
 
 
-class Image(ShortElement):
+class Image(VoidElement):
 
     """An HTML image (<img>) element.
 

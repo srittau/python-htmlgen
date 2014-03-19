@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from .block import Division, Paragraph, Preformatted
-from .element import (Element, ShortElement,
+from .element import (Element, VoidElement,
                       html_attribute, boolean_html_attribute,
                       int_html_attribute)
 from .generator import (Generator, NullGenerator, ChildGenerator,
