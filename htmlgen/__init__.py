@@ -9,3 +9,4 @@ from .generator import (Generator, NullGenerator, ChildGenerator,
 from .image import Image
 from .inline import Span, Highlight, Strong, Alternate, Emphasis, Small
 from .list import OrderedList, UnorderedList, ListItem
+from .structure import Section, Navigation, Aside, Header, Footer, Heading
