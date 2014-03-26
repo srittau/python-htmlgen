@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from asserts import assert_equal
+from asserts import assert_equal, assert_raises
 
 from htmlgen.generator import (Generator,
                                NullGenerator,
@@ -79,6 +79,27 @@ class ChildGeneratorTest(TestCase):
         generator.extend([_TestingGenerator([u"c2", u"c3"]), u"c4"])
         assert_equal([b"c1", b"c2", b"c3", b"c4"], list(iter(generator)))
 
+    def test_remove_string(self):
+        generator = ChildGenerator()
+        generator.append("foo")
+        generator.append("bar")
+        generator.remove("foo")
+        assert_equal([b"bar"], list(iter(generator)))
+
+    def test_remove_generator(self):
+        sub_generator = Generator()
+        generator = ChildGenerator()
+        generator.append("foo")
+        generator.append(sub_generator)
+        generator.remove(sub_generator)
+        assert_equal([b"foo"], list(iter(generator)))
+
+    def test_remove__not_found(self):
+        generator = ChildGenerator()
+        generator.append("foo")
+        with assert_raises(ValueError):
+            generator.remove("abc")
+
     def test_len(self):
         generator = ChildGenerator()
         generator.append(u"c1")
@@ -119,6 +140,48 @@ class HTMLChildGeneratorTest(TestCase):
         generator.append(u"c1")
         generator.extend_raw([_TestingGenerator([u"c&2", u"c3"]), u"<c4>"])
         assert_equal([b"c1", b"c&2", b"c3", b"<c4>"], list(iter(generator)))
+
+    def test_remove_not_found(self):
+        generator = HTMLChildGenerator()
+        generator.extend(["foo", "bar"])
+        with assert_raises(ValueError):
+            generator.remove("baz")
+
+    def test_remove(self):
+        generator = HTMLChildGenerator()
+        generator.extend_raw(["foo", "bar", "lower &lt; than"])
+        generator.remove("foo")
+        generator.remove("lower < than")
+        assert_equal([b"bar"], list(iter(generator)))
+
+    def test_remove_generator(self):
+        sub_generator = Generator()
+        generator = HTMLChildGenerator()
+        generator.append(sub_generator)
+        generator.append("foo")
+        generator.remove(sub_generator)
+        assert_equal([b"foo"], list(iter(generator)))
+
+    def test_remove_raw_not_found(self):
+        generator = HTMLChildGenerator()
+        generator.extend(["foo", "bar"])
+        with assert_raises(ValueError):
+            generator.remove_raw("baz")
+
+    def test_remove_raw(self):
+        generator = HTMLChildGenerator()
+        generator.extend_raw(["foo", "bar", "lower < than"])
+        generator.remove_raw("foo")
+        generator.remove_raw("lower < than")
+        assert_equal([b"bar"], list(iter(generator)))
+
+    def test_remove_raw_generator(self):
+        sub_generator = Generator()
+        generator = HTMLChildGenerator()
+        generator.append(sub_generator)
+        generator.append("foo")
+        generator.remove_raw(sub_generator)
+        assert_equal([b"foo"], list(iter(generator)))
 
     def test_len(self):
         generator = ChildGenerator()

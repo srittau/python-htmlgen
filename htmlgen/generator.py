@@ -112,6 +112,14 @@ class ChildGenerator(Generator):
         """Append multiple strings and sub generators."""
         self._children.extend(children)
 
+    def remove(self, child):
+        """Remove a string or sub-generator.
+
+        If the string or sub-generator is not found, raises a ValueError.
+
+        """
+        self._children.remove(child)
+
     def empty(self):
         """Remove all children."""
         self._children = []
@@ -208,6 +216,33 @@ class HTMLChildGenerator(Generator):
         """
         for child in children:
             self.append_raw(child)
+
+    def remove(self, child):
+        """Remove a string or sub-generator.
+
+        If child is a string, it will be HTML-escaped before trying to
+        remove it. Use this method for strings added with append() or
+        extend().
+
+        If the string or sub-generator is not found, raises a ValueError.
+
+        """
+        # if not hasattr(child, "generate"):
+        if not hasattr(child, "generate"):
+            child = escape(child)
+        self._children.remove(child)
+
+    def remove_raw(self, child):
+        """Remove a string or sub-generator.
+
+        If child is a string, it will not be HTML-escaped before trying to
+        remove it. Use this method for strings added with append_raw() or
+        extend_raw().
+
+        If the string or sub-generator is not found, raises a ValueError.
+
+        """
+        self._children.remove(child)
 
     def empty(self):
         """Remove all children."""
