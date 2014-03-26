@@ -8,7 +8,7 @@ from htmlgen.element import (Element,
                              boolean_html_attribute,
                              int_html_attribute,
                              float_html_attribute,
-                             VoidElement)
+                             VoidElement, NonVoidElement)
 
 
 class HTMLAttributeTest(TestCase):
@@ -112,6 +112,18 @@ class HTMLAttributeTest(TestCase):
         element.attr = None
         assert_equal(4.2, element.attr)
         assert_equal('<div></div>', str(element))
+
+
+class NonVoidElementTest(TestCase):
+
+    def test_generate_children(self):
+        class TestingElement(NonVoidElement):
+            def generate_children(self):
+                yield "Hello World!"
+                yield VoidElement("br")
+        element = TestingElement("div")
+        assert_equal([b"<div>", b"Hello World!", b"<br/>", b"</div>"],
+                     list(iter(element)))
 
 
 class ElementTest(TestCase):

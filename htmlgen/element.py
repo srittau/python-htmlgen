@@ -264,7 +264,37 @@ class _ElementBase(Generator):
         return "; ".join(rendered_styles)
 
 
-class Element(_ElementBase):
+class NonVoidElement(_ElementBase):
+
+    """Base generator for non-void HTML elements.
+
+    Sub-classes must override the generate_children method:
+
+        >>> class MyElement(NonVoidElement):
+        ...     def generate_children(self):
+        ...         yield "Hello World!"
+        >>> element = MyElement("div")
+        >>> str(element)
+        '<div>Hello World!</div>'
+
+    """
+
+    def generate(self):
+        yield self.render_start_tag() + ">"
+        for element in self.generate_children():
+            yield element
+        yield "</" + self.element_name + ">"
+
+    def generate_children(self):
+        """Return an iterator over the children of this element.
+
+        This method must be overridden by sub-classes.
+
+        """
+        raise NotImplementedError()
+
+
+class Element(NonVoidElement):
 
     """Base generator for HTML elements with children.
 
@@ -340,7 +370,7 @@ class Element(_ElementBase):
     def generate_children(self):
         """Return an iterator over the children of this element.
 
-        This method can be overwritten by sub-classes.
+        This method can be overridden by sub-classes.
 
         """
         return self.children
