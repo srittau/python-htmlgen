@@ -152,6 +152,20 @@ class ElementTest(TestCase):
         assert_equal("bar", element.get_attribute("foo"))
         assert_equal([b'<div foo="bar">', b"</div>"], list(iter(element)))
 
+    def test_attribute_order(self):
+        """Test attribute order.
+
+        The attributes are ordered alphabetically so that unit and doctests
+        can rely on this order.
+
+        """
+        element = Element("div")
+        element.set_attribute("def", "")
+        element.set_attribute("abc", "")
+        element.set_attribute("ghi", "")
+        assert_equal([b'<div abc="" def="" ghi="">', b"</div>"],
+                     list(iter(element)))
+
     def test_get_attribute(self):
         element = Element("div")
         assert_is_none(element.get_attribute("foo"))

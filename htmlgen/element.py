@@ -240,7 +240,7 @@ class _ElementBase(Generator):
 
     def render_start_tag(self):
         html = "<" + self.element_name
-        for attribute, value in self._attributes.items():
+        for attribute, value in sorted(self._attributes.items()):
             html += self._get_attribute_string(attribute, value)
         if self._css_classes:
             html += self._get_attribute_string("class", self._class_value)
