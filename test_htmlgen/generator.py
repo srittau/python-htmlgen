@@ -191,13 +191,13 @@ class HTMLChildGeneratorTest(TestCase):
         assert_equal([b"foo"], list(iter(generator)))
 
     def test_len(self):
-        generator = ChildGenerator()
+        generator = HTMLChildGenerator()
         generator.append(u"c1")
         generator.extend([u"c2", u"c3", NullGenerator()])
         assert_equal(4, len(generator))
 
     def test_empty(self):
-        generator = ChildGenerator()
+        generator = HTMLChildGenerator()
         generator.append(u"c1")
         generator.extend([u"c2", u"c3", NullGenerator()])
         generator.empty()
