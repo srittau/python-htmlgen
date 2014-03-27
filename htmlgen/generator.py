@@ -124,6 +124,11 @@ class ChildGenerator(Generator):
         """Remove all children."""
         self._children = []
 
+    @property
+    def children(self):
+        """Return a copy of the list of children."""
+        return self._children[:]
+
     def generate(self):
         """Return an iterator over all children, in order.
 
@@ -247,6 +252,15 @@ class HTMLChildGenerator(Generator):
     def empty(self):
         """Remove all children."""
         self._children.empty()
+
+    @property
+    def children(self):
+        """Return a copy of the list of children.
+
+        String children are already HTML-escaped.
+
+        """
+        return self._children.children
 
     def generate(self):
         """Return an iterator over all children, in order.

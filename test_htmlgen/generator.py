@@ -113,6 +113,13 @@ class ChildGeneratorTest(TestCase):
         generator.empty()
         assert_equal([], list(iter(generator)))
 
+    def test_children(self):
+        generator = ChildGenerator()
+        generator.append("Foo")
+        assert_equal(["Foo"], generator.children)
+        generator.children.append("Bar")
+        assert_equal(["Foo"], generator.children)
+
 
 class HTMLChildGeneratorTest(TestCase):
 
@@ -195,6 +202,14 @@ class HTMLChildGeneratorTest(TestCase):
         generator.extend([u"c2", u"c3", NullGenerator()])
         generator.empty()
         assert_equal([], list(iter(generator)))
+
+    def test_children(self):
+        generator = HTMLChildGenerator()
+        generator.append("Foo")
+        generator.append("<tag>")
+        assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
+        generator.children.append("Bar")
+        assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
 
 
 class JoinGeneratorTest(TestCase):
