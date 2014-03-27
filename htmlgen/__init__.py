@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
 from .block import Division, Paragraph, Preformatted
+from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
+                       HeadLink, Main)
 from .element import (Element, VoidElement,
                       html_attribute, boolean_html_attribute,
                       int_html_attribute)
