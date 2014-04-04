@@ -361,12 +361,6 @@ class Element(NonVoidElement):
     def __nonzero__(self):
         return True
 
-    def generate(self):
-        yield self.render_start_tag() + ">"
-        for element in self.generate_children():
-            yield element
-        yield "</" + self.element_name + ">"
-
     def generate_children(self):
         """Return an iterator over the children of this element.
 
