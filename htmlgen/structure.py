@@ -13,6 +13,19 @@ class Section(Element):
         super(Section, self).__init__("section")
 
 
+class Article(Element):
+
+    """An HTML article (<article>) element.
+
+    A self-contained article on a page, like a blog entry or a comment in a
+    blog system.
+
+    """
+
+    def __init__(self):
+        super(Article, self).__init__("article")
+
+
 class Navigation(Element):
 
     """An HTML navigation container (<nav>) element."""

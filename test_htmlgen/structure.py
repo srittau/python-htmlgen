@@ -2,7 +2,8 @@ from unittest import TestCase
 
 from asserts import assert_equal
 
-from htmlgen import Section, Navigation, Aside, Header, Footer, Heading
+from htmlgen import (Section, Article, Navigation, Aside, Header, Footer,
+                     Heading)
 
 
 class SectionTest(TestCase):
@@ -10,6 +11,13 @@ class SectionTest(TestCase):
     def test_element(self):
         section = Section()
         assert_equal([b"<section>", b"</section>"], list(iter(section)))
+
+
+class ArticleTest(TestCase):
+
+    def test_element(self):
+        section = Article()
+        assert_equal([b"<article>", b"</article>"], list(iter(section)))
 
 
 class NavigationTest(TestCase):
