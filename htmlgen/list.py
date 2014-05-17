@@ -69,3 +69,54 @@ class ListItem(Element):
         super(ListItem, self).__init__("li")
         if content:
             self.append(content)
+
+
+class DescriptionList(Element):
+
+    """An HTML description list (<dl>) element.
+
+    This used to be known as a "definition list" and is a list of terms and
+    their descriptions.
+
+        >>> dl = DescriptionList()
+        >>> term, definition = dl.create_item("Term", "Long description.")
+        >>> term.add_css_classes("my-term")
+        >>> str(dl)
+        '<dl><dt class="my-term">Term</dt><dd>Long description.</dd></dl>'
+
+    """
+
+    def __init__(self):
+        super(DescriptionList, self).__init__("dl")
+
+    def create_item(self, term, description):
+        """Create term and definition elements and add them to the list.
+
+        Returns a (term element, description element) tuple.
+
+        """
+        dt = DescriptionTerm(term)
+        dd = DescriptionDefinition(description)
+        self.append(dt)
+        self.append(dd)
+        return dt, dd
+
+
+class DescriptionTerm(Element):
+
+    """An HTML term element (<dt>) for description lists."""
+
+    def __init__(self, content=None):
+        super(DescriptionTerm, self).__init__("dt")
+        if content is not None:
+            self.append(content)
+
+
+class DescriptionDefinition(Element):
+
+    """An HTML definition element (<dd>) for description lists."""
+
+    def __init__(self, content=None):
+        super(DescriptionDefinition, self).__init__("dd")
+        if content is not None:
+            self.append(content)

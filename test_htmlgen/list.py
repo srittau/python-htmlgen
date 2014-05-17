@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from asserts import assert_equal
 
-from htmlgen import OrderedList, UnorderedList, ListItem
+from htmlgen import OrderedList, UnorderedList, ListItem, DescriptionList
 
 
 class OrderedListTest(TestCase):
@@ -91,3 +91,12 @@ class ListItemTest(TestCase):
         li = ListItem("Initial")
         li.append("Test")
         assert_equal([b"<li>", b"Initial", b"Test", b"</li>"], list(iter(li)))
+
+
+class DescriptionListTest(TestCase):
+
+    def test_create_term(self):
+        dl = DescriptionList()
+        dl.create_item("Term", "Description")
+        assert_equal([b"<dl>", b"<dt>", b"Term", b"</dt>", b"<dd>",
+                      b"Description", b"</dd>", b"</dl>"], list(iter(dl)))
