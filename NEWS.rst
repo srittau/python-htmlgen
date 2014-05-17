@@ -1,3 +1,16 @@
+News in version 0.4
+===================
+
+API Additions
+-------------
+
+  * Add data property to element classes. This provides an API to
+    easily set and query data-* attributes.
+  * Add structural element Article (<article>).
+  * Add inline elements Link (<a>) and Time (<time>).
+  * Add description list elements DescriptionList (<dl>),
+    DescriptionTerm (<dt>), and DescriptionDefinition (<dd>).
+
 News in version 0.3
 ===================
 
