@@ -14,3 +14,4 @@ from .list import (OrderedList, UnorderedList, ListItem, DescriptionList,
                    DescriptionDefinition, DescriptionTerm)
 from .structure import (Section, Article, Navigation, Aside, Header, Footer,
                         Heading)
+from .time import Time
