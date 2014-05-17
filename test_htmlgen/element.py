@@ -1,7 +1,8 @@
 import re
 from unittest import TestCase
 
-from asserts import assert_false, assert_true, assert_equal, assert_is_none
+from asserts import (assert_false, assert_true, assert_equal, assert_is_none,
+                     assert_raises)
 
 from htmlgen.element import (Element,
                              html_attribute,
@@ -191,6 +192,13 @@ class ElementTest(TestCase):
         assert_is_none(element.get_attribute("foo"))
         assert_equal([b'<div>', b"</div>"], list(iter(element)))
 
+    def test_attribute_names(self):
+        element = Element("div")
+        element.set_attribute("foo", "")
+        element.set_attribute("bar", "")
+        element.remove_attribute("foo")
+        assert_equal({"bar"}, element.attribute_names)
+
     def test_add_one_css_classes(self):
         element = Element("div")
         element.add_css_classes("foo")
@@ -245,6 +253,65 @@ class ElementTest(TestCase):
         element = Element("div")
         element.id = "test-id"
         assert_equal([b'<div id="test-id">', b"</div>"], list(iter(element)))
+
+    def test_data_set(self):
+        element = Element("div")
+        element.data["foo"] = "bar"
+        element.data["abc-def"] = "Another Value"
+        assert_equal([b'<div data-abc-def="Another Value" data-foo="bar">',
+                      b"</div>"], list(iter(element)))
+
+    def test_data_get(self):
+        element = Element("div")
+        element.data["foo"] = "bar"
+        assert_equal("bar", element.data["foo"])
+
+    def test_data_get_not_set(self):
+        element = Element("div")
+        with assert_raises(KeyError):
+            element.data["foo"]
+
+    def test_data_overwrite(self):
+        element = Element("div")
+        element.data["foo"] = "bar"
+        element.data["foo"] = "new"
+        assert_equal([b'<div data-foo="new">', b"</div>"], list(iter(element)))
+
+    def test_data_delete(self):
+        element = Element("div")
+        element.data["foo"] = "bar"
+        del element.data["foo"]
+        assert_equal([b'<div>', b"</div>"], list(iter(element)))
+
+    def test_data_delete_unknown(self):
+        element = Element("div")
+        with assert_raises(KeyError):
+            del element.data["foo"]
+
+    def test_data_clear(self):
+        element = Element("div")
+        element.data = {"old": "xxx", "foo": "old-value"}
+        element.data.clear()
+        assert_equal([b'<div>', b"</div>"], list(iter(element)))
+
+    def test_data_replace(self):
+        element = Element("div")
+        element.data = {"old": "xxx", "foo": "old-value"}
+        element.data = {"foo": "bar", "abc": "def"}
+        assert_equal([b'<div data-abc="def" data-foo="bar">', b"</div>"],
+                     list(iter(element)))
+
+    def test_data_external(self):
+        element = Element("div")
+        element.set_attribute("data-foo", "bar")
+        assert_equal("bar", element.data["foo"])
+        element.data["xyz"] = "abc"
+        assert_equal("abc", element.get_attribute("data-xyz"))
+        element.data.clear()
+        assert_is_none(element.get_attribute("data-foo"))
+        element.set_attribute("data-old", "")
+        element.data = {}
+        assert_is_none(element.get_attribute("data-old"))
 
 
 class ShortElementTest(TestCase):

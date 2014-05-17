@@ -1,3 +1,4 @@
+import re
 try:
     from html import escape
 except ImportError:
@@ -162,6 +163,32 @@ class _ElementBase(Generator):
         self._attributes = {}
         self._css_classes = set()
         self._styles = {}
+        self._data = _ElementDataProxy(self)
+
+    @property
+    def data(self):
+        """Dictionary-like object for setting data-* attributes.
+
+        Data attributes can be used to attach application-specific data
+        to elements.
+
+        Keys must conform to usual HTML attribute syntax rules.
+
+            >>> element = Element("div")
+            >>> element.data["foo"] = "bar"
+            >>> str(element)
+            '<div data-foo="bar"></div>'
+            >>> element.data = {"foo": "bar", "abc": "xyz"}
+            >>> str(element)
+            '<div data-abc="xyz" data-foo="bar"></div>'
+
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data):
+        self._data.clear()
+        self._data = _ElementDataProxy.from_data(self, data)
 
     def set_attribute(self, name, value):
         """Set an HTML attribute to a given string value.
@@ -196,6 +223,11 @@ class _ElementBase(Generator):
             del self._attributes[name]
         except KeyError:
             pass
+
+    @property
+    def attribute_names(self):
+        """Return a set of all attribute names of this element."""
+        return set(self._attributes.keys())
 
     def add_css_classes(self, *css_classes):
         """Add CSS classes to this element.
@@ -262,6 +294,47 @@ class _ElementBase(Generator):
         rendered_styles = [name + ": " + value
                            for name, value in self._styles.items()]
         return "; ".join(rendered_styles)
+
+
+class _ElementDataProxy(object):
+
+    """Dictionary-like object for setting data-* attributes.
+
+    Keys must conform to usual HTML attribute syntax rules.
+
+    """
+
+    def __init__(self, element):
+        self._element = element
+
+    def __setitem__(self, key, value):
+        self._element.set_attribute(self._attribute_name(key), value)
+
+    def __getitem__(self, key):
+        if self._element.get_attribute(self._attribute_name(key)) is None:
+            raise KeyError(key)
+        return self._element.get_attribute(self._attribute_name(key))
+
+    def __delitem__(self, key):
+        if self._element.get_attribute(self._attribute_name(key)) is None:
+            raise KeyError(key)
+        self._element.remove_attribute(self._attribute_name(key))
+
+    def clear(self):
+        """Remove all data-* attributes from the element."""
+        for key in self._element.attribute_names:
+            if key.startswith("data-"):
+                self._element.remove_attribute(key)
+
+    def _attribute_name(self, key):
+        return "data-" + key
+
+    @classmethod
+    def from_data(cls, element, data):
+        d = cls(element)
+        for key, value in data.items():
+            d[key] = value
+        return d
 
 
 class NonVoidElement(_ElementBase):
