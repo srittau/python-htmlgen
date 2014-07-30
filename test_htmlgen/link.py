@@ -33,3 +33,9 @@ class LinkTest(TestCase):
         assert_equal("_blank", link.target)
         assert_equal([b'<a href="" target="_blank">', b"</a>"],
                      list(iter(link)))
+
+    def test_title(self):
+        link = Link("foo")
+        link.title = "Test Title"
+        assert_equal([b'<a href="foo" title="Test Title">', b"</a>"],
+                     list(iter(link)))

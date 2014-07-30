@@ -37,6 +37,7 @@ class Link(Element):
 
     url = html_attribute("href")
     target = html_attribute("target", "_self")
+    title = html_attribute("title")
 
     def set_blank_target(self):
         self.target = "_blank"
