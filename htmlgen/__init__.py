@@ -15,6 +15,7 @@ from .list import (OrderedList, UnorderedList, ListItem, DescriptionList,
                    DescriptionDefinition, DescriptionTerm)
 from .structure import (Section, Article, Navigation, Aside, Header, Footer,
                         Heading)
-from .table import (Table, TableHead, TableBody, TableRow, TableCell,
+from .table import (Table, TableHead, TableBody, TableRow, TableHeaderCell,
+                    TableCell,
                     ColumnGroup, Column)
 from .time import Time
