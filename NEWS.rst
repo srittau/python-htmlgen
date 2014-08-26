@@ -1,3 +1,13 @@
+News in version 0.5
+===================
+
+API Additions
+-------------
+
+  * Add table elements Table (<table>), TableHead (<thead>),
+    TableBody (<tbody>), TableRow (<tr>), TableHeaderCell (<th>),
+    TableCell (<td>), ColumnGroup (<colgroup>), and Column (<col>).
+
 News in version 0.4
 ===================
 
