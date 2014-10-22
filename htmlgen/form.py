@@ -1,6 +1,10 @@
+import datetime
+import re
+
 from htmlgen.block import Division
 from htmlgen.element import (Element, VoidElement, html_attribute,
-                             boolean_html_attribute, int_html_attribute)
+                             boolean_html_attribute, int_html_attribute,
+                             float_html_attribute)
 
 
 class Form(Element):
@@ -83,6 +87,84 @@ class TextInput(Input):
         self.value = value
 
 
+class PasswordInput(Input):
+
+    """An HTML password input (<input type="password">) element."""
+
+    def __init__(self, name=None):
+        """Create an HTML password input element.
+
+        The optional name argument sets this input element's name, used when
+        submitting a form.
+
+        """
+        super(PasswordInput, self).__init__("password", name)
+
+
+class NumberInput(Input):
+
+    """An HTML number input (<input type="number">) element."""
+
+    def __init__(self, name=None, value=None):
+        """Create an HTML number input element.
+
+        The optional name argument sets this input element's name, used when
+        submitting a form.
+
+        If value is not None, it determines the initial content of the
+        number field.
+
+        """
+        super(NumberInput, self).__init__("number", name)
+        if value is not None:
+            self.value = str(value)
+
+    minimum = float_html_attribute("min")
+    maximum = float_html_attribute("max")
+    step = float_html_attribute("step")
+
+
+class DateInput(Input):
+
+    """An HTML date input (<input type="date">) element."""
+
+    def __init__(self, name=None, date=None):
+        """Create an HTML date element.
+
+        The optional name argument sets this input element's name, used when
+        submitting a form.
+
+        date is the initial date. If date is None, the field is initially
+        empty.
+
+        """
+        super(DateInput, self).__init__("date", name)
+        self.date = date
+
+    @property
+    def date(self):
+        """Return the element's value attribute, parsed as date.
+
+        If value is empty or can not be parsed as a date, return None.
+
+        """
+        return self._parse_date(self.value)
+
+    @date.setter
+    def date(self, date):
+        """Set the element's value to the given date. If date is None,
+        clear the value."""
+        self.value = date.strftime("%Y-%m-%d") if date else ""
+
+    @staticmethod
+    def _parse_date(v):
+        match = re.match(r"(\d\d\d\d)-(\d\d)-(\d\d)", v)
+        if not match:
+            return None
+        return datetime.date(int(match.group(1)), int(match.group(2)),
+                             int(match.group(3)))
+
+
 class SubmitButton(Input):
 
     """An HTML form submit button (<input type="submit">) element.
@@ -109,3 +191,16 @@ class SubmitButton(Input):
     @label.setter
     def label(self, label):
         self.value = label
+
+
+class Button(Element):
+
+    """An HTML <button> element.
+
+        >>> button = Button("My Label")
+
+    """
+
+    def __init__(self, *content):
+        super(Button, self).__init__("button")
+        self.extend(content)
