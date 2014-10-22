@@ -15,12 +15,14 @@ Basic usage:
 >>> span.append("important!")
 >>> div.append(span)
 
-A tree constructed like this can either be converted to a string:
+A tree constructed like this can be converted to a string:
 
 >>> str(div)
 '<div id="my-block">This is <span class="important">important!</span></div>'
+>>> "<p>This is {}</p>".format(span)
+'<p>This is <span class="important">important!</span></p>'
 
-Alternatively, all elements can be used as iterator, for example to return
+Alternatively, all elements can be used as iterators, for example to return
 them from a WSGI callback:
 
 >>> def application(env, start_response):
