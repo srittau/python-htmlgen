@@ -6,6 +6,7 @@ from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
 from .element import (Element, VoidElement,
                       html_attribute, boolean_html_attribute,
                       int_html_attribute)
+from .form import Form, Input, TextInput, SubmitButton
 from .generator import (Generator, NullGenerator, ChildGenerator,
                         HTMLChildGenerator, JoinGenerator, HTMLJoinGenerator)
 from .image import Image
