@@ -7,20 +7,24 @@ Feedback and suggestions are welcome!*
 Basic usage:
 
 >>> from htmlgen import Division, Span
+>>> Division("This is ", Span("important!"), "!")
+
+A more verbose example:
+
+>>> span = Span("important")
+>>> span.add_css_classes("important")
 >>> div = Division()
 >>> div.id = "my-block"
 >>> div.append("This is ")
->>> span = Span()
->>> span.add_css_classes("important")
->>> span.append("important!")
 >>> div.append(span)
+>>> div.append("!")
 
 A tree constructed like this can be converted to a string:
 
 >>> str(div)
-'<div id="my-block">This is <span class="important">important!</span></div>'
->>> "<p>This is {}</p>".format(span)
-'<p>This is <span class="important">important!</span></p>'
+'<div id="my-block">This is <span class="important">important</span>!</div>'
+>>> "<p>This is {}!</p>".format(span)
+'<p>This is <span class="important">important</span>!</p>'
 
 Alternatively, all elements can be used as iterators, for example to return
 them from a WSGI callback:
@@ -41,9 +45,9 @@ of elements, is to override the generate_children method of the Element class:
 ...         self.id = "my-block"
 ...     def generate_children(self):
 ...         yield "This is "
-...         span = Span()
+...         span = Span("important")
 ...         span.add_css_classes("important")
-...         span.append("important!")
 ...         yield span
+...         yield "!"
 >>> str(MyBlock())
-'<div id="my-block">This is <span class="important">important!</span></div>'
+'<div id="my-block">This is <span class="important">important</span>!</div>'
