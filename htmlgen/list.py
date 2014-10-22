@@ -65,10 +65,9 @@ class ListItem(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(ListItem, self).__init__("li")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class DescriptionList(Element):
@@ -106,17 +105,15 @@ class DescriptionTerm(Element):
 
     """An HTML term element (<dt>) for description lists."""
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(DescriptionTerm, self).__init__("dt")
-        if content is not None:
-            self.append(content)
+        self.extend(content)
 
 
 class DescriptionDefinition(Element):
 
     """An HTML definition element (<dd>) for description lists."""
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(DescriptionDefinition, self).__init__("dd")
-        if content is not None:
-            self.append(content)
+        self.extend(content)

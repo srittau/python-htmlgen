@@ -12,9 +12,9 @@ class LinkTest(TestCase):
         assert_equal([b'<a href="foo">', b"</a>"], list(iter(link)))
 
     def test_caption_argument(self):
-        link = Link("foo", "initial caption")
+        link = Link("foo", "initial", "caption")
         link.append(" continued")
-        assert_equal([b'<a href="foo">', b"initial caption", b" continued",
+        assert_equal([b'<a href="foo">', b"initial", b"caption", b" continued",
                       b"</a>"], list(iter(link)))
 
     def test_url(self):

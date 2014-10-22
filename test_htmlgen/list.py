@@ -88,9 +88,10 @@ class ListItemTest(TestCase):
         assert_equal([b"<li>", b"Test", b"</li>"], list(iter(li)))
 
     def test_with_initial_content(self):
-        li = ListItem("Initial")
-        li.append("Test")
-        assert_equal([b"<li>", b"Initial", b"Test", b"</li>"], list(iter(li)))
+        li = ListItem("Initial", "test")
+        li.append("content")
+        assert_equal([b"<li>", b"Initial", b"test", b"content", b"</li>"],
+                     list(iter(li)))
 
 
 class DescriptionListTest(TestCase):

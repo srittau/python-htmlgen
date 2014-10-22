@@ -56,9 +56,9 @@ class HeadingTest(TestCase):
         assert_equal([b"<h3>", b"Test", b"</h3>"], list(iter(highlight)))
 
     def test_with_initial_content(self):
-        highlight = Heading(2, "Initial")
-        highlight.append("Test")
-        assert_equal([b"<h2>", b"Initial", b"Test", b"</h2>"],
+        highlight = Heading(2, "Initial", "test")
+        highlight.append("content")
+        assert_equal([b"<h2>", b"Initial", b"test", b"content", b"</h2>"],
                      list(iter(highlight)))
 
     def test_default_depth(self):

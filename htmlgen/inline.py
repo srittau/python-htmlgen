@@ -8,17 +8,15 @@ class Span(Element):
     <span> elements are inline elements without semantic meaning. They are
     containers for styling or scripting.
 
-
-        >>> span1 = Span("Example text")
+        >>> span1 = Span("Example", "text")
         >>> span2 = Span()
         >>> span2.append("Example text")
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Span, self).__init__("span")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Highlight(Element):
@@ -44,10 +42,9 @@ class Highlight(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Highlight, self).__init__("b")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Strong(Element):
@@ -62,10 +59,9 @@ class Strong(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Strong, self).__init__("strong")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Alternate(Element):
@@ -88,10 +84,9 @@ class Alternate(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Alternate, self).__init__("i")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Emphasis(Element):
@@ -108,10 +103,9 @@ class Emphasis(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Emphasis, self).__init__("em")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Small(Element):
@@ -127,8 +121,7 @@ class Small(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Small, self).__init__("small")
-        if content:
-            self.append(content)
+        self.extend(content)
 

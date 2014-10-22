@@ -13,9 +13,9 @@ class SpanTest(TestCase):
         assert_equal([b"<span>", b"Test", b"</span>"], list(iter(span)))
 
     def test_with_initial_content(self):
-        span = Span("Initial")
-        span.append("Test")
-        assert_equal([b"<span>", b"Initial", b"Test", b"</span>"],
+        span = Span("Initial", "test")
+        span.append("content")
+        assert_equal([b"<span>", b"Initial", b"test", b"content", b"</span>"],
                      list(iter(span)))
 
 
@@ -27,9 +27,9 @@ class HighlightTest(TestCase):
         assert_equal([b"<b>", b"Test", b"</b>"], list(iter(highlight)))
 
     def test_with_initial_content(self):
-        highlight = Highlight("Initial")
-        highlight.append("Test")
-        assert_equal([b"<b>", b"Initial", b"Test", b"</b>"],
+        highlight = Highlight("Initial", "test")
+        highlight.append("content")
+        assert_equal([b"<b>", b"Initial", b"test", b"content", b"</b>"],
                      list(iter(highlight)))
 
 
@@ -41,10 +41,10 @@ class StrongTest(TestCase):
         assert_equal([b"<strong>", b"Test", b"</strong>"], list(iter(strong)))
 
     def test_with_initial_content(self):
-        strong = Strong("Initial")
-        strong.append("Test")
-        assert_equal([b"<strong>", b"Initial", b"Test", b"</strong>"],
-                     list(iter(strong)))
+        strong = Strong("Initial", "test")
+        strong.append("content")
+        assert_equal([b"<strong>", b"Initial", b"test", b"content",
+                      b"</strong>"], list(iter(strong)))
 
 
 class AlternateTest(TestCase):
@@ -55,9 +55,10 @@ class AlternateTest(TestCase):
         assert_equal([b"<i>", b"Test", b"</i>"], list(iter(alt)))
 
     def test_with_initial_content(self):
-        alt = Alternate("Initial")
-        alt.append("Test")
-        assert_equal([b"<i>", b"Initial", b"Test", b"</i>"], list(iter(alt)))
+        alt = Alternate("Initial", "test")
+        alt.append("content")
+        assert_equal([b"<i>", b"Initial", b"test", b"content", b"</i>"],
+                     list(iter(alt)))
 
 
 class EmphasisTest(TestCase):
@@ -68,9 +69,9 @@ class EmphasisTest(TestCase):
         assert_equal([b"<em>", b"Test", b"</em>"], list(iter(em)))
 
     def test_with_initial_content(self):
-        em = Emphasis("Initial")
-        em.append("Test")
-        assert_equal([b"<em>", b"Initial", b"Test", b"</em>"],
+        em = Emphasis("Initial", "test")
+        em.append("content")
+        assert_equal([b"<em>", b"Initial", b"test", b"content", b"</em>"],
                      list(iter(em)))
 
 
@@ -82,7 +83,7 @@ class SmallTest(TestCase):
         assert_equal([b"<small>", b"Test", b"</small>"], list(iter(small)))
 
     def test_with_initial_content(self):
-        small = Small("Initial")
-        small.append("Test")
-        assert_equal([b"<small>", b"Initial", b"Test", b"</small>"],
-                     list(iter(small)))
+        small = Small("Initial", "test")
+        small.append("content")
+        assert_equal([b"<small>", b"Initial", b"test", b"content",
+                      b"</small>"], list(iter(small)))

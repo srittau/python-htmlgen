@@ -29,11 +29,10 @@ class Link(Element):
 
     """
 
-    def __init__(self, url, caption=None):
+    def __init__(self, url, *content):
         super(Link, self).__init__("a")
         self.url = url
-        if caption:
-            self.append(caption)
+        self.extend(content)
 
     url = html_attribute("href")
     target = html_attribute("target", "_self")

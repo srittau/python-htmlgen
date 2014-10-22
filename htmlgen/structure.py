@@ -87,10 +87,9 @@ class Heading(Element):
 
     """
 
-    def __init__(self, level=1, content=None):
+    def __init__(self, level=1, *content):
         if level < 1 or level > 6:
             raise TypeError("heading level must be between 1 and 6")
         super(Heading, self).__init__("h" + str(level))
         self.level = level
-        if content:
-            self.append(content)
+        self.extend(content)

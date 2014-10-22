@@ -32,10 +32,9 @@ class Paragraph(Element):
 
     """
 
-    def __init__(self, content=None):
+    def __init__(self, *content):
         super(Paragraph, self).__init__("p")
-        if content:
-            self.append(content)
+        self.extend(content)
 
 
 class Preformatted(Element):

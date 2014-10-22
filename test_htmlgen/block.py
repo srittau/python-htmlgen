@@ -26,9 +26,10 @@ class ParagraphTest(TestCase):
         assert_equal([b"<p>", b"Test", b"</p>"], list(iter(p)))
 
     def test_with_initial_content(self):
-        p = Paragraph("Initial")
-        p.append("Test")
-        assert_equal([b"<p>", b"Initial", b"Test", b"</p>"], list(iter(p)))
+        p = Paragraph("Initial", "test")
+        p.append("content")
+        assert_equal([b"<p>", b"Initial", b"test", b"content", b"</p>"],
+                     list(iter(p)))
 
 
 class PreformattedTest(TestCase):

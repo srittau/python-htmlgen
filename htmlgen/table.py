@@ -273,10 +273,9 @@ class TableRow(Element):
 
 class _TableCellBase(Element):
 
-    def __init__(self, element_name, content=""):
+    def __init__(self, element_name, *content):
         super(_TableCellBase, self).__init__(element_name)
-        if content:
-            self.append(content)
+        self.extend(*content)
 
     rows = int_html_attribute("rowspan", 1)
     columns = int_html_attribute("colspan", 1)
@@ -294,8 +293,8 @@ class TableHeaderCell(_TableCellBase):
 
     """
 
-    def __init__(self, content=""):
-        super(TableHeaderCell, self).__init__("th", content)
+    def __init__(self, *content):
+        super(TableHeaderCell, self).__init__("th", *content)
 
 
 class TableCell(_TableCellBase):
@@ -310,8 +309,8 @@ class TableCell(_TableCellBase):
 
     """
 
-    def __init__(self, content=""):
-        super(TableCell, self).__init__("td", content)
+    def __init__(self, *content):
+        super(TableCell, self).__init__("td", *content)
 
 
 class ColumnGroup(Element):
