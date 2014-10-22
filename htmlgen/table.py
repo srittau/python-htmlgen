@@ -275,7 +275,7 @@ class _TableCellBase(Element):
 
     def __init__(self, element_name, *content):
         super(_TableCellBase, self).__init__(element_name)
-        self.extend(*content)
+        self.extend(content)
 
     rows = int_html_attribute("rowspan", 1)
     columns = int_html_attribute("colspan", 1)

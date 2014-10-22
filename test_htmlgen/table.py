@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from asserts import assert_equal, assert_true
 
-from htmlgen import Table, TableHead, TableRow, TableCell, ColumnGroup
+from htmlgen import Table, TableHead, TableRow, TableCell, ColumnGroup, Span
 
 
 class TableTest(TestCase):
@@ -153,6 +153,10 @@ class TableCellTest(TestCase):
         cell.columns = 3
         cell.rows = 5
         assert_equal('<td colspan="3" rowspan="5">Content</td>', str(cell))
+
+    def test_element_child(self):
+        cell = TableCell(Span("Content"))
+        assert_equal('<td><span>Content</span></td>', str(cell))
 
 
 class ColumnGroupTest(TestCase):

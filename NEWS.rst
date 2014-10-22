@@ -1,3 +1,12 @@
+News in version 0.6.1
+=====================
+
+Bug Fixes
+---------
+
+  * Fixed error when passing elements to TableCell's and TableHeaderCell's
+    constructor.
+
 News in version 0.6
 ===================
 
