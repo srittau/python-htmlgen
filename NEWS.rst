@@ -1,3 +1,19 @@
+News in version 0.6
+===================
+
+API Additions
+-------------
+
+  * Add TableHeaderCell to htmlgen (missing from 0.5).
+  * Division constructor now accepts initial content arguments.
+
+API-Incompatible Changes
+------------------------
+
+  * All element constructors that took an initial content argument now take
+    any number of content arguments, i.e. the following is now possible:
+    >>> Paragraph("This is ", Emphasis("initial"), " content.")
+
 News in version 0.5
 ===================
 
