@@ -7,10 +7,15 @@ from htmlgen import Division, Paragraph, Preformatted
 
 class DivisionTest(TestCase):
 
-    def test_render(self):
+    def test_without_initial_content(self):
         div = Division()
         div.append("Test")
         assert_equal([b"<div>", b"Test", b"</div>"], list(iter(div)))
+
+    def test_with_initial_content(self):
+        div = Division("foo", "bar")
+        div.append("baz")
+        assert_equal("<div>foobarbaz</div>", str(div))
 
 
 class ParagraphTest(TestCase):

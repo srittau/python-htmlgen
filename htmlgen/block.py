@@ -8,15 +8,16 @@ class Division(Element):
     <div> elements are block-level elements without semantic meaning. They are
     containers for styling or scripting.
 
-        >>> div = Division()
+        >>> div = Division("Initial text. ")
         >>> div.id = "my-block"
         >>> div.add_css_classes("important", "legal")
-        >>> div.append("This is important legal text.")
+        >>> div.append("This is more text.")
 
     """
 
-    def __init__(self):
+    def __init__(self, *content):
         super(Division, self).__init__("div")
+        self.extend(content)
 
 
 class Paragraph(Element):
