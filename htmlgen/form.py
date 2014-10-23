@@ -1,10 +1,10 @@
 import datetime
 import re
 
+from htmlgen.attribute import (html_attribute, boolean_html_attribute,
+                               int_html_attribute, float_html_attribute)
 from htmlgen.block import Division
-from htmlgen.element import (Element, VoidElement, html_attribute,
-                             boolean_html_attribute, int_html_attribute,
-                             float_html_attribute)
+from htmlgen.element import Element, VoidElement
 
 
 class Form(Element):

@@ -1,11 +1,11 @@
 from __future__ import absolute_import
 
+from .attribute import (html_attribute, boolean_html_attribute,
+                        int_html_attribute, float_html_attribute)
 from .block import Division, Paragraph, Preformatted
 from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
                        HeadLink, Main)
-from .element import (Element, VoidElement,
-                      html_attribute, boolean_html_attribute,
-                      int_html_attribute, float_html_attribute)
+from .element import Element, VoidElement
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    DateInput, SubmitButton, Button)
 from .generator import (Generator, NullGenerator, ChildGenerator,
