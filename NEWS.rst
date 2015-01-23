@@ -1,3 +1,34 @@
+News in version 0.7
+===================
+
+API Additions
+-------------
+
+  * Add input elements Button (<button>), NumberInput (<input type="number">),
+    PasswordInput (<input type="password">), and DateInput (<input
+    type="date">).
+
+API-Incompatible Changes
+------------------------
+
+  * Move attribute functions from htmlgen.elements to htmlgen.attribute.
+    (But you should import them directly from htmlgen anyway.)
+
+Improvements
+------------
+
+  * Improved error handling and reporting.
+
+Documentation
+-------------
+
+  * Add element list document elements.rst.
+
+Bug Fixes
+---------
+
+  * Add float_html_attribute to htmlgen.
+
 News in version 0.6.1
 =====================
 
