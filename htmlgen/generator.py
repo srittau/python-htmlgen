@@ -1,7 +1,14 @@
+import sys
+
 try:
     from html import escape
 except ImportError:
     from cgi import escape
+
+
+# TODO: Python 3: remove
+if sys.version_info[0] >= 3:
+    unicode = str
 
 
 class Generator(object):
@@ -48,11 +55,12 @@ class Generator(object):
             else:
                 if hasattr(item, "generate"):
                     self._iterator_stack.append(item.generate())
+                elif isinstance(item, bytes):
+                    yield item
+                elif isinstance(item, unicode):
+                    yield item.encode("utf-8")
                 else:
-                    if isinstance(item, bytes):
-                        yield item
-                    else:
-                        yield item.encode("utf-8")
+                    raise TypeError("can not generate {}".format(repr(item)))
         raise StopIteration()
 
     def __str__(self):
@@ -106,10 +114,14 @@ class ChildGenerator(Generator):
 
     def append(self, child):
         """Append a string or sub generator."""
+        if child is None:
+            raise TypeError("child can not be None")
         self._children.append(child)
 
     def extend(self, children):
         """Append multiple strings and sub generators."""
+        if any(child is None for child in children):
+            raise TypeError("child can not be None")
         self._children.extend(children)
 
     def remove(self, child):

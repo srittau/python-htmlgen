@@ -58,6 +58,11 @@ class GeneratorTest(TestCase):
         generator = _TestingGenerator([u"foo", inner, u"baz"])
         assert_equal("foobarbaz", str(generator))
 
+    def test_invalid_class(self):
+        generator = _TestingGenerator([5])
+        with assert_raises(TypeError):
+            str(generator)
+
 
 class NullGeneratorTest(TestCase):
     

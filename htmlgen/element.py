@@ -1,3 +1,5 @@
+import sys
+
 try:
     from html import escape
 except ImportError:
@@ -5,6 +7,12 @@ except ImportError:
 
 from htmlgen.attribute import html_attribute
 from htmlgen.generator import Generator, HTMLChildGenerator
+
+# TODO: Python 3: remove
+if sys.version_info[0] >= 3:
+    str_class = str
+else:
+    str_class = basestring
 
 
 class _ElementBase(Generator):
@@ -55,6 +63,8 @@ class _ElementBase(Generator):
             '<div title="Test Title"></div>'
 
         """
+        if not isinstance(name, str_class) or not isinstance(value, str_class):
+            raise TypeError("name and value must be strings")
         self._attributes[name] = value
 
     def get_attribute(self, name, default=None):
