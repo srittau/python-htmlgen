@@ -27,12 +27,12 @@ class Form(Element):
 
     """
 
-    def __init__(self, method="POST", url=""):
+    def __init__(self, method="GET", url=""):
         super(Form, self).__init__("form")
         self.method = method
         self.url = url
 
-    method = html_attribute("method", default="POST")
+    method = html_attribute("method", default="GET")
     url = html_attribute("action", default="")
     encryption_type = html_attribute("enctype", _ENC_TYPE_URL_ENCODED)
 
