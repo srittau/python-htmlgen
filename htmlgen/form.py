@@ -7,6 +7,10 @@ from htmlgen.block import Division
 from htmlgen.element import Element, VoidElement
 
 
+_ENC_TYPE_URL_ENCODED = "application/x-www-form-urlencoded"
+_ENC_TYPE_MULTI_PART = "multipart/form-data"
+
+
 class Form(Element):
 
     """An HTML <form> element.
@@ -14,6 +18,12 @@ class Form(Element):
         >>> form = Form("POST", "/feedback")
         >>> form.append(Division("Name: ", TextInput("name")))
         >>> form.append(Division(SubmitButton("Submit")))
+
+    If the form contains file input elements, set multipart to True:
+
+        >>> form.multipart = True
+        >>> form.encryption_type
+        'multipart/form-data'
 
     """
 
@@ -24,6 +34,18 @@ class Form(Element):
 
     method = html_attribute("method", default="POST")
     url = html_attribute("action", default="")
+    encryption_type = html_attribute("enctype", _ENC_TYPE_URL_ENCODED)
+
+    @property
+    def multipart(self):
+        return self.encryption_type == _ENC_TYPE_MULTI_PART
+
+    @multipart.setter
+    def multipart(self, multipart):
+        if multipart:
+            self.encryption_type = _ENC_TYPE_MULTI_PART
+        else:
+            self.encryption_type = _ENC_TYPE_URL_ENCODED
 
 
 class Input(VoidElement):

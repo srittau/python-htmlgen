@@ -1,7 +1,7 @@
 import datetime
 from unittest import TestCase
 
-from asserts import assert_equal, assert_is_none
+from asserts import assert_false, assert_true, assert_equal, assert_is_none
 
 from htmlgen.form import (Form, Input, TextInput, SubmitButton, Button,
                           NumberInput, PasswordInput, DateInput)
@@ -21,6 +21,19 @@ class FormTest(TestCase):
         assert_equal("POST", form.method)
         assert_equal("", form.url)
         assert_equal([b'<form>', b"</form>"], list(iter(form)))
+
+    def test_multipart(self):
+        form = Form()
+        assert_false(form.multipart)
+        assert_equal("application/x-www-form-urlencoded", form.encryption_type)
+        form.multipart = True
+        assert_equal("multipart/form-data", form.encryption_type)
+        form.multipart = False
+        assert_equal("application/x-www-form-urlencoded", form.encryption_type)
+        form.encryption_type = "multipart/form-data"
+        assert_true(form.multipart)
+        form.encryption_type = "application/x-www-form-urlencoded"
+        assert_false(form.multipart)
 
 
 class InputTest(TestCase):
