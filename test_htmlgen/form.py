@@ -4,7 +4,7 @@ from unittest import TestCase
 from asserts import assert_false, assert_true, assert_equal, assert_is_none
 
 from htmlgen.form import (Form, Input, TextInput, SubmitButton, Button,
-                          NumberInput, PasswordInput, DateInput)
+                          NumberInput, PasswordInput, DateInput, TextArea)
 
 
 class FormTest(TestCase):
@@ -191,3 +191,14 @@ class ButtonTest(TestCase):
     def test_with_children(self):
         button = Button("Foo", "bar")
         assert_equal("<button>Foobar</button>", str(button))
+
+
+class TextAreaTest(TestCase):
+
+    def test_with_name(self):
+        text_area = TextArea("my-name")
+        assert_equal('<textarea name="my-name"></textarea>', str(text_area))
+
+    def test_without_name(self):
+        text_area = TextArea()
+        assert_equal('<textarea></textarea>', str(text_area))

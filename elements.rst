@@ -43,6 +43,7 @@ htmlgen currently supports the following HTML elements:
 * <table> - Table
 * <tbody> - TableBody
 * <td> - TableCell
+* <textarea> - TextArea
 * <th> - TableHeaderCell
 * <thead> - TableHead
 * <time> - Time

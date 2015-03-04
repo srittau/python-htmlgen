@@ -226,3 +226,16 @@ class Button(Element):
     def __init__(self, *content):
         super(Button, self).__init__("button")
         self.extend(content)
+
+
+class TextArea(Element):
+
+    def __init__(self, name=None):
+        super(TextArea, self).__init__("textarea")
+        self.name = name
+
+    name = html_attribute("name")
+    readonly = boolean_html_attribute("readonly")
+    disabled = boolean_html_attribute("disabled")
+    columns = int_html_attribute("cols")
+    rows = int_html_attribute("rows")
