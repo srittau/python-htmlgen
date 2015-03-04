@@ -18,7 +18,7 @@ class FormTest(TestCase):
 
     def test_default_arguments(self):
         form = Form()
-        assert_equal("POST", form.method)
+        assert_equal("GET", form.method)
         assert_equal("", form.url)
         assert_equal([b'<form>', b"</form>"], list(iter(form)))
 
