@@ -148,6 +148,12 @@ class TableRowTest(TestCase):
 
 class TableCellTest(TestCase):
 
+    def test_default_columns_and_rows(self):
+        cell = TableCell("Content")
+        assert_equal(1, cell.columns)
+        assert_equal(1, cell.rows)
+        assert_equal('<td>Content</td>', str(cell))
+
     def test_columns_and_rows(self):
         cell = TableCell("Content")
         cell.columns = 3
