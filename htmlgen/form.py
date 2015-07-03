@@ -230,6 +230,13 @@ class Button(Element):
 
 class TextArea(Element):
 
+    """An HTML <textarea> element.
+
+        >>> area = TextArea("element-name")
+        >>> area.append("Initial text area content.")
+
+    """
+
     def __init__(self, name=None):
         super(TextArea, self).__init__("textarea")
         self.name = name
