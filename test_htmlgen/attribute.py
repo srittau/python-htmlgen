@@ -1,3 +1,4 @@
+import datetime
 from unittest import TestCase
 
 from asserts import assert_true, assert_false, assert_is_none, assert_equal
@@ -5,7 +6,8 @@ from asserts import assert_true, assert_false, assert_is_none, assert_equal
 from htmlgen.attribute import (html_attribute,
                                boolean_html_attribute,
                                int_html_attribute,
-                               float_html_attribute)
+                               float_html_attribute,
+                               time_html_attribute)
 from htmlgen.element import Element
 
 
@@ -110,3 +112,44 @@ class HTMLAttributeTest(TestCase):
         element.attr = None
         assert_equal(4.2, element.attr)
         assert_equal('<div></div>', str(element))
+
+    def test_time(self):
+        class MyElement(Element):
+            attr = time_html_attribute("data-time")
+        element = MyElement("div")
+        assert_is_none(element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = datetime.time(14, 13, 9)
+        assert_equal(datetime.time(14, 13, 9), element.attr)
+        assert_equal('<div data-time="14:13:09"></div>', str(element))
+        element.attr = None
+        assert_is_none(element.attr)
+        assert_equal('<div></div>', str(element))
+        element.set_attribute("data-time", "09:33:04")
+        assert_equal(datetime.time(9, 33, 4), element.attr)
+
+    def test_time_with_fraction(self):
+        class MyElement(Element):
+            attr = time_html_attribute("data-time")
+        element = MyElement("div")
+        element.attr = datetime.time(14, 13, 9, 123456)
+        assert_equal(datetime.time(14, 13, 9, 123456), element.attr)
+        assert_equal('<div data-time="14:13:09.123456"></div>', str(element))
+
+    def test_time__invalid_value(self):
+        class MyElement(Element):
+            attr = time_html_attribute("data-time")
+        element = MyElement("div")
+        element.set_attribute("data-time", "INVALID")
+        assert_is_none(element.attr)
+
+    def test_time_with_default(self):
+        class MyElement(Element):
+            attr = time_html_attribute(
+                "data-attr", default=datetime.time(12, 9, 34))
+        element = MyElement("div")
+        assert_equal(datetime.time(12, 9, 34), element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = datetime.time(12, 9, 34)
+        assert_equal(datetime.time(12, 9, 34), element.attr)
+        assert_equal("<div></div>", str(element))

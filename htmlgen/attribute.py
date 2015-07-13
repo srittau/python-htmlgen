@@ -1,3 +1,8 @@
+import datetime
+
+from htmlgen.timeutil import parse_rfc3339_partial_time
+
+
 def html_attribute(attribute_name, default=None):
     """Add an attribute to an HTML element.
 
@@ -140,6 +145,49 @@ def float_html_attribute(attribute_name, default=None):
         if value is None:
             return None
         return float(value)
+
+    def set_(self, value):
+        if value is None or value == default:
+            self.remove_attribute(attribute_name)
+        else:
+            self.set_attribute(attribute_name, str(value))
+
+    return property(get, set_)
+
+
+def time_html_attribute(attribute_name, default=None):
+    """Add an attribute to an HTML element that accepts only time values.
+
+    >>> from htmlgen import Element
+    >>> class MyElement(Element):
+    ...     time = time_html_attribute("data-time")
+    >>> element = MyElement("div")
+    >>> element.time
+    >>> str(element)
+    '<div></div>'
+    >>> element.time = datetime.time(8, 15)
+    >>> str(element)
+    '<div data-time="08:15:00"></div>'
+
+    If the optional default argument is given, the attribute will not be
+    included if the value matches it.
+
+    >>> class MyElement(Element):
+    ...     value = time_html_attribute(
+    ...         "data-value", default=datetime.time(8, 0))
+    >>> element = MyElement("div")
+    >>> element.value
+    datetime.time(8, 0)
+    >>> str(element)
+    '<div></div>'
+
+    """
+
+    def get(self):
+        value = self.get_attribute(attribute_name)
+        if value is None:
+            return default
+        return parse_rfc3339_partial_time(value)
 
     def set_(self, value):
         if value is None or value == default:
