@@ -25,6 +25,9 @@ class _ElementBase(Generator):
         self._styles = {}
         self._data = _ElementDataProxy(self)
 
+    def generate(self):
+        raise NotImplementedError()
+
     @property
     def data(self):
         """Dictionary-like object for setting data-* attributes.
