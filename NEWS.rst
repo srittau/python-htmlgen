@@ -1,3 +1,23 @@
+News in version 0.8
+===================
+
+API Additions
+-------------
+
+  * Add form elements TextArea (<textarea>), Select (<select>), OptionGroup
+    (<optgroup>), and Option (<option>).
+  * Add is_element() to check whether an object is an element generator of
+    a certain type.
+  * Forms now support multipart submissions using the Form.encryption_type and
+    Form.multipart attributes.
+
+API-Incompatible Changes
+------------------------
+
+  * Fix the default HTTP method to be "GET" for forms as per HTML spec. This
+    avoids unexpected behaviour and the need for problematic workarounds
+    with "POST" forms.
+
 News in version 0.7
 ===================
 
