@@ -6,9 +6,10 @@ from asserts import (assert_false, assert_true,
                      assert_equal, assert_is,
                      assert_raises)
 
-from htmlgen.form import (Form, Input, TextInput, SubmitButton, Button,
-                          NumberInput, PasswordInput, DateInput, TextArea,
-                          Select, OptionGroup, Option)
+from htmlgen.form import (
+    Form, Input, TextInput, SubmitButton, Button,
+    NumberInput, SearchInput, PasswordInput, DateInput, TextArea,
+    Select, OptionGroup, Option)
 
 
 class FormTest(TestCase):
@@ -92,6 +93,21 @@ class TextInputTest(TestCase):
         assert_equal([b'<input name="my-text" type="text" '
                       b'value="Default Value"/>'],
                      list(iter(input_)))
+
+
+class SearchInputTest(TestCase):
+
+    def test_defaults(self):
+        search = SearchInput()
+        assert_equal("search", search.type)
+        assert_equal("", search.name)
+        assert_equal("", search.value)
+        assert_equal('<input type="search"/>', str(search))
+
+    def test_with_arguments(self):
+        search = SearchInput("my-search")
+        assert_equal("my-search", search.name)
+        assert_equal('<input name="my-search" type="search"/>', str(search))
 
 
 class PasswordInputTest(TestCase):

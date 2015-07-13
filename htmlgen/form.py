@@ -108,6 +108,20 @@ class TextInput(Input):
         self.value = value
 
 
+class SearchInput(Input):
+
+    """An HTML search (<input type="search">) element."""
+
+    def __init__(self, name=""):
+        """Create an HTML search element.
+
+        The optional name argument sets this input element's name, used when
+        submitting a form.
+
+        """
+        super(SearchInput, self).__init__("search", name)
+
+
 class PasswordInput(Input):
 
     """An HTML password input (<input type="password">) element."""

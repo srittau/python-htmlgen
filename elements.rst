@@ -25,6 +25,7 @@ htmlgen currently supports the following HTML elements:
 * <input type="date"> - DateInput
 * <input type="number"> - NumberInput
 * <input type="password"> - PasswordInput
+* <input type="search"> - SearchInput
 * <input type="submit"> - SubmitButton
 * <input type="text"> - TextInput
 * <li> - ListItem
