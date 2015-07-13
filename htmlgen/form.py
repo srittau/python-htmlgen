@@ -95,7 +95,7 @@ class TextInput(Input):
 
     """
 
-    def __init__(self, name=None, value=""):
+    def __init__(self, name="", value=""):
         """Create an HTML text input element.
 
         The optional name argument sets this input element's name, used when
@@ -112,7 +112,7 @@ class PasswordInput(Input):
 
     """An HTML password input (<input type="password">) element."""
 
-    def __init__(self, name=None):
+    def __init__(self, name=""):
         """Create an HTML password input element.
 
         The optional name argument sets this input element's name, used when
@@ -126,7 +126,7 @@ class NumberInput(Input):
 
     """An HTML number input (<input type="number">) element."""
 
-    def __init__(self, name=None, value=None):
+    def __init__(self, name="", value=None):
         """Create an HTML number input element.
 
         The optional name argument sets this input element's name, used when
@@ -149,7 +149,7 @@ class DateInput(Input):
 
     """An HTML date input (<input type="date">) element."""
 
-    def __init__(self, name=None, date=None):
+    def __init__(self, name="", date=None):
         """Create an HTML date element.
 
         The optional name argument sets this input element's name, used when
@@ -236,11 +236,11 @@ class TextArea(Element):
 
     """
 
-    def __init__(self, name=None):
+    def __init__(self, name=""):
         super(TextArea, self).__init__("textarea")
         self.name = name
 
-    name = html_attribute("name")
+    name = html_attribute("name", default="")
     readonly = boolean_html_attribute("readonly")
     disabled = boolean_html_attribute("disabled")
     columns = int_html_attribute("cols")
@@ -273,11 +273,11 @@ class Select(Element):
 
     """
 
-    def __init__(self, name=None):
+    def __init__(self, name=""):
         super(Select, self).__init__("select")
         self.name = name
 
-    name = html_attribute("name")
+    name = html_attribute("name", default="")
     disabled = boolean_html_attribute("disabled")
 
     def create_group(self, label):

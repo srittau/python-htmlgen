@@ -221,7 +221,7 @@ class SelectTest(TestCase):
 
     def test_without_name(self):
         select = Select()
-        assert_is_none(select.name)
+        assert_equal("", select.name)
         assert_equal('<select></select>', str(select))
 
     def test_create_group(self):
