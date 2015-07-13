@@ -1,10 +1,14 @@
 import datetime
 from unittest import TestCase
 
-from asserts import assert_false, assert_true, assert_equal, assert_is_none
+from asserts import (assert_false, assert_true,
+                     assert_is_none,
+                     assert_equal, assert_is,
+                     assert_raises)
 
 from htmlgen.form import (Form, Input, TextInput, SubmitButton, Button,
-                          NumberInput, PasswordInput, DateInput, TextArea)
+                          NumberInput, PasswordInput, DateInput, TextArea,
+                          Select, OptionGroup, Option)
 
 
 class FormTest(TestCase):
@@ -202,3 +206,211 @@ class TextAreaTest(TestCase):
     def test_without_name(self):
         text_area = TextArea()
         assert_equal('<textarea></textarea>', str(text_area))
+
+
+class SelectTest(TestCase):
+
+    def test_attributes(self):
+        select = Select()
+        assert_false(select.disabled)
+
+    def test_with_name(self):
+        select = Select("my-name")
+        assert_equal("my-name", select.name)
+        assert_equal('<select name="my-name"></select>', str(select))
+
+    def test_without_name(self):
+        select = Select()
+        assert_is_none(select.name)
+        assert_equal('<select></select>', str(select))
+
+    def test_create_group(self):
+        select = Select()
+        group = select.create_group("Group Label")
+        assert_equal("Group Label", group.label)
+        assert_equal('<select><optgroup label="Group Label"></optgroup>'
+                     '</select>', str(select))
+
+    def test_create_option(self):
+        select = Select()
+        select.create_option("Option Label")
+        assert_equal('<select><option>Option Label</option></select>',
+                     str(select))
+
+    def test_create_option__selected(self):
+        select = Select()
+        option = select.create_option("Option Label", "test-value",
+                                      selected=True)
+        assert_is(option, select.selected_option)
+        assert_equal(
+            '<select><option selected="selected" value="test-value">'
+            'Option Label</option></select>',
+            str(select))
+
+    def test_create_option__option_object(self):
+        select = Select()
+        option = select.create_option("Option Label", "test-value",
+                                      selected=True)
+        assert_equal("option", option.element_name)
+        assert_equal("test-value", option.value)
+        assert_true(option.selected)
+
+    def test_create_option__option_object__default_value(self):
+        select = Select()
+        option = select.create_option("Option Label")
+        assert_equal("Option Label", option.value)
+
+    def test_create_option__selected_deselect_others(self):
+        select = Select()
+        option = select.create_option("L1", selected=True)
+        select.create_option("L2", selected=True)
+        assert_false(option.selected)
+
+    def test_get_selected_option(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        option = select.create_option("L2", "v2", selected=True)
+        select.create_option("L3", "v3")
+        assert_is(option, select.selected_option)
+
+    def test_get_selected_option__return_first(self):
+        select = Select()
+        option1 = Option("L1")
+        option1.selected = True
+        option2 = Option("L2")
+        option2.selected = True
+        select.append(option1)
+        select.append(option2)
+        assert_is(option1, select.selected_option)
+
+    def test_get_selected_option__no_selected_elements(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        select.create_option("L2", "v2")
+        select.create_option("L3", "v3")
+        assert_is_none(select.selected_option)
+
+    def test_get_selected_option__non_option_elements(self):
+        select = Select()
+        select.append("String Content")
+        assert_is_none(select.selected_option)
+
+    def test_get_selected_option__in_option_group(self):
+        select = Select()
+        group = select.create_group("")
+        option = group.create_option("")
+        option.selected = True
+        assert_is(option, select.selected_option)
+
+    def test_get_selected_option__option_group_has_string_child(self):
+        select = Select()
+        group = select.create_group("")
+        group.append("XXX")
+        assert_is_none(select.selected_option)
+
+    def test_set_selected_option(self):
+        select = Select()
+        select.create_option("L1")
+        option = select.create_option("L2")
+        select.create_option("L3")
+        select.selected_option = option
+        assert_true(option.selected)
+        assert_is(option, select.selected_option)
+
+    def test_set_selected_option__deselect_others(self):
+        select = Select()
+        option1 = select.create_option("L1", selected=True)
+        option2 = select.create_option("L2")
+        select.selected_option = option2
+        assert_false(option1.selected)
+        assert_is(option2, select.selected_option)
+
+    def test_set_selected_option__string_children(self):
+        select = Select()
+        select.append("String Content")
+        option = select.create_option("L1")
+        select.selected_option = option
+
+    def test_get_selected_value(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        select.create_option("L2", "v2", selected=True)
+        assert_equal("v2", select.selected_value)
+
+    def test_get_selected_value__implicit_value(self):
+        select = Select()
+        select.create_option("L1")
+        select.create_option("L2", selected=True)
+        assert_equal("L2", select.selected_value)
+
+    def test_get_selected_value__no_selected(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        assert_is_none(select.selected_value)
+
+    def test_set_selected_value(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        option = select.create_option("L2", "v2")
+        select.create_option("L3", "v3")
+        select.selected_value = "v2"
+        assert_equal("v2", select.selected_value)
+        assert_is(option, select.selected_option)
+        assert_true(option.selected)
+
+    def test_set_selected_value__value_not_found(self):
+        select = Select()
+        select.create_option("L1", "v1")
+        select.create_option("L2", "v2")
+        with assert_raises(ValueError):
+            select.selected_value = "not-found"
+
+
+class OptionGroupTest(TestCase):
+
+    def test_default(self):
+        group = OptionGroup("Test Label")
+        assert_equal("Test Label", group.label)
+        assert_false(group.disabled)
+        assert_equal('<optgroup label="Test Label"></optgroup>', str(group))
+
+    def test_disabled(self):
+        group = OptionGroup("Test Label")
+        group.disabled = True
+        assert_equal('<optgroup disabled="disabled" label="Test Label">'
+                     '</optgroup>', str(group))
+
+    def create_option(self):
+        group = OptionGroup("")
+        group.create_option("Option Label")
+        assert_equal('<optgroup label=""><option>Option Label'
+                     '</option></optgroup>', str(group))
+
+
+class OptionTest(TestCase):
+
+    def test_default_value(self):
+        option = Option("Test Label")
+        assert_equal("Test Label", option.value)
+        assert_equal('<option>Test Label</option>', str(option))
+        assert_false(option.selected)
+        assert_false(option.disabled)
+
+    def test_with_value(self):
+        option = Option("Test Label", "test-value")
+        assert_equal("test-value", option.value)
+        assert_equal('<option value="test-value">Test Label</option>',
+                     str(option))
+
+    def test_set_value(self):
+        option = Option("Test Label")
+        option.value = "test-value"
+        assert_equal("test-value", option.value)
+        assert_equal('<option value="test-value">Test Label</option>',
+                     str(option))
+
+    def test_set_value_to_none(self):
+        option = Option("Test Label", "test-value")
+        option.value = None
+        assert_equal("Test Label", option.value)
+        assert_equal('<option>Test Label</option>', str(option))

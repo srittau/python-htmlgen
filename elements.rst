@@ -33,10 +33,13 @@ htmlgen currently supports the following HTML elements:
 * <meta> - Meta
 * <nav> - Navigation
 * <ol> - OrderedList
+* <optgroup> - OptionGroup
+* <option> - Option
 * <p> - Paragraph
 * <pre> - Preformatted
 * <script> - Script
 * <section> - Section
+* <select> - Select
 * <small> - Small
 * <span> - Span
 * <strong> - Strong

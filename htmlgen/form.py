@@ -4,8 +4,7 @@ import re
 from htmlgen.attribute import (html_attribute, boolean_html_attribute,
                                int_html_attribute, float_html_attribute)
 from htmlgen.block import Division
-from htmlgen.element import Element, VoidElement
-
+from htmlgen.element import Element, VoidElement, is_element
 
 _ENC_TYPE_URL_ENCODED = "application/x-www-form-urlencoded"
 _ENC_TYPE_MULTI_PART = "multipart/form-data"
@@ -246,3 +245,176 @@ class TextArea(Element):
     disabled = boolean_html_attribute("disabled")
     columns = int_html_attribute("cols")
     rows = int_html_attribute("rows")
+
+
+class Select(Element):
+
+    """An HTML selection list (<select>) element.
+
+    >>> select = Select("element-name")
+    >>> option1 = select.create_option("Option 1", "v1")
+    >>> option2 = select.create_option("Option 2", "v2", selected=True)
+    >>> option2 is select.selected_option
+    True
+    >>> option2.value == select.selected_value
+    True
+    >>> select.selected_value = "v1"
+    >>> option1 is select.selected_option
+    True
+
+    It is also possible to use option groups:
+
+    >>> select = Select()
+    >>> group = select.create_group("Group 1")
+    >>> option1 = group.create_option("Option 1")
+    >>> option2 = group.create_option("Option 2")
+
+    At the moment, multiple selection lists are not supported.
+
+    """
+
+    def __init__(self, name=None):
+        super(Select, self).__init__("select")
+        self.name = name
+
+    name = html_attribute("name")
+    disabled = boolean_html_attribute("disabled")
+
+    def create_group(self, label):
+        """Create and append an option group."""
+        group = OptionGroup(label)
+        self.append(group)
+        return group
+
+    def create_option(self, label, value=None, selected=False):
+        """Create and append an option."""
+        option = Option(label, value)
+        self.append(option)
+        if selected:
+            self.selected_option = option
+        return option
+
+    @property
+    def _options_iter(self):
+        for child in self.children.children:
+            if is_element(child, "option"):
+                yield child
+            elif is_element(child, "optgroup"):
+                for sub_child in child.children.children:
+                    if is_element(sub_child, "option"):
+                        yield sub_child
+
+    @property
+    def selected_option(self):
+        """Return the first selected option object.
+
+        If no option is selected, return None.
+
+        """
+
+        for child in self._options_iter:
+            if child.selected:
+                return child
+        return None
+
+    @selected_option.setter
+    def selected_option(self, option):
+        """Set the selected option object.
+
+        All other selected options will be deselected.
+
+        """
+        for child in self._options_iter:
+            child.selected = False
+        option.selected = True
+
+    @property
+    def selected_value(self):
+        """Return the value of the first selected option.
+
+        If no option is selected, return None.
+
+        """
+        option = self.selected_option
+        return option.value if option else None
+
+    @selected_value.setter
+    def selected_value(self, selected_value):
+        """Set the selected option by its value.
+
+        If no option has the supplied value, raise a ValueError.
+
+        """
+        for option in self._options_iter:
+            if option.value == selected_value:
+                self.selected_option = option
+                break
+        else:
+            raise ValueError("no option with value '{}' found".format(
+                selected_value))
+
+
+class OptionGroup(Element):
+
+    """An HTML selection list option group (<optgroup>) element.
+
+    """
+
+    def __init__(self, label):
+        super(OptionGroup, self).__init__("optgroup")
+        self.label = label
+
+    label = html_attribute("label")
+    disabled = boolean_html_attribute("disabled")
+
+    def create_option(self, label, value=None):
+        """Create and append an option."""
+        option = Option(label, value)
+        self.append(option)
+        return option
+
+
+class Option(Element):
+
+    """An HTML selection list option (<option>) element.
+
+    >>> option = Option("Label")
+    >>> str(option)
+    '<option>Label</option>'
+    >>> option = Option("Label", "test-value")
+    >>> str(option)
+    '<option value="test-value">Label</option>'
+
+    """
+
+    def __init__(self, label, value=None):
+        super(Option, self).__init__("option")
+        self.value = value
+        self.append(label)
+
+    disabled = boolean_html_attribute("disabled")
+    selected = boolean_html_attribute("selected")
+
+    @property
+    def value(self):
+        """Return the value of this option.
+
+        >>> option = Option("Label", "value")
+        >>> option.value
+        'value'
+
+        If no explicit value is given, return the children as string.
+
+        >>> option = Option("Label")
+        >>> option.value
+        'Label'
+
+        """
+        return self.get_attribute("value", str(self.children))
+
+    @value.setter
+    def value(self, value):
+        if value is None:
+            self.remove_attribute("value")
+        else:
+            self.set_attribute("value", value)
