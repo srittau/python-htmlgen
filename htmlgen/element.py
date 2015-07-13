@@ -1,3 +1,4 @@
+import collections
 import sys
 
 try:
@@ -13,6 +14,13 @@ if sys.version_info[0] >= 3:
     str_class = str
 else:
     str_class = basestring
+
+
+def is_element(object, element_name):
+    """Return whether a given object is a certain element generator."""
+    return (isinstance(object, collections.Iterable) and
+            hasattr(object, "element_name") and
+            object.element_name == element_name)
 
 
 class _ElementBase(Generator):

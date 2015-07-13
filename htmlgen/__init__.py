@@ -5,7 +5,7 @@ from .attribute import (html_attribute, boolean_html_attribute,
 from .block import Division, Paragraph, Preformatted
 from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
                        HeadLink, Main)
-from .element import Element, VoidElement
+from .element import Element, VoidElement, is_element
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    DateInput, SubmitButton, Button, TextArea)
 from .generator import (Generator, NullGenerator, ChildGenerator,
