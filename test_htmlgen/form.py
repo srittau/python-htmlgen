@@ -8,7 +8,7 @@ from asserts import (assert_false, assert_true,
 
 from htmlgen.form import (
     Form, Input, TextInput, SubmitButton, Button,
-    NumberInput, SearchInput, PasswordInput, DateInput, TextArea,
+    NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, TextArea,
     Select, OptionGroup, Option)
 
 
@@ -185,6 +185,72 @@ class DateInputTest(TestCase):
         input_.date = None
         assert_equal("", input_.value)
         assert_equal('<input type="date"/>', str(input_))
+
+
+class TimeInputTest(TestCase):
+
+    def test_defaults(self):
+        time = TimeInput()
+        assert_equal("", time.name)
+        assert_is_none(time.time)
+        assert_is_none(time.minimum)
+        assert_is_none(time.maximum)
+        assert_is_none(time.step)
+        assert_equal('<input type="time"/>', str(time))
+
+    def test_construct_with_arguments(self):
+        time = TimeInput("time-name", datetime.time(14, 30, 12))
+        assert_equal("time-name", time.name)
+        assert_equal(datetime.time(14, 30, 12), time.time)
+        assert_equal('<input name="time-name" type="time" '
+                     'value="14:30:12"/>', str(time))
+
+    def test_minimum_maximum(self):
+        time = TimeInput()
+        time.minimum = datetime.time(12, 14)
+        time.maximum = datetime.time(19, 45)
+        assert_equal('<input max="19:45:00" min="12:14:00" type="time"/>',
+                     str(time))
+        time.minimum = None
+        time.maximum = None
+        assert_equal('<input type="time"/>', str(time))
+
+    def test_minimum_above_maximum(self):
+        time = TimeInput()
+        time.maximum = datetime.time(12, 0)
+        with assert_raises(ValueError):
+            time.minimum = datetime.time(12, 1)
+
+    def test_maximum_below_minimum(self):
+        time = TimeInput()
+        time.minimum = datetime.time(12, 1)
+        with assert_raises(ValueError):
+            time.maximum = datetime.time(12, 0)
+
+    def test_step(self):
+        time = TimeInput()
+        time.step = 12.3
+        assert_equal(12.3, time.step)
+        assert_equal('<input step="12.3" type="time"/>', str(time))
+        time.step = None
+        assert_is_none(time.step)
+        assert_equal('<input type="time"/>', str(time))
+        time.set_attribute("step", "any")
+        assert_is_none(time.step)
+
+    def test_step_get_invalid(self):
+        time = TimeInput()
+        time.set_attribute("step", "invalid")
+        assert_is_none(time.step)
+        time.set_attribute("step", "0")
+        assert_is_none(time.step)
+        time.set_attribute("step", "-1")
+        assert_is_none(time.step)
+
+    def test_step_set_invalid(self):
+        time = TimeInput()
+        with assert_raises(ValueError):
+            time.step = 0
 
 
 class SubmitButtonTest(TestCase):

@@ -2,9 +2,12 @@ import datetime
 import re
 
 from htmlgen.attribute import (html_attribute, boolean_html_attribute,
-                               int_html_attribute, float_html_attribute)
+                               int_html_attribute, float_html_attribute,
+                               time_html_attribute)
 from htmlgen.block import Division
 from htmlgen.element import Element, VoidElement, is_element
+from htmlgen.timeutil import parse_rfc3339_partial_time
+
 
 _ENC_TYPE_URL_ENCODED = "application/x-www-form-urlencoded"
 _ENC_TYPE_MULTI_PART = "multipart/form-data"
@@ -198,6 +201,78 @@ class DateInput(Input):
             return None
         return datetime.date(int(match.group(1)), int(match.group(2)),
                              int(match.group(3)))
+
+
+class TimeInput(Input):
+
+    """An HTML time input (<input type="time">) element."""
+
+    def __init__(self, name=None, time=None):
+        """Create an HTML time element.
+
+        The optional name argument sets this input element's name, used when
+        submitting a form.
+
+        time is the initial time. If time is None, the field is initially
+        empty.
+
+        """
+        super(TimeInput, self).__init__("time", name)
+        self.time = time
+
+    time = time_html_attribute("value")
+
+    @property
+    def minimum(self):
+        value = self.get_attribute("min")
+        if value is None:
+            return None
+        return parse_rfc3339_partial_time(value)
+
+    @minimum.setter
+    def minimum(self, minimum):
+        if minimum is None:
+            self.remove_attribute("min")
+        else:
+            if self.maximum is not None and minimum > self.maximum:
+                raise ValueError("minimum value is greater than maximum")
+            self.set_attribute("min", str(minimum))
+
+    @property
+    def maximum(self):
+        value = self.get_attribute("max")
+        if value is None:
+            return None
+        return parse_rfc3339_partial_time(value)
+
+    @maximum.setter
+    def maximum(self, maximum):
+        if maximum is None:
+            self.remove_attribute("max")
+        else:
+            if self.minimum is not None and maximum < self.minimum:
+                raise ValueError("maximum value is lower than minimum")
+            self.set_attribute("max", str(maximum))
+
+    @property
+    def step(self):
+        try:
+            value = float(self.get_attribute("step"))
+        except (TypeError, ValueError):
+            return None
+        if value <= 0:
+            return None
+        else:
+            return value
+
+    @step.setter
+    def step(self, step):
+        if step is None:
+            self.remove_attribute("step")
+        elif step <= 0:
+            raise ValueError("step values must be positive numbers")
+        else:
+            self.set_attribute("step", str(step))
 
 
 class SubmitButton(Input):

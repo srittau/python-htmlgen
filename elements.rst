@@ -28,6 +28,7 @@ htmlgen currently supports the following HTML elements:
 * <input type="search"> - SearchInput
 * <input type="submit"> - SubmitButton
 * <input type="text"> - TextInput
+* <input type="time"> - TimeInput
 * <li> - ListItem
 * <link> - HeadLink
 * <main> - Main
