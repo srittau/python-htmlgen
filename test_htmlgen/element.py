@@ -141,10 +141,22 @@ class ElementTest(TestCase):
                       "color: black",
                       "display: block"], css_classes)
 
-    def test_common_html_attributes(self):
+    def test_id(self):
         element = Element("div")
-        element.id = "test-id"
-        assert_equal([b'<div id="test-id">', b"</div>"], list(iter(element)))
+        element.id = "Test-ID"
+        assert_equal("Test-ID", element.id)
+        assert_equal('<div id="Test-ID"></div>', str(element))
+        element.id = ""
+        assert_is_none(element.id)
+        assert_equal('<div></div>', str(element))
+        element.id = None
+        assert_is_none(element.id)
+        assert_equal('<div></div>', str(element))
+
+    def test_id_space(self):
+        element = Element("div")
+        with assert_raises(ValueError):
+            element.id = "Test ID"
 
     def test_data_set(self):
         element = Element("div")

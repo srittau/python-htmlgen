@@ -141,7 +141,18 @@ class _ElementBase(Generator):
         """
         self._styles[name] = value
 
-    id = html_attribute("id")
+    @property
+    def id(self):
+        return self.get_attribute("id", None)
+
+    @id.setter
+    def id(self, id):
+        if id:
+            if " " in id:
+                raise ValueError("id must not contain space characters")
+            self.set_attribute("id", id)
+        else:
+            self.remove_attribute("id")
 
     def render_start_tag(self):
         html = "<" + self.element_name
