@@ -134,18 +134,21 @@ class NumberInputTest(TestCase):
         assert_equal("number", number.type)
         assert_equal("", number.name)
         assert_equal("", number.value)
+        assert_is_none(number.number)
         assert_equal('<input type="number"/>', str(number))
 
     def test_with_arguments(self):
         number = NumberInput("my-number", 3.4)
         assert_equal("my-number", number.name)
         assert_equal("3.4", number.value)
+        assert_equal(3.4, number.number)
         assert_equal('<input name="my-number" type="number" value="3.4"/>',
                      str(number))
 
     def test_value_zero(self):
-        number = NumberInput(value=0)
+        number = NumberInput(number=0)
         assert_equal("0", number.value)
+        assert_equal(0, number.number)
         assert_equal('<input type="number" value="0"/>', str(number))
 
     def test_attributes(self):

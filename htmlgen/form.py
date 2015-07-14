@@ -143,20 +143,21 @@ class NumberInput(Input):
 
     """An HTML number input (<input type="number">) element."""
 
-    def __init__(self, name="", value=None):
+    def __init__(self, name="", number=None):
         """Create an HTML number input element.
 
         The optional name argument sets this input element's name, used when
         submitting a form.
 
-        If value is not None, it determines the initial content of the
-        number field.
+        If number is not None, it determines the initial content of the
+        this input element.
 
         """
         super(NumberInput, self).__init__("number", name)
-        if value is not None:
-            self.value = str(value)
+        if number is not None:
+            self.number = number
 
+    number = float_html_attribute("value")
     minimum = float_html_attribute("min")
     maximum = float_html_attribute("max")
     step = float_html_attribute("step")
