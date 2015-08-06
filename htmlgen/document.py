@@ -109,7 +109,7 @@ class Head(Element):
 
     There are convenience methods for adding stylesheets and scripts:
 
-        >>> head.add_stylesheet("style'css")
+        >>> head.add_stylesheet("style.css")
         >>> head.add_script("script.js")
 
     """
