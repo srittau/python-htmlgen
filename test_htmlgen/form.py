@@ -256,6 +256,16 @@ class TimeInputTest(TestCase):
             time.step = 0
 
 
+class HiddenInputTest(TestCase):
+
+    def test_construct(self):
+        button = SubmitButton("My Label")
+        assert_equal("My Label", button.label)
+        assert_equal("My Label", button.value)
+        assert_equal([b'<input type="submit" value="My Label"/>'],
+                     list(iter(button)))
+
+
 class SubmitButtonTest(TestCase):
     
     def test_construct(self):

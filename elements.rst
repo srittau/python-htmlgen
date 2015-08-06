@@ -23,6 +23,7 @@ htmlgen currently supports the following HTML elements:
 * <img> - Image
 * <input> (generic) - Input
 * <input type="date"> - DateInput
+* <input type="hidden"> - HiddenInput
 * <input type="number"> - NumberInput
 * <input type="password"> - PasswordInput
 * <input type="search"> - SearchInput

@@ -276,6 +276,15 @@ class TimeInput(Input):
             self.set_attribute("step", str(step))
 
 
+class HiddenInput(Input):
+
+    """A hidden HTML input (<input type="hidden"/>) element."""
+
+    def __init__(self, name, value):
+        super(HiddenInput, self).__init__("hidden", name)
+        self.value = value
+
+
 class SubmitButton(Input):
 
     """An HTML form submit button (<input type="submit">) element.
