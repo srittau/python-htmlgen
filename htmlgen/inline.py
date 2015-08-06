@@ -1,4 +1,4 @@
-from htmlgen.element import Element
+from htmlgen.element import Element, VoidElement
 
 
 class Span(Element):
@@ -125,3 +125,10 @@ class Small(Element):
         super(Small, self).__init__("small")
         self.extend(content)
 
+
+class LineBreak(VoidElement):
+
+    """An HTML line break (<br>) element."""
+
+    def __init__(self):
+        super(LineBreak, self).__init__("br")

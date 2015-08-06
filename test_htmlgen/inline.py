@@ -2,7 +2,8 @@ from unittest import TestCase
 
 from asserts import assert_equal
 
-from htmlgen import Span, Highlight, Strong, Alternate, Emphasis, Small
+from htmlgen import (Span, Highlight, Strong, Alternate, Emphasis, Small,
+                     LineBreak)
 
 
 class SpanTest(TestCase):
@@ -87,3 +88,10 @@ class SmallTest(TestCase):
         small.append("content")
         assert_equal([b"<small>", b"Initial", b"test", b"content",
                       b"</small>"], list(iter(small)))
+
+
+class LineBreakTest(TestCase):
+
+    def test_line_break(self):
+        br = LineBreak()
+        assert_equal("<br/>", str(br))

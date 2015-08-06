@@ -12,7 +12,8 @@ from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
 from .generator import (Generator, NullGenerator, ChildGenerator,
                         HTMLChildGenerator, JoinGenerator, HTMLJoinGenerator)
 from .image import Image
-from .inline import Span, Highlight, Strong, Alternate, Emphasis, Small
+from .inline import (Span, Highlight, Strong, Alternate, Emphasis, Small,
+                     LineBreak)
 from .link import Link
 from .list import (OrderedList, UnorderedList, ListItem, DescriptionList,
                    DescriptionDefinition, DescriptionTerm)

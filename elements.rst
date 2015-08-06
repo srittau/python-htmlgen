@@ -5,6 +5,7 @@ htmlgen currently supports the following HTML elements:
 * <aside> - Aside
 * <b> - Highlight
 * <body> - Body
+* <br> - LineBreak
 * <button> - Button
 * <col> - Column
 * <colgroup> - ColumnGroup
