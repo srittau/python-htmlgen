@@ -18,6 +18,7 @@ class FormTest(TestCase):
         form = Form("PUT", "/test")
         assert_equal("PUT", form.method)
         assert_equal("/test", form.url)
+        assert_equal("_self", form.target)
         assert_equal([b'<form action="/test" method="PUT">', b"</form>"],
                      list(iter(form)))
 
@@ -26,6 +27,14 @@ class FormTest(TestCase):
         assert_equal("GET", form.method)
         assert_equal("", form.url)
         assert_equal([b'<form>', b"</form>"], list(iter(form)))
+
+    def test_target(self):
+        form = Form()
+        form.target = "my-target"
+        assert_equal('<form target="my-target"></form>', str(form))
+        form.set_blank_target()
+        assert_equal("_blank", form.target)
+        assert_equal('<form target="_blank"></form>', str(form))
 
     def test_multipart(self):
         form = Form()

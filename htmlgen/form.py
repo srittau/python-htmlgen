@@ -36,7 +36,11 @@ class Form(Element):
 
     method = html_attribute("method", default="GET")
     url = html_attribute("action", default="")
+    target = html_attribute("target", "_self")
     encryption_type = html_attribute("enctype", _ENC_TYPE_URL_ENCODED)
+
+    def set_blank_target(self):
+        self.target = "_blank"
 
     @property
     def multipart(self):
