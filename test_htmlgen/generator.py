@@ -235,6 +235,13 @@ class JoinGeneratorTest(TestCase):
         generator.extend([sub_generator])
         assert_equal([b"foo", b"!", b"bar", b"!", b"baz"], list(iter(generator)))
 
+    def test_glue_is_generator(self):
+        glue = ChildGenerator()
+        glue.append(u", ")
+        generator = JoinGenerator(glue, [u"foo", u"bar", u"baz"])
+        assert_equal([b"foo", b", ", b"bar", b", ", b"baz"],
+                     list(iter(generator)))
+
 
 class HTMLJoinGeneratorTest(TestCase):
 
@@ -253,4 +260,11 @@ class HTMLJoinGeneratorTest(TestCase):
         sub_generator.append(u"<baz>")
         generator.extend([sub_generator])
         assert_equal([b"foo", b"!", b"&lt;bar&gt;", b"!", b"<baz>"],
+                     list(iter(generator)))
+
+    def test_glue_is_generator(self):
+        glue = ChildGenerator()
+        glue.append(u"<")
+        generator = JoinGenerator(glue, [u"foo", u"bar", u"baz"])
+        assert_equal([b"foo", b"<", b"bar", b"<", b"baz"],
                      list(iter(generator)))
