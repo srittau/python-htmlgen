@@ -6,7 +6,7 @@ from asserts import (assert_false, assert_true,
                      assert_equal, assert_is,
                      assert_raises)
 
-from htmlgen.form import (
+from htmlgen import (
     Form, Input, TextInput, SubmitButton, Button,
     NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, TextArea,
     Select, OptionGroup, Option)
