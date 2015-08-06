@@ -7,8 +7,8 @@ from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
                        HeadLink, Main)
 from .element import Element, VoidElement, is_element
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
-                   DateInput, HiddenInput, SubmitButton, Button, TextArea,
-                   Select, OptionGroup, Option)
+                   DateInput, TimeInput, SearchInput, HiddenInput,
+                   SubmitButton, Button, TextArea, Select, OptionGroup, Option)
 from .generator import (Generator, NullGenerator, ChildGenerator,
                         HTMLChildGenerator, JoinGenerator, HTMLJoinGenerator)
 from .image import Image
