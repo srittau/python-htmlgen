@@ -288,7 +288,7 @@ class FileInput(Input):
         super(FileInput, self).__init__("file", name)
 
     max_length = int_html_attribute("maxlength")
-    accepts = list_html_attribute("accepts")
+    accept = list_html_attribute("accept")
 
 
 class HiddenInput(Input):

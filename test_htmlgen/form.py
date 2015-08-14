@@ -285,17 +285,17 @@ class FileInputTest(TestCase):
 
     def test_accepts(self):
         file_input = FileInput()
-        assert_equal([], file_input.accepts)
-        file_input.set_attribute("accepts", "")
-        assert_equal([], file_input.accepts)
-        file_input.set_attribute("accepts", "audio/*,image/*")
-        assert_equal(["audio/*", "image/*"], file_input.accepts)
-        file_input.accepts = ["image/png", "image/jpeg"]
-        file_input.accepts.append("image/gif")
-        assert_equal(["image/png", "image/jpeg"], file_input.accepts)
+        assert_equal([], file_input.accept)
+        file_input.set_attribute("accept", "")
+        assert_equal([], file_input.accept)
+        file_input.set_attribute("accept", "audio/*,image/*")
+        assert_equal(["audio/*", "image/*"], file_input.accept)
+        file_input.accept = ["image/png", "image/jpeg"]
+        file_input.accept.append("image/gif")
+        assert_equal(["image/png", "image/jpeg"], file_input.accept)
         assert_equal(
-            "image/png,image/jpeg", file_input.get_attribute("accepts"))
-        assert_equal('<input accepts="image/png,image/jpeg" type="file"/>',
+            "image/png,image/jpeg", file_input.get_attribute("accept"))
+        assert_equal('<input accept="image/png,image/jpeg" type="file"/>',
                      str(file_input))
 
 
