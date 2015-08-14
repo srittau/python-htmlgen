@@ -3,7 +3,7 @@ import re
 
 from htmlgen.attribute import (html_attribute, boolean_html_attribute,
                                int_html_attribute, float_html_attribute,
-                               time_html_attribute)
+                               time_html_attribute, list_html_attribute)
 from htmlgen.block import Division
 from htmlgen.element import Element, VoidElement, is_element
 from htmlgen.timeutil import parse_rfc3339_partial_time
@@ -278,6 +278,17 @@ class TimeInput(Input):
             raise ValueError("step values must be positive numbers")
         else:
             self.set_attribute("step", str(step))
+
+
+class FileInput(Input):
+
+    """An HTML file input (<input type="file">) element."""
+
+    def __init__(self, name=""):
+        super(FileInput, self).__init__("file", name)
+
+    max_length = int_html_attribute("maxlength")
+    accepts = list_html_attribute("accepts")
 
 
 class HiddenInput(Input):

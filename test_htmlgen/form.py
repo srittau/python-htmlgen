@@ -8,8 +8,8 @@ from asserts import (assert_false, assert_true,
 
 from htmlgen import (
     Form, Input, TextInput, SubmitButton, Button,
-    NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, TextArea,
-    Select, OptionGroup, Option)
+    NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, FileInput,
+    TextArea, Select, OptionGroup, Option)
 
 
 class FormTest(TestCase):
@@ -263,6 +263,40 @@ class TimeInputTest(TestCase):
         time = TimeInput()
         with assert_raises(ValueError):
             time.step = 0
+
+
+class FileInputTest(TestCase):
+
+    def test_defaults(self):
+        file_input = FileInput()
+        assert_equal("", file_input.name)
+        assert_is_none(file_input.max_length)
+        assert_equal('<input type="file"/>', str(file_input))
+
+    def test_construct_with_name(self):
+        file_input = FileInput("file-name")
+        assert_equal("file-name", file_input.name)
+        assert_equal('<input name="file-name" type="file"/>', str(file_input))
+
+    def test_max_length(self):
+        file_input = FileInput()
+        file_input.max_length = 10000
+        assert_equal('<input maxlength="10000" type="file"/>', str(file_input))
+
+    def test_accepts(self):
+        file_input = FileInput()
+        assert_equal([], file_input.accepts)
+        file_input.set_attribute("accepts", "")
+        assert_equal([], file_input.accepts)
+        file_input.set_attribute("accepts", "audio/*,image/*")
+        assert_equal(["audio/*", "image/*"], file_input.accepts)
+        file_input.accepts = ["image/png", "image/jpeg"]
+        file_input.accepts.append("image/gif")
+        assert_equal(["image/png", "image/jpeg"], file_input.accepts)
+        assert_equal(
+            "image/png,image/jpeg", file_input.get_attribute("accepts"))
+        assert_equal('<input accepts="image/png,image/jpeg" type="file"/>',
+                     str(file_input))
 
 
 class HiddenInputTest(TestCase):
