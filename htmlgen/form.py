@@ -212,7 +212,7 @@ class TimeInput(Input):
 
     """An HTML time input (<input type="time">) element."""
 
-    def __init__(self, name=None, time=None):
+    def __init__(self, name="", time=None):
         """Create an HTML time element.
 
         The optional name argument sets this input element's name, used when
