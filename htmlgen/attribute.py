@@ -196,3 +196,33 @@ def time_html_attribute(attribute_name, default=None):
             self.set_attribute(attribute_name, str(value))
 
     return property(get, set_)
+
+
+def list_html_attribute(attribute_name):
+    """Add an attribute to an HTML element that accepts a list of strings.
+
+    >>> from htmlgen import Element
+    >>> class MyElement(Element):
+    ...     list = list_html_attribute("data-list")
+    >>> element = MyElement("div")
+    >>> element.list
+    []
+    >>> str(element)
+    '<div></div>'
+    >>> element.list = ["foo", "bar"]
+    >>> str(element)
+    '<div data-list="foo,bar"></div>'
+
+    """
+
+    def get(self):
+        value = self.get_attribute(attribute_name)
+        return value.split(",") if value else []
+
+    def set_(self, value):
+        if value:
+            self.set_attribute(attribute_name, ",".join(value))
+        else:
+            self.remove_attribute(attribute_name)
+
+    return property(get, set_)

@@ -7,7 +7,8 @@ from htmlgen.attribute import (html_attribute,
                                boolean_html_attribute,
                                int_html_attribute,
                                float_html_attribute,
-                               time_html_attribute)
+                               time_html_attribute,
+                               list_html_attribute)
 from htmlgen.element import Element
 
 
@@ -153,3 +154,21 @@ class HTMLAttributeTest(TestCase):
         element.attr = datetime.time(12, 9, 34)
         assert_equal(datetime.time(12, 9, 34), element.attr)
         assert_equal("<div></div>", str(element))
+
+    def test_list(self):
+        class MyElement(Element):
+            attr = list_html_attribute("data-attr")
+        element = MyElement("div")
+        assert_equal([], element.attr)
+        element.set_attribute("data-attr", "")
+        assert_equal([], element.attr)
+        element.set_attribute("data-attr", "foo,bar")
+        assert_equal(["foo", "bar"], element.attr)
+        element.attr = []
+        assert_equal('<div></div>', str(element))
+        element.attr = ["abc", "def"]
+        assert_equal(["abc", "def"], element.attr)
+        element.attr.append("ghi")
+        assert_equal(["abc", "def"], element.attr)
+        assert_equal("abc,def", element.get_attribute("data-attr"))
+        assert_equal('<div data-attr="abc,def"></div>', str(element))
