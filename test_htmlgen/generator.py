@@ -6,6 +6,7 @@ from asserts import assert_equal, assert_raises
 
 from htmlgen.generator import (Generator,
                                NullGenerator,
+                               IteratorGenerator,
                                ChildGenerator,
                                HTMLChildGenerator,
                                JoinGenerator,
@@ -68,6 +69,13 @@ class NullGeneratorTest(TestCase):
     
     def test_generate(self):
         assert_equal([], list(iter(NullGenerator())))
+
+
+class IteratorGeneratorTest(TestCase):
+
+    def test_generate(self):
+        generator = IteratorGenerator(["foo", "bar"])
+        assert_equal([b"foo", b"bar"], list(iter(generator)))
 
 
 class ChildGeneratorTest(TestCase):

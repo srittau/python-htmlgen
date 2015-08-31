@@ -83,6 +83,25 @@ class NullGenerator(Generator):
         return iter([])
 
 
+class IteratorGenerator(Generator):
+
+    """A generator that generates an item per item of an iterator.
+
+        >>> generator = IteratorGenerator(["foo", "bar"])
+        >>> list(iter(generator))
+        [b'foo', b'bar']
+
+    """
+
+    def __init__(self, iterator):
+        super(IteratorGenerator, self).__init__()
+        self._iterator = iterator
+
+    def generate(self):
+        for item in self._iterator:
+            yield item
+
+
 class ChildGenerator(Generator):
 
     """A generator that generates children appended to it.

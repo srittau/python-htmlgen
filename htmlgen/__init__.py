@@ -10,8 +10,9 @@ from .element import Element, VoidElement, is_element
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    DateInput, TimeInput, SearchInput, FileInput, HiddenInput,
                    SubmitButton, Button, TextArea, Select, OptionGroup, Option)
-from .generator import (Generator, NullGenerator, ChildGenerator,
-                        HTMLChildGenerator, JoinGenerator, HTMLJoinGenerator)
+from .generator import (Generator, NullGenerator, IteratorGenerator,
+                        ChildGenerator, HTMLChildGenerator,
+                        JoinGenerator, HTMLJoinGenerator)
 from .image import Image
 from .inline import (Span, Highlight, Strong, Alternate, Emphasis, Small,
                      LineBreak)
