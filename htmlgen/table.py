@@ -21,6 +21,15 @@ class Table(Element):
         >>> head = table.create_head()
         >>> table.append(TableBody())
 
+    It is also possible to override the generate_header_rows() and
+    generate_rows() methods:
+
+        >>> class MyTable(Table):
+        ...     def generate_rows(self):
+        ...         yield TableRow()
+        >>> str(MyTable())
+        '<table><tbody><tr></tr></tbody></table>'
+
     For simple tables, create_simple_header_row() and create_simple_row()
     can be used:
 
@@ -162,10 +171,36 @@ class Table(Element):
     def generate_children(self):
         if self._head.children:
             yield self._head
-        if self._body.children:
+        head = TableHead()
+        head.extend(self.generate_header_rows())
+        if len(head):
+            yield head
+        if len(self._body):
             yield self._body
+        body = TableBody()
+        body.extend(self.generate_rows())
+        if len(body):
+            yield body
         for child in self.children:
             yield child
+
+    def generate_header_rows(self):
+        """Return an iterator over rows of this table's head.
+
+        This method can be overridden by sub-classes.
+
+        """
+        if False:
+            yield
+
+    def generate_rows(self):
+        """Return an iterator over rows of this table's body.
+
+        This method can be overridden by sub-classes.
+
+        """
+        if False:
+            yield
 
 
 class _TableSection(Element):

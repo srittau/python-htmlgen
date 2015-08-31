@@ -99,6 +99,20 @@ class TableTest(TestCase):
         assert_equal('<table><tbody><tr id="test-id"></tr></tbody></table>',
                      str(table))
 
+    def test_generate_header_rows(self):
+        class MyTable(Table):
+            def generate_header_rows(self):
+                yield TableRow()
+        table = MyTable()
+        assert_equal('<table><thead><tr></tr></thead></table>', str(table))
+
+    def test_generate_rows(self):
+        class MyTable(Table):
+            def generate_rows(self):
+                yield TableRow()
+        table = MyTable()
+        assert_equal('<table><tbody><tr></tr></tbody></table>', str(table))
+
 
 class TableHeadTest(TestCase):
 
