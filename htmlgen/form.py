@@ -346,6 +346,7 @@ class TextArea(Element):
     """An HTML <textarea> element.
 
         >>> area = TextArea("element-name")
+        >>> area.placeholder = "Placeholder text ..."
         >>> area.append("Initial text area content.")
 
     """
@@ -359,6 +360,7 @@ class TextArea(Element):
     disabled = boolean_html_attribute("disabled")
     columns = int_html_attribute("cols")
     rows = int_html_attribute("rows")
+    placeholder = html_attribute("placeholder")
 
 
 class Select(Element):
