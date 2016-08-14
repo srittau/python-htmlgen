@@ -11,6 +11,6 @@ setup(
     author_email="srittau@rittau.biz",
     url="https://github.com/srittau/python-htmlgen",
     packages=["htmlgen", "test_htmlgen"],
-    install_requires=["asserts >= 0.5.1"],
+    tests_require=["asserts >= 0.5.1"],
     license="MIT",
 )
