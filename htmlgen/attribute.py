@@ -226,3 +226,8 @@ def list_html_attribute(attribute_name):
             self.remove_attribute(attribute_name)
 
     return property(get, set_)
+
+
+def data_attribute(data_name, default=None):
+    attribute_name = "data-" + data_name
+    return html_attribute(attribute_name, default)
