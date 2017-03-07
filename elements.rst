@@ -23,15 +23,18 @@ htmlgen currently supports the following HTML elements:
 * <i> - Alternate
 * <img> - Image
 * <input> (generic) - Input
+* <input type="checkbox"> - Checkbox
 * <input type="date"> - DateInput
 * <input type="file"> - FileInput
 * <input type="hidden"> - HiddenInput
 * <input type="number"> - NumberInput
 * <input type="password"> - PasswordInput
+* <input type="radio"> - RadioButton
 * <input type="search"> - SearchInput
 * <input type="submit"> - SubmitButton
 * <input type="text"> - TextInput
 * <input type="time"> - TimeInput
+* <label> - Label
 * <li> - ListItem
 * <link> - HeadLink
 * <main> - Main

@@ -7,9 +7,9 @@ from asserts import (assert_false, assert_true,
                      assert_raises)
 
 from htmlgen import (
-    Form, Input, TextInput, SubmitButton, Button,
+    Span, Form, Input, TextInput, SubmitButton, Button,
     NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, FileInput,
-    TextArea, Select, OptionGroup, Option)
+    Checkbox, RadioButton, TextArea, Select, OptionGroup, Option, Label)
 
 
 class FormTest(TestCase):
@@ -263,6 +263,58 @@ class TimeInputTest(TestCase):
         time = TimeInput()
         with assert_raises(ValueError):
             time.step = 0
+
+
+class CheckboxTest(TestCase):
+
+    def test_defaults(self):
+        checkbox = Checkbox()
+        assert_equal("checkbox", checkbox.type)
+        assert_equal("", checkbox.name)
+        assert_equal("", checkbox.value)
+        assert_false(checkbox.checked)
+        assert_equal('<input type="checkbox"/>', str(checkbox))
+
+    def test_name_and_value(self):
+        checkbox = Checkbox("my-name", "my-value")
+        assert_equal("my-name", checkbox.name)
+        assert_equal("my-value", checkbox.value)
+        assert_equal(
+            '<input name="my-name" type="checkbox" value="my-value"/>',
+            str(checkbox))
+
+    def test_checked(self):
+        checkbox = Checkbox()
+        checkbox.checked = True
+        assert_true(checkbox.checked)
+        assert_equal(
+            '<input checked="checked" type="checkbox"/>', str(checkbox))
+
+
+class RadioButtonTest(TestCase):
+
+    def test_defaults(self):
+        radio = RadioButton()
+        assert_equal("radio", radio.type)
+        assert_equal("", radio.name)
+        assert_equal("", radio.value)
+        assert_false(radio.checked)
+        assert_equal('<input type="radio"/>', str(radio))
+
+    def test_name_and_value(self):
+        radio = RadioButton("my-name", "my-value")
+        assert_equal("my-name", radio.name)
+        assert_equal("my-value", radio.value)
+        assert_equal(
+            '<input name="my-name" type="radio" value="my-value"/>',
+            str(radio))
+
+    def test_checked(self):
+        radio = RadioButton()
+        radio.checked = True
+        assert_true(radio.checked)
+        assert_equal(
+            '<input checked="checked" type="radio"/>', str(radio))
 
 
 class FileInputTest(TestCase):
@@ -552,3 +604,21 @@ class OptionTest(TestCase):
         option.value = None
         assert_equal("Test Label", option.value)
         assert_equal('<option>Test Label</option>', str(option))
+
+
+class LabelTest(TestCase):
+
+    def test_default(self):
+        label = Label()
+        assert_equal('<label></label>', str(label))
+
+    def test_children(self):
+        label = Label("Foo", Span())
+        assert_equal('<label>Foo<span></span></label>', str(label))
+
+    def test_for(self):
+        label = Label()
+        assert_is_none(label.for_)
+        label.for_ = "my-id"
+        assert_equal("my-id", label.for_)
+        assert_equal('<label for="my-id"></label>', str(label))

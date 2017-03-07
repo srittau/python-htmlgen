@@ -280,6 +280,42 @@ class TimeInput(Input):
             self.set_attribute("step", str(step))
 
 
+class _CheckableInput(Input):
+
+    def __init__(self, type_, name, value):
+        super(_CheckableInput, self).__init__(type_, name)
+        if value:
+            self.value = value
+
+    checked = boolean_html_attribute("checked")
+
+
+class Checkbox(_CheckableInput):
+
+    """An HTML checkbox (<input type="checkbox">) element.
+
+    >>> cb = Checkbox("my-name", "my-value")
+    >>> cb.checked = True
+
+    """
+
+    def __init__(self, name="", value=""):
+        super(Checkbox, self).__init__("checkbox", name, value)
+
+
+class RadioButton(_CheckableInput):
+
+    """An HTML radio button (<input type="radio">) element.
+
+    >>> cb = RadioButton("my-name", "my-value")
+    >>> cb.checked = True
+
+    """
+
+    def __init__(self, name="", value=""):
+        super(RadioButton, self).__init__("radio", name, value)
+
+
 class FileInput(Input):
 
     """An HTML file input (<input type="file">) element."""
@@ -534,3 +570,19 @@ class Option(Element):
             self.remove_attribute("value")
         else:
             self.set_attribute("value", value)
+
+
+class Label(Element):
+
+    """An HTML label (<label>) element.
+
+    >>> str(Label(Checkbox(), " My Label"))
+    '<label><input type="checkbox"/> My Label</label>'
+
+    """
+
+    def __init__(self, *children):
+        super(Label, self).__init__("label")
+        self.extend(children)
+
+    for_ = html_attribute("for")

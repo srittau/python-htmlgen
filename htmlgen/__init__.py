@@ -10,7 +10,8 @@ from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
 from .element import Element, VoidElement, is_element
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    DateInput, TimeInput, SearchInput, FileInput, HiddenInput,
-                   SubmitButton, Button, TextArea, Select, OptionGroup, Option)
+                   SubmitButton, Button, TextArea, Select, OptionGroup, Option,
+                   Checkbox, RadioButton, Label)
 from .generator import (Generator, NullGenerator, IteratorGenerator,
                         ChildGenerator, HTMLChildGenerator,
                         JoinGenerator, HTMLJoinGenerator)
