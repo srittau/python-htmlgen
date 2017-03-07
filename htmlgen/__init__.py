@@ -14,7 +14,8 @@ from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    Checkbox, RadioButton, Label)
 from .generator import (Generator, NullGenerator, IteratorGenerator,
                         ChildGenerator, HTMLChildGenerator,
-                        JoinGenerator, HTMLJoinGenerator)
+                        JoinGenerator, HTMLJoinGenerator,
+                        generate_html_string)
 from .image import Image
 from .inline import (Span, Highlight, Strong, Alternate, Emphasis, Small,
                      LineBreak)

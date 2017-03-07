@@ -303,6 +303,33 @@ class HTMLChildGenerator(Generator):
         return self._children.generate()
 
 
+def generate_html_string(s):
+    """Wrap a string in a HTMLChildGenerator.
+
+    >>> for s in generate_html_string("Test String"):
+    ...     print(s)
+    b'Test String'
+
+    This will escape the string:
+
+    >>> str(generate_html_string("<foo>"))
+    '&lt;foo&gt;'
+
+    If s is already a generator is will not get wrapped:
+
+    >>> other_gen = IteratorGenerator("foo")
+    >>> gen = generate_html_string(other_gen)
+    >>> gen is other_gen
+    True
+
+    """
+    if hasattr(s, "generate"):
+        return s
+    gen = HTMLChildGenerator()
+    gen.append(s)
+    return gen
+
+
 class JoinGenerator(ChildGenerator):
 
     """Generate the supplied pieces, separated by glue.

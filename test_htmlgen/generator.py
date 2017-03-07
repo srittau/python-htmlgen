@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from asserts import assert_equal, assert_raises
+from asserts import assert_equal, assert_raises, assert_is_instance, assert_is
 
 from htmlgen.generator import (Generator,
                                NullGenerator,
@@ -10,7 +10,7 @@ from htmlgen.generator import (Generator,
                                ChildGenerator,
                                HTMLChildGenerator,
                                JoinGenerator,
-                               HTMLJoinGenerator)
+                               HTMLJoinGenerator, generate_html_string)
 
 
 class _TestingGenerator(Generator):
@@ -223,6 +223,26 @@ class HTMLChildGeneratorTest(TestCase):
         assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
         generator.children.append("Bar")
         assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
+
+
+class GenerateHTMLStringTest(TestCase):
+
+    def test_wrap_string(self):
+        generator = generate_html_string("Test")
+        assert_is_instance(generator, HTMLChildGenerator)
+        result = list(iter(generator))
+        assert_equal([b"Test"], result)
+
+    def test_escape_string(self):
+        generator = generate_html_string("<br>")
+        assert_is_instance(generator, HTMLChildGenerator)
+        result = list(iter(generator))
+        assert_equal([b"&lt;br&gt;"], result)
+
+    def test_do_not_wrap_generator(self):
+        other_gen = Generator()
+        generator = generate_html_string(other_gen)
+        assert_is(other_gen, generator)
 
 
 class JoinGeneratorTest(TestCase):
