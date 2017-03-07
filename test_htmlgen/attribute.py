@@ -8,7 +8,8 @@ from htmlgen.attribute import (html_attribute,
                                int_html_attribute,
                                float_html_attribute,
                                time_html_attribute,
-                               list_html_attribute, data_attribute)
+                               list_html_attribute, data_attribute,
+                               css_class_attribute)
 from htmlgen.element import Element
 
 
@@ -189,3 +190,21 @@ class HTMLAttributeTest(TestCase):
         element = MyElement("div")
         element.attr = "def"
         assert_is_none(element.get_attribute("data-attr"))
+
+    def test_css_class(self):
+        class MyElement(Element):
+            attr = css_class_attribute("my-class")
+        element = MyElement("div")
+        assert_false(element.attr)
+        element.add_css_classes("other-class")
+        assert_false(element.attr)
+        element.add_css_classes("my-class")
+        assert_true(element.attr)
+        element.attr = False
+        assert_false(element.has_css_class("my-class"))
+        element.attr = False
+        assert_false(element.has_css_class("my-class"))
+        element.attr = True
+        assert_true(element.has_css_class("my-class"))
+        element.attr = True
+        assert_true(element.has_css_class("my-class"))

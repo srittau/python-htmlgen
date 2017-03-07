@@ -231,3 +231,33 @@ def list_html_attribute(attribute_name):
 def data_attribute(data_name, default=None):
     attribute_name = "data-" + data_name
     return html_attribute(attribute_name, default)
+
+
+def css_class_attribute(css_class):
+    """Add a boolean attribute to an HTML element that add a CSS class.
+
+    >>> from htmlgen import Element
+    >>> class MyElement(Element):
+    ...     test = css_class_attribute("my-class")
+    >>> element = MyElement("div")
+    >>> element.add_css_classes("other-class")
+    >>> element.test
+    False
+    >>> str(element)
+    '<div class="other-class"></div>'
+    >>> element.test = True
+    >>> str(element)
+    '<div class="my-class other-class"></div>'
+
+    """
+
+    def get(self):
+        return self.has_css_class(css_class)
+
+    def set_(self, value):
+        if value:
+            self.add_css_classes(css_class)
+        else:
+            self.remove_css_classes(css_class)
+
+    return property(get, set_)
