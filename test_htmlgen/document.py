@@ -212,6 +212,16 @@ class ScriptTest(TestCase):
         assert_equal([b'<script>', b'alert("foo");', b'</script>'],
                      list(iter(script)))
 
+    def test_type(self):
+        script = Script()
+        script.type = "application/json"
+        assert_equal([b'<script type="application/json">', b'</script>'],
+                     list(iter(script)))
+
+    def test_type_default(self):
+        script = Script()
+        assert_equal("text/javascript", script.type)
+
 
 class HeadLinkTest(TestCase):
 

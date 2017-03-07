@@ -205,6 +205,7 @@ class Script(NonVoidElement):
             self.url = url
         self.script = script
 
+    type = html_attribute("type", default="text/javascript")
     url = html_attribute("src")
 
     def generate_children(self):
