@@ -1,9 +1,11 @@
 from unittest import TestCase
 
-from asserts import assert_equal, assert_is_not, assert_is, assert_is_none
+from asserts import assert_equal, assert_is_not, assert_is, assert_is_none, \
+    assert_is_instance
 
 from htmlgen import (ChildGenerator, Element, Document, HTMLRoot, Head, Body,
                      Title, Meta, Script, HeadLink, Main)
+from htmlgen.document import json_script
 
 
 class _TestingHead(ChildGenerator):
@@ -221,6 +223,32 @@ class ScriptTest(TestCase):
     def test_type_default(self):
         script = Script()
         assert_equal("text/javascript", script.type)
+
+
+class JSONScriptTest(TestCase):
+
+    def test_element_type(self):
+        script = json_script([])
+        assert_is_instance(script, Script)
+
+    def test_type(self):
+        script = json_script([])
+        assert_equal("application/json", script.type)
+
+    def test_script(self):
+        script = json_script([1, 2, "a"])
+        assert_equal('[1, 2, "a"]', script.script)
+
+    def test_serialized(self):
+        script = json_script([1, 2, "a"])
+        assert_equal('<script type="application/json">[1, 2, "a"]</script>',
+                     str(script))
+
+    def test_escape_slash(self):
+        script = json_script(["</script>"])
+        assert_equal(
+            '<script type="application/json">["<\\/script>"]</script>',
+            str(script))
 
 
 class HeadLinkTest(TestCase):

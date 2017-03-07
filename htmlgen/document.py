@@ -2,6 +2,10 @@ from htmlgen.element import (Generator, Element, NonVoidElement, VoidElement,
                              html_attribute)
 
 
+MIME_JAVASCRIPT = "text/javascript"
+MIME_JSON = "application/json"
+
+
 class Document(Generator):
 
     """An HTML document.
@@ -196,6 +200,16 @@ class Script(NonVoidElement):
         >>> internal_script.script
         "alert('Hello World!');"
 
+    The type attribute can be overridden:
+
+        >>> json_script = Script()
+        >>> json_script.type = "application/json"
+
+    It defaults to Javascript:
+
+        >>> Script().type
+        'text/javascript'
+
     """
 
     def __init__(self, url=None, script=None):
@@ -205,12 +219,32 @@ class Script(NonVoidElement):
             self.url = url
         self.script = script
 
-    type = html_attribute("type", default="text/javascript")
+    type = html_attribute("type", default=MIME_JAVASCRIPT)
     url = html_attribute("src")
 
     def generate_children(self):
         if self.script:
             yield self.script
+
+
+def json_script(json):
+    """Create a Script element with JSON payload.
+
+        >>> script = json_script({"s": "test", "a": [1, 2]})
+        >>> script.type
+        'application/json'
+        >>> script.script
+        '{"s": "test", "a": [1, 2]}'
+
+    """
+
+    from json import dumps
+
+    serialized = dumps(json)
+    escaped = serialized.replace("</", "<\\/")  # XSS protection
+    script = Script(script=escaped)
+    script.type = MIME_JSON
+    return script
 
 
 class HeadLink(VoidElement):
