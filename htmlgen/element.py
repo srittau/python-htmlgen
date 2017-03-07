@@ -171,7 +171,7 @@ class _ElementBase(Generator):
 
     @property
     def _class_value(self):
-        return " ".join(self._css_classes)
+        return " ".join(sorted(self._css_classes))
 
     @property
     def _style_value(self):

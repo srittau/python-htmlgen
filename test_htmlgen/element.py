@@ -102,7 +102,6 @@ class ElementTest(TestCase):
         element.add_css_classes("bar")
         matches = re.search(r'class="(.*)"', str(element))
         css_classes = matches.group(1).split(" ")
-        css_classes.sort()
         assert_equal(["bar", "baz", "foo"], css_classes)
 
     def test_remove_css_classes(self):
