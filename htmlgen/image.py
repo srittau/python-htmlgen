@@ -1,4 +1,5 @@
-from .element import VoidElement, html_attribute
+from .attribute import html_attribute
+from .element import VoidElement
 
 
 class Image(VoidElement):

@@ -6,7 +6,6 @@ try:
 except ImportError:
     from cgi import escape
 
-from htmlgen.attribute import html_attribute
 from htmlgen.generator import Generator, HTMLChildGenerator
 
 # TODO: Python 3: remove
