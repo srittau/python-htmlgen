@@ -1,3 +1,28 @@
+News in version 0.9
+===================
+
+API Additions
+-------------
+
+  * Add IteratorGenerator.
+  * Add HiddenInput (<input type="hidden">), FileInput (<input type="file">),
+    SearchInput (<input type="search">), and TimeInput (<input type="time">).
+  * Add LineBreak (<br>).
+  * Table now has two overridable generator methods generate_header_rows() and
+    generate_rows().
+  * Add TextArea.placeholder property.
+  * Add NumberInput.number property.
+  * Add Form.target property and Form.set_blank_target().
+  * Add data_attribute(), list_html_attribute() and time_html_attribute().
+
+API-Incompatible Changes
+------------------------
+
+  * Improve Element.id handling and raise ValueError on invalid ids.
+  * The default name of all input elements has been changed from None to the
+    empty string to match Input.name.
+  * NumberInput constructor: Replace value argument by number.
+
 News in version 0.8
 ===================
 
