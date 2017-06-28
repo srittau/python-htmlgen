@@ -1,6 +1,9 @@
 Python HTML 5 Generator
 =======================
 
+[![GitHub Release](https://img.shields.io/github/release/srittau/python-htmlgen/all.svg)](https://github.com/srittau/python-htmlgen/releases/)
+[![Build Status](https://travis-ci.org/srittau/python-htmlgen.svg?branch=master)](https://travis-ci.org/srittau/python-htmlgen)
+
 Library to generate HTML from classes.
 
 Basic usage:
