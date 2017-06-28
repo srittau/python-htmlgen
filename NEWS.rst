@@ -1,3 +1,31 @@
+News in version 0.99.0
+======================
+
+First Beta Release
+
+API Additions
+-------------
+
+  * Add generate_html_string().
+  * Add css_class_attribute().
+  * Add Checkbox (<input type="checkbox">), RadioButton (<input type="radio">),
+    and Label (<label>).
+
+API-Incompatible Changes
+------------------------
+
+  * Remove html_attribute() from htmlgen.element.
+
+Improvements
+------------
+
+  * Render CSS classes alphabetically for easier unit testing.
+
+Bug Fixes
+---------
+
+  * Fix PendingDeprecationWarnings.
+
 News in version 0.9
 ===================
 

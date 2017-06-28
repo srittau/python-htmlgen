@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="htmlgen",
-    version="0.10",
+    version="0.99.0",
     description="HTML 5 Generator",
     author="Sebastian Rittau",
     author_email="srittau@rittau.biz",
