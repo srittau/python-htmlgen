@@ -61,7 +61,6 @@ class Generator(object):
                     yield item.encode("utf-8")
                 else:
                     raise TypeError("can not generate {}".format(repr(item)))
-        raise StopIteration()
 
     def __str__(self):
         """Return a concatenation of the strings returned by __iter__()."""
@@ -357,11 +356,12 @@ class JoinGenerator(ChildGenerator):
 
     def generate(self):
         pieces = super(JoinGenerator, self).generate()
-        yield next(pieces)
-        while True:
-            piece = next(pieces)
-            yield self._glue
+        first = True
+        for piece in pieces:
+            if not first:
+                yield self._glue
             yield piece
+            first = False
 
 
 class HTMLJoinGenerator(HTMLChildGenerator):
@@ -388,8 +388,9 @@ class HTMLJoinGenerator(HTMLChildGenerator):
 
     def generate(self):
         pieces = super(HTMLJoinGenerator, self).generate()
-        yield next(pieces)
-        while True:
-            piece = next(pieces)
-            yield self._glue
+        first = True
+        for piece in pieces:
+            if not first:
+                yield self._glue
             yield piece
+            first = False
