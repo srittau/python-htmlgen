@@ -1,8 +1,7 @@
 Python HTML 5 Generator
 =======================
 
-*This library is currently in development. The API is subject to change.
-Feedback and suggestions are welcome!*
+Library to generate HTML from classes.
 
 Basic usage:
 
