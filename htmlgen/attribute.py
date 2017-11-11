@@ -3,7 +3,8 @@ import datetime
 from htmlgen.timeutil import parse_rfc3339_partial_time
 
 
-def html_attribute(attribute_name, default=None):
+class html_attribute(object):
+
     """Add an attribute to an HTML element.
 
         >>> from htmlgen import Element
@@ -30,19 +31,22 @@ def html_attribute(attribute_name, default=None):
 
     """
 
-    def get(self):
-        return self.get_attribute(attribute_name, default=default)
+    def __init__(self, attribute_name, default=None):
+        self._attribute_name = attribute_name
+        self._default = default
 
-    def set_(self, value):
-        if value is None or value == default:
-            self.remove_attribute(attribute_name)
+    def __get__(self, obj, _=None):
+        return obj.get_attribute(self._attribute_name, default=self._default)
+
+    def __set__(self, obj, value):
+        if value is None or value == self._default:
+            obj.remove_attribute(self._attribute_name)
         else:
-            self.set_attribute(attribute_name, value)
-
-    return property(get, set_)
+            obj.set_attribute(self._attribute_name, value)
 
 
-def boolean_html_attribute(attribute_name):
+class boolean_html_attribute(object):
+
     """Add a boolean attribute to an HTML element.
 
         >>> from htmlgen import Element
@@ -59,19 +63,21 @@ def boolean_html_attribute(attribute_name):
 
     """
 
-    def get(self):
-        return self.get_attribute(attribute_name) == attribute_name
+    def __init__(self, attribute_name):
+        self._attribute_name = attribute_name
 
-    def set_(self, value):
+    def __get__(self, obj, _=None):
+        return obj.get_attribute(self._attribute_name) == self._attribute_name
+
+    def __set__(self, obj, value):
         if value:
-            self.set_attribute(attribute_name, attribute_name)
+            obj.set_attribute(self._attribute_name, self._attribute_name)
         else:
-            self.remove_attribute(attribute_name)
-
-    return property(get, set_)
+            obj.remove_attribute(self._attribute_name)
 
 
-def int_html_attribute(attribute_name, default=None):
+class int_html_attribute(object):
+
     """Add an attribute to an HTML element that accepts only integers.
 
         >>> from htmlgen import Element
@@ -98,22 +104,25 @@ def int_html_attribute(attribute_name, default=None):
 
     """
 
-    def get(self):
-        value = self.get_attribute(attribute_name, default=default)
+    def __init__(self, attribute_name, default=None):
+        self._attribute_name = attribute_name
+        self._default = default
+
+    def __get__(self, obj, _=None):
+        value = obj.get_attribute(self._attribute_name, default=self._default)
         if value is None:
             return None
         return int(value)
 
-    def set_(self, value):
-        if value is None or value == default:
-            self.remove_attribute(attribute_name)
+    def __set__(self, obj, value):
+        if value is None or value == self._default:
+            obj.remove_attribute(self._attribute_name)
         else:
-            self.set_attribute(attribute_name, str(value))
-
-    return property(get, set_)
+            obj.set_attribute(self._attribute_name, str(value))
 
 
-def float_html_attribute(attribute_name, default=None):
+class float_html_attribute(object):
+
     """Add an attribute to an HTML element that accepts only numbers.
 
         >>> from htmlgen import Element
@@ -140,22 +149,25 @@ def float_html_attribute(attribute_name, default=None):
 
     """
 
-    def get(self):
-        value = self.get_attribute(attribute_name, default=default)
+    def __init__(self, attribute_name, default=None):
+        self._attribute_name = attribute_name
+        self._default = default
+
+    def __get__(self, obj, _=None):
+        value = obj.get_attribute(self._attribute_name, default=self._default)
         if value is None:
             return None
         return float(value)
 
-    def set_(self, value):
-        if value is None or value == default:
-            self.remove_attribute(attribute_name)
+    def __set__(self, obj, value):
+        if value is None or value == self._default:
+            obj.remove_attribute(self._attribute_name)
         else:
-            self.set_attribute(attribute_name, str(value))
-
-    return property(get, set_)
+            obj.set_attribute(self._attribute_name, str(value))
 
 
-def time_html_attribute(attribute_name, default=None):
+class time_html_attribute(object):
+
     """Add an attribute to an HTML element that accepts only time values.
 
     >>> from htmlgen import Element
@@ -183,22 +195,25 @@ def time_html_attribute(attribute_name, default=None):
 
     """
 
-    def get(self):
-        value = self.get_attribute(attribute_name)
+    def __init__(self, attribute_name, default=None):
+        self._attribute_name = attribute_name
+        self._default = default
+
+    def __get__(self, obj, _=None):
+        value = obj.get_attribute(self._attribute_name)
         if value is None:
-            return default
+            return self._default
         return parse_rfc3339_partial_time(value)
 
-    def set_(self, value):
-        if value is None or value == default:
-            self.remove_attribute(attribute_name)
+    def __set__(self, obj, value):
+        if value is None or value == self._default:
+            obj.remove_attribute(self._attribute_name)
         else:
-            self.set_attribute(attribute_name, str(value))
-
-    return property(get, set_)
+            obj.set_attribute(self._attribute_name, str(value))
 
 
-def list_html_attribute(attribute_name):
+class list_html_attribute(object):
+
     """Add an attribute to an HTML element that accepts a list of strings.
 
     >>> from htmlgen import Element
@@ -215,25 +230,29 @@ def list_html_attribute(attribute_name):
 
     """
 
-    def get(self):
-        value = self.get_attribute(attribute_name)
+    def __init__(self, attribute_name):
+        self._attribute_name = attribute_name
+
+    def __get__(self, obj, _=None):
+        value = obj.get_attribute(self._attribute_name)
         return value.split(",") if value else []
 
-    def set_(self, value):
+    def __set__(self, obj, value):
         if value:
-            self.set_attribute(attribute_name, ",".join(value))
+            obj.set_attribute(self._attribute_name, ",".join(value))
         else:
-            self.remove_attribute(attribute_name)
-
-    return property(get, set_)
+            obj.remove_attribute(self._attribute_name)
 
 
-def data_attribute(data_name, default=None):
-    attribute_name = "data-" + data_name
-    return html_attribute(attribute_name, default)
+class data_attribute(html_attribute):
+
+    def __init__(self, data_name, default=None):
+        attribute_name = "data-" + data_name
+        super(data_attribute, self).__init__(attribute_name, default)
 
 
-def css_class_attribute(css_class):
+class css_class_attribute(object):
+
     """Add a boolean attribute to an HTML element that add a CSS class.
 
     >>> from htmlgen import Element
@@ -251,13 +270,14 @@ def css_class_attribute(css_class):
 
     """
 
-    def get(self):
-        return self.has_css_class(css_class)
+    def __init__(self, css_class):
+        self._css_class = css_class
 
-    def set_(self, value):
+    def __get__(self, obj, _=None):
+        return obj.has_css_class(self._css_class)
+
+    def __set__(self, obj, value):
         if value:
-            self.add_css_classes(css_class)
+            obj.add_css_classes(self._css_class)
         else:
-            self.remove_css_classes(css_class)
-
-    return property(get, set_)
+            obj.remove_css_classes(self._css_class)

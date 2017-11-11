@@ -1,5 +1,6 @@
 from htmlgen.attribute import html_attribute
-from htmlgen.element import Generator, Element, NonVoidElement, VoidElement
+from htmlgen.generator import Generator
+from htmlgen.element import Element, NonVoidElement, VoidElement
 
 
 MIME_JAVASCRIPT = "text/javascript"
