@@ -1,4 +1,5 @@
-from htmlgen import Element, html_attribute
+from htmlgen.attribute import html_attribute
+from htmlgen.element import Element
 
 
 class Link(Element):

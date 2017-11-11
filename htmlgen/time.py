@@ -1,4 +1,4 @@
-from htmlgen import Element
+from htmlgen.element import Element
 
 
 class Time(Element):

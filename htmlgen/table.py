@@ -1,4 +1,5 @@
-from htmlgen import Element, int_html_attribute
+from htmlgen.attribute import int_html_attribute
+from htmlgen.element import Element
 
 
 class Table(Element):

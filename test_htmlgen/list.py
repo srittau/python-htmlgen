@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from asserts import assert_equal
 
-from htmlgen import OrderedList, UnorderedList, ListItem, DescriptionList
+from htmlgen.list import OrderedList, UnorderedList, ListItem, DescriptionList
 
 
 class OrderedListTest(TestCase):
