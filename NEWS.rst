@@ -1,6 +1,11 @@
 News in version 0.99.1
 ======================
 
+Improvements
+------------
+
+  * Add stub files.
+
 News in version 0.99.0
 ======================
 

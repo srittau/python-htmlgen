@@ -1,3 +1,4 @@
+from collections import Iterable
 import sys
 
 if sys.version_info[0] < 3:
@@ -11,7 +12,7 @@ if sys.version_info[0] >= 3:
     unicode = str
 
 
-class Generator(object):
+class Generator(Iterable):
 
     """Base class for HTML generators.
 
