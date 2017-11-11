@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from asserts import assert_equal
 
-from htmlgen import Link
+from htmlgen.link import Link
 
 
 class LinkTest(TestCase):

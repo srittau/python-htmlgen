@@ -85,7 +85,7 @@ class Input(VoidElement):
     value = html_attribute("value", default="")
     readonly = boolean_html_attribute("readonly")
     disabled = boolean_html_attribute("disabled")
-    type = html_attribute("type")
+    type = html_attribute("type")  # type: ignore
     placeholder = html_attribute("placeholder")
     size = int_html_attribute("size")
     focus = boolean_html_attribute("autofocus")
