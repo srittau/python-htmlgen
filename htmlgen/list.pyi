@@ -1,0 +1,29 @@
+from typing import Optional, Union, AnyStr, List, Tuple
+
+from htmlgen.element import Element
+from htmlgen.generator import Generator
+
+
+class _ListBase(Element):
+    def create_item(self, child: Optional[Union[AnyStr, Generator]] = ...) -> "ListItem": ...
+    def create_items(self, *items: Optional[Union[AnyStr, Generator]]) -> List["ListItem"]: ...
+
+class OrderedList(_ListBase):
+    start = ...  # type: int
+    def __init__(self) -> None: ...
+
+class UnorderedList(_ListBase):
+    def __init__(self) -> None: ...
+
+class ListItem(Element):
+    def __init__(self, *content: Union[AnyStr, Generator]) -> None: ...
+
+class DescriptionList(Element):
+    def __init__(self) -> None: ...
+    def create_item(self, term: Union[AnyStr, Generator], description: Union[AnyStr, Generator]) -> Tuple["DescriptionTerm", "DescriptionDefinition"]: ...
+
+class DescriptionTerm(Element):
+    def __init__(self, *content: Union[AnyStr, Generator]) -> None: ...
+
+class DescriptionDefinition(Element):
+    def __init__(self, *content: Union[AnyStr, Generator]) -> None: ...
