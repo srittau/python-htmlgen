@@ -1,12 +1,12 @@
 import collections
 import sys
 
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
-
 from htmlgen.generator import Generator, HTMLChildGenerator
+
+if sys.version_info[0] < 3:
+    from cgi import escape
+else:
+    from html import escape
 
 # TODO: Python 3: remove
 if sys.version_info[0] >= 3:

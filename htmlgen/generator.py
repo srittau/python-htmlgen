@@ -1,9 +1,9 @@
 import sys
 
-try:
-    from html import escape
-except ImportError:
+if sys.version_info[0] < 3:
     from cgi import escape
+else:
+    from html import escape
 
 
 # TODO: Python 3: remove
