@@ -1,6 +1,12 @@
 News in version 0.99.1
 ======================
 
+API-Incompatible Changes
+------------------------
+
+  * html_attribute() at al. are now directly implemented using the descriptor
+    protocol, and not derived from property.
+
 Improvements
 ------------
 
