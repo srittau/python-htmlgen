@@ -1,4 +1,4 @@
-from collections import Iterable
+from collections import Iterable, Sized
 import sys
 
 if sys.version_info[0] < 3:
@@ -102,7 +102,7 @@ class IteratorGenerator(Generator):
             yield item
 
 
-class ChildGenerator(Generator):
+class ChildGenerator(Generator, Sized):
 
     """A generator that generates children appended to it.
 
@@ -170,7 +170,7 @@ class ChildGenerator(Generator):
         return iter(self._children)
 
 
-class HTMLChildGenerator(Generator):
+class HTMLChildGenerator(Generator, Sized):
 
     """A generator that handles HTML safely.
 

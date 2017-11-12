@@ -1,3 +1,4 @@
+import collections
 import typing
 from typing import \
     Any, AnyStr, Mapping, Union, TypeVar, Set, Optional
@@ -27,7 +28,7 @@ class _ElementBase(Generator):
 class NonVoidElement(_ElementBase):
     def generate_children(self) -> typing.Generator[Union[AnyStr, Generator], None, None]: ...
 
-class Element(NonVoidElement):
+class Element(NonVoidElement, collections.Sized):
     children: HTMLChildGenerator = ...
     def __init__(self, element_name: str) -> None: ...
     def __bool__(self) -> bool: ...

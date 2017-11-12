@@ -250,7 +250,7 @@ class NonVoidElement(_ElementBase):
         raise NotImplementedError()
 
 
-class Element(NonVoidElement):
+class Element(NonVoidElement, collections.Sized):
 
     """Base generator for HTML elements with children.
 

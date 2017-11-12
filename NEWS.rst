@@ -1,5 +1,11 @@
-News in version 0.99.2s
+News in version 0.99.2
 ======================
+
+Improvements
+------------
+
+* Derive ``ChildGenerator``, ``HTMLChildGenerator``, and ``Element`` from
+  Sized.
 
 News in version 0.99.1
 ======================
@@ -7,7 +13,7 @@ News in version 0.99.1
 API-Incompatible Changes
 ------------------------
 
-* html_attribute() at al. are now directly implemented using the descriptor
+* ``html_attribute()`` at al. are now directly implemented using the descriptor
   protocol, and not derived from property.
 
 Improvements
