@@ -1,7 +1,6 @@
 import collections
 import typing
-from typing import \
-    Any, AnyStr, Mapping, MutableMapping, Union, TypeVar, Set, Optional
+from typing import Any, Mapping, MutableMapping, Union, TypeVar, Set, Optional
 
 from htmlgen.generator import Generator, HTMLChildGenerator
 
@@ -37,7 +36,7 @@ class _ElementBase(Generator):
     def render_start_tag(self) -> str: ...
 
 class NonVoidElement(_ElementBase):
-    def generate_children(self) -> typing.Generator[Union[AnyStr, Generator], None, None]: ...
+    def generate_children(self) -> typing.Generator[Union[str, bytes, Generator], None, None]: ...
 
 class Element(NonVoidElement, collections.Sized):
     children: HTMLChildGenerator = ...

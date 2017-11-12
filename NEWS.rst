@@ -17,6 +17,7 @@ Bug Fixes
 ---------
 
 * Fix a few stubs.
+* Fix incorrect usage of ``AnyStr``.
 
 News in version 0.99.1
 ======================
