@@ -221,8 +221,12 @@ class HTMLChildGeneratorTest(TestCase):
         generator.append("Foo")
         generator.append("<tag>")
         assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
+
+    def test_children_readonly(self):
+        generator = HTMLChildGenerator()
+        generator.append("Foo")
         generator.children.append("Bar")
-        assert_equal(["Foo", "&lt;tag&gt;"], generator.children)
+        assert_equal(["Foo"], generator.children)
 
 
 class GenerateHTMLStringTest(TestCase):
