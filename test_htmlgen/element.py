@@ -204,6 +204,20 @@ class ElementTest(TestCase):
         assert_equal([b'<div data-abc="def" data-foo="bar">', b"</div>"],
                      list(iter(element)))
 
+    def test_data_iteration(self):
+        element = Element("div")
+        element.set_attribute("foo", "v1")
+        element.set_attribute("data-bar", "v2")
+        items = list(iter(element.data))
+        assert_equal(["bar"], items)
+
+    def test_data_length(self):
+        element = Element("div")
+        element.set_attribute("foo", "v1")
+        element.set_attribute("data-bar", "v2")
+        element.set_attribute("data-baz", "v3")
+        assert_equal(2, len(element.data))
+
     def test_data_external(self):
         element = Element("div")
         element.set_attribute("data-foo", "bar")

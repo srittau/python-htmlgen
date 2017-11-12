@@ -1,6 +1,12 @@
 News in version 0.99.2
 ======================
 
+API Additions
+-------------
+
+* ``Element.data`` does now derive from MutableMapping and implements all its
+  methods.
+
 Improvements
 ------------
 

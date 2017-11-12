@@ -179,7 +179,7 @@ class _ElementBase(Generator):
         return "; ".join(rendered_styles)
 
 
-class _ElementDataProxy(object):
+class _ElementDataProxy(collections.MutableMapping):
 
     """Dictionary-like object for setting data-* attributes.
 
@@ -189,6 +189,14 @@ class _ElementDataProxy(object):
 
     def __init__(self, element):
         self._element = element
+
+    def __iter__(self):
+        for key in self._element.attribute_names:
+            if key.startswith("data-"):
+                yield key[5:]
+
+    def __len__(self):
+        return len(list(iter(self)))
 
     def __setitem__(self, key, value):
         self._element.set_attribute(self._attribute_name(key), value)
