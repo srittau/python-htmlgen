@@ -13,6 +13,11 @@ Improvements
 * Derive ``ChildGenerator``, ``HTMLChildGenerator``, and ``Element`` from
   Sized.
 
+Bug Fixes
+---------
+
+* Fix a few stubs.
+
 News in version 0.99.1
 ======================
 
