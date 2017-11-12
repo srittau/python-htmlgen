@@ -1,3 +1,4 @@
+from typing import cast, List
 from unittest import TestCase
 
 from asserts import assert_equal, assert_is_not, assert_is, assert_is_none, \
@@ -12,8 +13,8 @@ class _TestingHead(Head):
 
     def __init__(self):
         super(_TestingHead, self).__init__()
-        self.stylesheets = []
-        self.scripts = []
+        self.stylesheets = []  # type: List[str]
+        self.scripts = []  # type: List[str]
 
     def add_stylesheet(self, style):
         self.stylesheets.append(style)
@@ -32,7 +33,7 @@ class DocumentTest(TestCase):
 
     def test_generate(self):
         doc = Document()
-        doc.root = Element("html")
+        doc.root = cast(HTMLRoot, Element("html"))
         assert_equal([b"<!DOCTYPE html>", b"<html>", b"</html>"],
                      list(iter(doc)))
 
@@ -141,23 +142,23 @@ class HeadTest(TestCase):
         head = Head()
         head.add_stylesheet("style.css")
         head.add_stylesheets("style1.css", "style2.css")
-        style = head.children.children[-3]
-        assert_equal("link", style.element_name)
-        assert_equal("style.css", style.get_attribute("href"))
-        style = head.children.children[-1]
-        assert_equal("link", style.element_name)
-        assert_equal("style2.css", style.get_attribute("href"))
+        style1 = cast(HeadLink, head.children.children[-3])
+        assert_equal("link", style1.element_name)
+        assert_equal("style.css", style1.get_attribute("href"))
+        style2 = cast(HeadLink, head.children.children[-1])
+        assert_equal("link", style2.element_name)
+        assert_equal("style2.css", style2.get_attribute("href"))
 
     def test_scripts(self):
         head = Head()
         head.add_script("script.js")
         head.add_scripts("script1.js", "script2.js")
-        style = head.children.children[-3]
-        assert_equal("script", style.element_name)
-        assert_equal("script.js", style.get_attribute("src"))
-        style = head.children.children[-1]
-        assert_equal("script", style.element_name)
-        assert_equal("script2.js", style.get_attribute("src"))
+        script1 = cast(Script, head.children.children[-3])
+        assert_equal("script", script1.element_name)
+        assert_equal("script.js", script1.get_attribute("src"))
+        script2 = cast(Script, head.children.children[-1])
+        assert_equal("script", script2.element_name)
+        assert_equal("script2.js", script2.get_attribute("src"))
 
 
 class BodyTest(TestCase):

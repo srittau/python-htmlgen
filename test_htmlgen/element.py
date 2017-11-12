@@ -19,6 +19,8 @@ class NonVoidElementTest(TestCase):
                      list(iter(element)))
 
 
+# Some lines below are marked "type: ignore".
+# See https://github.com/python/mypy/issues/220 for details.
 class ElementTest(TestCase):
 
     def test_true(self):
@@ -193,14 +195,14 @@ class ElementTest(TestCase):
 
     def test_data_clear(self):
         element = Element("div")
-        element.data = {"old": "xxx", "foo": "old-value"}
+        element.data = {"old": "xxx", "foo": "old-value"}  # type: ignore
         element.data.clear()
         assert_equal([b'<div>', b"</div>"], list(iter(element)))
 
     def test_data_replace(self):
         element = Element("div")
-        element.data = {"old": "xxx", "foo": "old-value"}
-        element.data = {"foo": "bar", "abc": "def"}
+        element.data = {"old": "xxx", "foo": "old-value"}  # type: ignore
+        element.data = {"foo": "bar", "abc": "def"}  # type: ignore
         assert_equal([b'<div data-abc="def" data-foo="bar">', b"</div>"],
                      list(iter(element)))
 
@@ -227,7 +229,7 @@ class ElementTest(TestCase):
         element.data.clear()
         assert_is_none(element.get_attribute("data-foo"))
         element.set_attribute("data-old", "")
-        element.data = {}
+        element.data = {}  # type: ignore
         assert_is_none(element.get_attribute("data-old"))
 
 
