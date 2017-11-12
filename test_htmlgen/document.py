@@ -3,12 +3,12 @@ from unittest import TestCase
 from asserts import assert_equal, assert_is_not, assert_is, assert_is_none, \
     assert_is_instance
 
-from htmlgen import (ChildGenerator, Element, Document, HTMLRoot, Head, Body,
+from htmlgen import (Element, Document, HTMLRoot, Head, Body,
                      Title, Meta, Script, HeadLink, Main)
 from htmlgen.document import json_script
 
 
-class _TestingHead(ChildGenerator):
+class _TestingHead(Head):
 
     def __init__(self):
         super(_TestingHead, self).__init__()
@@ -77,11 +77,10 @@ class DocumentTest(TestCase):
         assert_equal(["script.js", "script1.js", "script2.js"], head.scripts)
 
     def test_append(self):
-        head = _TestingHead()
         doc = Document()
-        doc.root.head = head
+        old_child_count = len(doc.root.head)
         doc.append_head("Test Head")
-        assert_equal(1, len(head))
+        assert_equal(old_child_count + 1, len(doc.root.head))
         doc.append_body("Test Body")
         assert_equal(1, len(doc.root.body))
 
@@ -90,15 +89,12 @@ class HTMLRootTest(TestCase):
 
     def test_default_language(self):
         root = HTMLRoot()
-        root.head = _TestingHead()
-        assert_equal([b'<html lang="en" xml:lang="en" '
-                      b'xmlns="http://www.w3.org/1999/xhtml">',
-                      b'<body>', b'</body>', b'</html>'],
-                     list(iter(root)))
+        assert_equal(b'<html lang="en" xml:lang="en" '
+                     b'xmlns="http://www.w3.org/1999/xhtml">',
+                     next(iter(root)))
 
     def test_custom_language(self):
         root = HTMLRoot(language="de")
-        root.head = _TestingHead()
         assert_equal(b'<html lang="de" xml:lang="de" '
                      b'xmlns="http://www.w3.org/1999/xhtml">',
                      next(iter(root)))
