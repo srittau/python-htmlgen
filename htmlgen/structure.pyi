@@ -1,4 +1,4 @@
-from typing import Union, AnyStr, Generator
+from typing import Union,  Generator
 
 from htmlgen.element import Element
 
@@ -23,4 +23,4 @@ class Footer(Element):
 
 class Heading(Element):
 
-    def __init__(self, level: int = ..., *content: Union[AnyStr, Generator]) -> None: ...
+    def __init__(self, level: int = ..., *content: Union[str, bytes, Generator]) -> None: ...

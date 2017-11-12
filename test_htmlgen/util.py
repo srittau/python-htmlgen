@@ -1,4 +1,5 @@
 import re
+from typing import Dict
 
 _short_tag_re = re.compile(r'^<([a-z0-9]+)(( [a-z0-9-]+="[^"]*")*)/>$')
 _attribute_re = re.compile(r' ([a-z0-9-]+)="([^"]*)"')
@@ -17,7 +18,7 @@ class Tag(object):
 
     def __init__(self, name):
         self.name = name
-        self.attributes = {}
+        self.attributes = {}  # type: Dict[str, str]
 
     def add_attribute(self, name, value):
         if name in self.attributes:

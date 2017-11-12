@@ -1,5 +1,23 @@
-News in version 0.99.2s
+News in version 0.99.2
 ======================
+
+API Additions
+-------------
+
+* ``Element.data`` does now derive from MutableMapping and implements all its
+  methods.
+
+Improvements
+------------
+
+* Derive ``ChildGenerator``, ``HTMLChildGenerator``, and ``Element`` from
+  Sized.
+
+Bug Fixes
+---------
+
+* Fix a few stubs.
+* Fix incorrect usage of ``AnyStr``.
 
 News in version 0.99.1
 ======================
@@ -7,7 +25,7 @@ News in version 0.99.1
 API-Incompatible Changes
 ------------------------
 
-* html_attribute() at al. are now directly implemented using the descriptor
+* ``html_attribute()`` at al. are now directly implemented using the descriptor
   protocol, and not derived from property.
 
 Improvements
