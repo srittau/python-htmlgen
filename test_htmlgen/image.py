@@ -22,12 +22,12 @@ class ImageTest(TestCase):
         image = Image("my-image.png", "Alternate text")
         tag = parse_short_tag(str(image))
         assert_equal("img", tag.name)
-        assert_equal("my-image.png", image._attributes["src"])
-        assert_equal("Alternate text", image._attributes["alt"])
+        assert_equal("my-image.png", image.get_attribute("src"))
+        assert_equal("Alternate text", image.get_attribute("alt"))
 
     def test_without_alt(self):
         image = Image("my-image.png")
         tag = parse_short_tag(str(image))
         assert_equal("img", tag.name)
-        assert_equal("my-image.png", image._attributes["src"])
-        assert_equal("", image._attributes["alt"])
+        assert_equal("my-image.png", image.get_attribute("src"))
+        assert_equal("", image.get_attribute("alt"))
