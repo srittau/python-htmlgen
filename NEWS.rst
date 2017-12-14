@@ -1,6 +1,11 @@
 News in version 0.99.3
 ======================
 
+API-Incompatible Changes
+------------------------
+
+* Revert deriving from ABC classes.
+
 News in version 0.99.2
 ======================
 

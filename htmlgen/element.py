@@ -1,4 +1,3 @@
-import collections
 import sys
 
 from htmlgen.generator import Generator, HTMLChildGenerator
@@ -15,11 +14,11 @@ else:
     str_class = basestring
 
 
-def is_element(object, element_name):
+def is_element(o, element_name):
     """Return whether a given object is a certain element generator."""
-    return (isinstance(object, collections.Iterable) and
-            hasattr(object, "element_name") and
-            object.element_name == element_name)
+    return (hasattr(o, "__iter__") and
+            hasattr(o, "element_name") and
+            o.element_name == element_name)
 
 
 class _ElementBase(Generator):
@@ -179,7 +178,7 @@ class _ElementBase(Generator):
         return "; ".join(rendered_styles)
 
 
-class _ElementDataProxy(collections.MutableMapping):
+class _ElementDataProxy:
 
     """Dictionary-like object for setting data-* attributes.
 
@@ -258,7 +257,7 @@ class NonVoidElement(_ElementBase):
         raise NotImplementedError()
 
 
-class Element(NonVoidElement, collections.Sized):
+class Element(NonVoidElement):
 
     """Base generator for HTML elements with children.
 

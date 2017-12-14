@@ -1,4 +1,3 @@
-from collections import Iterable, Sized
 import sys
 
 if sys.version_info[0] < 3:
@@ -12,7 +11,7 @@ if sys.version_info[0] >= 3:
     unicode = str
 
 
-class Generator(Iterable):
+class Generator(object):
 
     """Base class for HTML generators.
 
@@ -102,7 +101,7 @@ class IteratorGenerator(Generator):
             yield item
 
 
-class ChildGenerator(Generator, Sized):
+class ChildGenerator(Generator):
 
     """A generator that generates children appended to it.
 
@@ -170,7 +169,7 @@ class ChildGenerator(Generator, Sized):
         return iter(self._children)
 
 
-class HTMLChildGenerator(Generator, Sized):
+class HTMLChildGenerator(Generator):
 
     """A generator that handles HTML safely.
 
