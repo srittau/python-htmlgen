@@ -1,5 +1,7 @@
-News in version 0.99.4
-======================
+News in version 1.0.0
+=====================
+
+No changes.
 
 News in version 0.99.3
 ======================

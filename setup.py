@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="htmlgen",
-    version="0.99.4",
+    version="1.0.0",
     description="HTML 5 Generator",
     long_description=open("README.rst").read(),
     author="Sebastian Rittau",
@@ -17,7 +17,7 @@ setup(
     tests_require=["asserts >= 0.8.0, < 0.9", "typing"],
     license="MIT",
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 2",
