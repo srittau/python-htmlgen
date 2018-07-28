@@ -1,3 +1,11 @@
+News in version 1.1.0
+=====================
+
+Improvements
+------------
+
+* Improved type hints.
+
 News in version 1.0.0
 =====================
 
