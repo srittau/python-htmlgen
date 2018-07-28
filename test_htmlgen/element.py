@@ -103,6 +103,7 @@ class ElementTest(TestCase):
         element.add_css_classes("foo", "bar", "baz")
         element.add_css_classes("bar")
         matches = re.search(r'class="(.*)"', str(element))
+        assert matches is not None
         css_classes = matches.group(1).split(" ")
         assert_equal(["bar", "baz", "foo"], css_classes)
 
@@ -111,6 +112,7 @@ class ElementTest(TestCase):
         element.add_css_classes("foo", "bar", "baz")
         element.remove_css_classes("bar", "xxx")
         matches = re.search(r'class="(.*)"', str(element))
+        assert matches is not None
         css_classes = matches.group(1).split(" ")
         css_classes.sort()
         assert_equal(["baz", "foo"], css_classes)
@@ -136,6 +138,7 @@ class ElementTest(TestCase):
         element.set_style("background-color", "rgb(255, 0, 0)")
         element.set_style("display", "block")
         matches = re.search(r'style="(.*)"', str(element))
+        assert matches is not None
         css_classes = matches.group(1).split("; ")
         css_classes.sort()
         assert_equal(["background-color: rgb(255, 0, 0)",

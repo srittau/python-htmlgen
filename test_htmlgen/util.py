@@ -7,6 +7,7 @@ _attribute_re = re.compile(r' ([a-z0-9-]+)="([^"]*)"')
 
 def parse_short_tag(string):
     matches = _short_tag_re.match(string)
+    assert matches is not None
     tag = Tag(matches.group(1))
     attribute_string = matches.group(2)
     for match in _attribute_re.findall(attribute_string):
