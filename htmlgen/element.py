@@ -21,10 +21,9 @@ def is_element(o, element_name):
             o.element_name == element_name)
 
 
-class _ElementBase(Generator):
-
+class ElementBase(Generator):
     def __init__(self, element_name):
-        super(_ElementBase, self).__init__()
+        super(ElementBase, self).__init__()
         self.element_name = element_name
         self._attributes = {}
         self._css_classes = set()
@@ -227,7 +226,7 @@ class _ElementDataProxy:
         return d
 
 
-class NonVoidElement(_ElementBase):
+class NonVoidElement(ElementBase):
 
     """Base generator for non-void HTML elements.
 
@@ -333,7 +332,7 @@ class Element(NonVoidElement):
         return self.children
 
 
-class VoidElement(_ElementBase):
+class VoidElement(ElementBase):
 
     """Base generator for content-less HTML elements.
 

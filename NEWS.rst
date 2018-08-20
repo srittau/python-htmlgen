@@ -1,6 +1,11 @@
 News in version 1.2.0
 =====================
 
+API Additions
+-------------
+
+* Make ``ElementBase`` public.
+
 News in version 1.1.0
 =====================
 
