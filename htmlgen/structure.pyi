@@ -1,6 +1,5 @@
-from typing import Union,  Generator
-
-from htmlgen.element import Element
+from .element import Element
+from .generator import GenValue
 
 
 class Section(Element):
@@ -22,4 +21,4 @@ class Footer(Element):
     def __init__(self) -> None: ...
 
 class Heading(Element):
-    def __init__(self, level: int = ..., *content: Union[str, bytes, Generator]) -> None: ...
+    def __init__(self, level: int = ..., *content: GenValue) -> None: ...

@@ -6,6 +6,7 @@ API Additions
 
 * Make ``ElementBase`` public.
 * Add ``GenValue`` and ``GenValueGenerator`` type aliases.
+* Fix annotation of ``Heading``.
 
 News in version 1.1.0
 =====================
