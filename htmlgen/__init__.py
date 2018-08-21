@@ -7,7 +7,7 @@ from .attribute import (html_attribute, boolean_html_attribute,
 from .block import Division, Paragraph, Preformatted
 from .document import (Document, HTMLRoot, Head, Body, Title, Meta, Script,
                        HeadLink, Main, json_script)
-from .element import Element, VoidElement, is_element
+from .element import ElementBase, Element, VoidElement, is_element
 from .form import (Form, Input, TextInput, PasswordInput, NumberInput,
                    DateInput, TimeInput, SearchInput, FileInput, HiddenInput,
                    SubmitButton, Button, TextArea, Select, OptionGroup, Option,

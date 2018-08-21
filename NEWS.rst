@@ -1,6 +1,11 @@
 News in version 1.2.1
 =====================
 
+API Additions
+-------------
+
+* ``from htmlgen import ElementBase`` now works.
+
 Bug Fixes
 ---------
 
