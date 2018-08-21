@@ -1,3 +1,11 @@
+News in version 1.2.1
+=====================
+
+Bug Fixes
+---------
+
+* Add missing ``ElementBase`` to type stubs.
+
 News in version 1.2.0
 =====================
 
