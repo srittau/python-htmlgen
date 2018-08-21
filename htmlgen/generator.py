@@ -1,4 +1,5 @@
 import sys
+from typing import Union, Generator as GeneratorType
 
 if sys.version_info[0] < 3:
     from cgi import escape
@@ -12,7 +13,6 @@ if sys.version_info[0] >= 3:
 
 
 class Generator(object):
-
     """Base class for HTML generators.
 
     Sub-classes must implement the generate() method, which returns an
@@ -394,3 +394,7 @@ class HTMLJoinGenerator(HTMLChildGenerator):
                 yield self._glue
             yield piece
             first = False
+
+
+GenValue = Union[str, bytes, Generator]
+GenValueGenerator = GeneratorType[HTMLType, None, None]

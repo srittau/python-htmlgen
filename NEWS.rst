@@ -5,6 +5,7 @@ API Additions
 -------------
 
 * Make ``ElementBase`` public.
+* Add ``GenValue`` and ``GenValueGenerator`` type aliases.
 
 News in version 1.1.0
 =====================
