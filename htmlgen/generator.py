@@ -397,4 +397,4 @@ class HTMLJoinGenerator(HTMLChildGenerator):
 
 
 GenValue = Union[str, bytes, Generator]
-GenValueGenerator = GeneratorType[HTMLType, None, None]
+GenValueGenerator = GeneratorType[GenValue, None, None]
