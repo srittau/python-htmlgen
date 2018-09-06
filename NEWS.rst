@@ -1,3 +1,11 @@
+News in version 1.2.2
+=====================
+
+API Additions
+-------------
+
+* Add ``GenValue`` and ``GenValueGenerator`` to ``htmlgen``.
+
 News in version 1.2.1
 =====================
 
