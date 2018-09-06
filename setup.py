@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="htmlgen",
-    version="1.2.1",
+    version="1.2.2",
     description="HTML 5 Generator",
     long_description=open("README.rst").read(),
     author="Sebastian Rittau",
