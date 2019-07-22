@@ -1,4 +1,4 @@
-asserts==0.8.6
-mypy==0.620
-typing==3.6.4
-wheel==0.31.1
+asserts==0.9.1
+mypy==0.720
+typing==3.7.4
+wheel==0.33.4
