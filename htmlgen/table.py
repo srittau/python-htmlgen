@@ -205,7 +205,6 @@ class Table(Element):
 
 
 class _TableSection(Element):
-
     def create_row(self):
         """Create a TableRow, append it to this section, and return it."""
         row = TableRow()
@@ -308,7 +307,6 @@ class TableRow(Element):
 
 
 class _TableCellBase(Element):
-
     def __init__(self, element_name, *content):
         super(_TableCellBase, self).__init__(element_name)
         self.extend(content)
@@ -370,10 +368,12 @@ class ColumnGroup(Element):
 
     def create_columns_with_classes(self, *css_classes):
         """Create multiple columns with CSS classes."""
+
         def create_column(css):
             column = self.create_column()
             column.add_css_classes(css)
             return column
+
         return [create_column(css) for css in css_classes]
 
 

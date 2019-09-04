@@ -3,10 +3,11 @@ from typing import Optional, Union
 from htmlgen.element import Element
 from htmlgen.generator import Generator
 
-
 class Link(Element):
     url: Optional[str]
     target: str
     title: Optional[str]
-    def __init__(self, url: Optional[str], *content: Union[str, bytes, Generator]) -> None: ...
+    def __init__(
+        self, url: Optional[str], *content: Union[str, bytes, Generator]
+    ) -> None: ...
     def set_blank_target(self) -> None: ...

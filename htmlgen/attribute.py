@@ -245,7 +245,6 @@ class list_html_attribute(object):
 
 
 class data_attribute(html_attribute):
-
     def __init__(self, data_name, default=None):
         attribute_name = "data-" + data_name
         super(data_attribute, self).__init__(attribute_name, default)

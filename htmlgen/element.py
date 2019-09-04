@@ -16,9 +16,11 @@ else:
 
 def is_element(o, element_name):
     """Return whether a given object is a certain element generator."""
-    return (hasattr(o, "__iter__") and
-            hasattr(o, "element_name") and
-            o.element_name == element_name)
+    return (
+        hasattr(o, "__iter__")
+        and hasattr(o, "element_name")
+        and o.element_name == element_name
+    )
 
 
 class ElementBase(Generator):
@@ -172,8 +174,9 @@ class ElementBase(Generator):
 
     @property
     def _style_value(self):
-        rendered_styles = [name + ": " + value
-                           for name, value in self._styles.items()]
+        rendered_styles = [
+            name + ": " + value for name, value in self._styles.items()
+        ]
         return "; ".join(rendered_styles)
 
 

@@ -1,28 +1,34 @@
 import re
 from unittest import TestCase
 
-from asserts import (assert_false, assert_true, assert_equal, assert_is_none,
-                     assert_raises)
+from asserts import (
+    assert_false,
+    assert_true,
+    assert_equal,
+    assert_is_none,
+    assert_raises,
+)
 
 from htmlgen.element import Element, VoidElement, NonVoidElement
 
 
 class NonVoidElementTest(TestCase):
-
     def test_generate_children(self):
         class TestingElement(NonVoidElement):
             def generate_children(self):
                 yield "Hello World!"
                 yield VoidElement("br")
+
         element = TestingElement("div")
-        assert_equal([b"<div>", b"Hello World!", b"<br/>", b"</div>"],
-                     list(iter(element)))
+        assert_equal(
+            [b"<div>", b"Hello World!", b"<br/>", b"</div>"],
+            list(iter(element)),
+        )
 
 
 # Some lines below are marked "type: ignore".
 # See https://github.com/python/mypy/issues/220 for details.
 class ElementTest(TestCase):
-
     def test_true(self):
         assert_true(Element("div"))
 
@@ -51,7 +57,8 @@ class ElementTest(TestCase):
         element.append_raw("&lt;bar&gt;")
         assert_equal(
             [b"<div>", b"&lt;foo&gt;", b"&amp;", b"&lt;bar&gt;", b"</div>"],
-            list(iter(element)))
+            list(iter(element)),
+        )
 
     def test_attributes(self):
         element = Element("div")
@@ -70,8 +77,9 @@ class ElementTest(TestCase):
         element.set_attribute("def", "")
         element.set_attribute("abc", "")
         element.set_attribute("ghi", "")
-        assert_equal([b'<div abc="" def="" ghi="">', b"</div>"],
-                     list(iter(element)))
+        assert_equal(
+            [b'<div abc="" def="" ghi="">', b"</div>"], list(iter(element))
+        )
 
     def test_get_attribute(self):
         element = Element("div")
@@ -84,7 +92,7 @@ class ElementTest(TestCase):
         element.set_attribute("foo", "bar")
         element.remove_attribute("foo")
         assert_is_none(element.get_attribute("foo"))
-        assert_equal([b'<div>', b"</div>"], list(iter(element)))
+        assert_equal([b"<div>", b"</div>"], list(iter(element)))
 
     def test_attribute_names(self):
         element = Element("div")
@@ -96,7 +104,7 @@ class ElementTest(TestCase):
     def test_add_one_css_classes(self):
         element = Element("div")
         element.add_css_classes("foo")
-        assert_equal([b'<div class="foo">', b'</div>'], list(iter(element)))
+        assert_equal([b'<div class="foo">', b"</div>"], list(iter(element)))
 
     def test_add_multiple_css_classes(self):
         element = Element("div")
@@ -129,8 +137,10 @@ class ElementTest(TestCase):
     def test_set_one_style(self):
         element = Element("div")
         element.set_style("background-color", "rgb(255, 0, 0)")
-        assert_equal([b'<div style="background-color: rgb(255, 0, 0)">',
-                      b'</div>'], list(iter(element)))
+        assert_equal(
+            [b'<div style="background-color: rgb(255, 0, 0)">', b"</div>"],
+            list(iter(element)),
+        )
 
     def test_set_multiple_styles(self):
         element = Element("div")
@@ -141,9 +151,14 @@ class ElementTest(TestCase):
         assert matches is not None
         css_classes = matches.group(1).split("; ")
         css_classes.sort()
-        assert_equal(["background-color: rgb(255, 0, 0)",
-                      "color: black",
-                      "display: block"], css_classes)
+        assert_equal(
+            [
+                "background-color: rgb(255, 0, 0)",
+                "color: black",
+                "display: block",
+            ],
+            css_classes,
+        )
 
     def test_id(self):
         element = Element("div")
@@ -152,10 +167,10 @@ class ElementTest(TestCase):
         assert_equal('<div id="Test-ID"></div>', str(element))
         element.id = ""
         assert_is_none(element.id)
-        assert_equal('<div></div>', str(element))
+        assert_equal("<div></div>", str(element))
         element.id = None
         assert_is_none(element.id)
-        assert_equal('<div></div>', str(element))
+        assert_equal("<div></div>", str(element))
 
     def test_id_space(self):
         element = Element("div")
@@ -166,8 +181,10 @@ class ElementTest(TestCase):
         element = Element("div")
         element.data["foo"] = "bar"
         element.data["abc-def"] = "Another Value"
-        assert_equal([b'<div data-abc-def="Another Value" data-foo="bar">',
-                      b"</div>"], list(iter(element)))
+        assert_equal(
+            [b'<div data-abc-def="Another Value" data-foo="bar">', b"</div>"],
+            list(iter(element)),
+        )
 
     def test_data_get(self):
         element = Element("div")
@@ -189,7 +206,7 @@ class ElementTest(TestCase):
         element = Element("div")
         element.data["foo"] = "bar"
         del element.data["foo"]
-        assert_equal([b'<div>', b"</div>"], list(iter(element)))
+        assert_equal([b"<div>", b"</div>"], list(iter(element)))
 
     def test_data_delete_unknown(self):
         element = Element("div")
@@ -200,14 +217,16 @@ class ElementTest(TestCase):
         element = Element("div")
         element.data = {"old": "xxx", "foo": "old-value"}  # type: ignore
         element.data.clear()
-        assert_equal([b'<div>', b"</div>"], list(iter(element)))
+        assert_equal([b"<div>", b"</div>"], list(iter(element)))
 
     def test_data_replace(self):
         element = Element("div")
         element.data = {"old": "xxx", "foo": "old-value"}  # type: ignore
         element.data = {"foo": "bar", "abc": "def"}  # type: ignore
-        assert_equal([b'<div data-abc="def" data-foo="bar">', b"</div>"],
-                     list(iter(element)))
+        assert_equal(
+            [b'<div data-abc="def" data-foo="bar">', b"</div>"],
+            list(iter(element)),
+        )
 
     def test_data_iteration(self):
         element = Element("div")
@@ -237,10 +256,9 @@ class ElementTest(TestCase):
 
 
 class ShortElementTest(TestCase):
-
     def test_empty(self):
         element = VoidElement("br")
-        assert_equal([b'<br/>'], list(iter(element)))
+        assert_equal([b"<br/>"], list(iter(element)))
 
     def test_attribute(self):
         element = VoidElement("br")

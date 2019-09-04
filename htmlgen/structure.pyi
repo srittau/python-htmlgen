@@ -1,7 +1,6 @@
 from .element import Element
 from .generator import GenValue
 
-
 class Section(Element):
     def __init__(self) -> None: ...
 

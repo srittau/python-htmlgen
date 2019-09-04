@@ -1,32 +1,54 @@
 import datetime
 from unittest import TestCase
 
-from asserts import (assert_false, assert_true,
-                     assert_is_none,
-                     assert_equal, assert_is,
-                     assert_raises)
+from asserts import (
+    assert_false,
+    assert_true,
+    assert_is_none,
+    assert_equal,
+    assert_is,
+    assert_raises,
+)
 
 from htmlgen import (
-    Span, Form, Input, TextInput, SubmitButton, Button,
-    NumberInput, SearchInput, PasswordInput, DateInput, TimeInput, FileInput,
-    Checkbox, RadioButton, TextArea, Select, OptionGroup, Option, Label)
+    Span,
+    Form,
+    Input,
+    TextInput,
+    SubmitButton,
+    Button,
+    NumberInput,
+    SearchInput,
+    PasswordInput,
+    DateInput,
+    TimeInput,
+    FileInput,
+    Checkbox,
+    RadioButton,
+    TextArea,
+    Select,
+    OptionGroup,
+    Option,
+    Label,
+)
 
 
 class FormTest(TestCase):
-
     def test_implicit_arguments(self):
         form = Form("PUT", "/test")
         assert_equal("PUT", form.method)
         assert_equal("/test", form.url)
         assert_equal("_self", form.target)
-        assert_equal([b'<form action="/test" method="PUT">', b"</form>"],
-                     list(iter(form)))
+        assert_equal(
+            [b'<form action="/test" method="PUT">', b"</form>"],
+            list(iter(form)),
+        )
 
     def test_default_arguments(self):
         form = Form()
         assert_equal("GET", form.method)
         assert_equal("", form.url)
-        assert_equal([b'<form>', b"</form>"], list(iter(form)))
+        assert_equal([b"<form>", b"</form>"], list(iter(form)))
 
     def test_target(self):
         form = Form()
@@ -51,14 +73,14 @@ class FormTest(TestCase):
 
 
 class InputTest(TestCase):
-
     def test_with_name(self):
         input_ = Input("number", "my-name")
         assert_equal("number", input_.type)
         assert_equal("my-name", input_.name)
         assert_equal("", input_.value)
-        assert_equal([b'<input name="my-name" type="number"/>'],
-                     list(iter(input_)))
+        assert_equal(
+            [b'<input name="my-name" type="number"/>'], list(iter(input_))
+        )
 
     def test_defaults(self):
         input_ = Input()
@@ -71,41 +93,47 @@ class InputTest(TestCase):
         input_.placeholder = "Foo"
         input_.size = 5
         input_.value = "My Value"
-        assert_equal([b'<input placeholder="Foo" size="5" type="text" '
-                      b'value="My Value"/>'],
-                     list(iter(input_)))
+        assert_equal(
+            [
+                b'<input placeholder="Foo" size="5" type="text" '
+                b'value="My Value"/>'
+            ],
+            list(iter(input_)),
+        )
 
     def test_boolean_attributes(self):
         input_ = Input()
         input_.disabled = True
         input_.focus = True
         input_.readonly = True
-        assert_equal([b'<input autofocus="autofocus" disabled="disabled" '
-                      b'readonly="readonly" type="text"/>'],
-                     list(iter(input_)))
+        assert_equal(
+            [
+                b'<input autofocus="autofocus" disabled="disabled" '
+                b'readonly="readonly" type="text"/>'
+            ],
+            list(iter(input_)),
+        )
 
 
 class TextInputTest(TestCase):
-
     def test_defaults(self):
         input_ = TextInput()
         assert_equal("text", input_.type)
         assert_equal("", input_.name)
         assert_equal("", input_.value)
-        assert_equal([b'<input type="text"/>'],
-                     list(iter(input_)))
+        assert_equal([b'<input type="text"/>'], list(iter(input_)))
 
     def test_with_arguments(self):
         input_ = TextInput("my-text", "Default Value")
         assert_equal("my-text", input_.name)
         assert_equal("Default Value", input_.value)
-        assert_equal([b'<input name="my-text" type="text" '
-                      b'value="Default Value"/>'],
-                     list(iter(input_)))
+        assert_equal(
+            [b'<input name="my-text" type="text" ' b'value="Default Value"/>'],
+            list(iter(input_)),
+        )
 
 
 class SearchInputTest(TestCase):
-
     def test_defaults(self):
         search = SearchInput()
         assert_equal("search", search.type)
@@ -120,24 +148,22 @@ class SearchInputTest(TestCase):
 
 
 class PasswordInputTest(TestCase):
-
     def test_defaults(self):
         input_ = PasswordInput()
         assert_equal("password", input_.type)
         assert_equal("", input_.name)
         assert_equal("", input_.value)
-        assert_equal([b'<input type="password"/>'],
-                     list(iter(input_)))
+        assert_equal([b'<input type="password"/>'], list(iter(input_)))
 
     def test_with_arguments(self):
         input_ = PasswordInput("my-pw")
         assert_equal("my-pw", input_.name)
-        assert_equal([b'<input name="my-pw" type="password"/>'],
-                     list(iter(input_)))
+        assert_equal(
+            [b'<input name="my-pw" type="password"/>'], list(iter(input_))
+        )
 
 
 class NumberInputTest(TestCase):
-
     def test_defaults(self):
         number = NumberInput()
         assert_equal("number", number.type)
@@ -151,8 +177,9 @@ class NumberInputTest(TestCase):
         assert_equal("my-number", number.name)
         assert_equal("3.4", number.value)
         assert_equal(3.4, number.number)
-        assert_equal('<input name="my-number" type="number" value="3.4"/>',
-                     str(number))
+        assert_equal(
+            '<input name="my-number" type="number" value="3.4"/>', str(number)
+        )
 
     def test_value_zero(self):
         number = NumberInput(number=0)
@@ -165,12 +192,13 @@ class NumberInputTest(TestCase):
         number.minimum = 4.1
         number.maximum = 10.5
         number.step = 0.8
-        assert_equal('<input max="10.5" min="4.1" step="0.8" type="number"/>',
-                     str(number))
+        assert_equal(
+            '<input max="10.5" min="4.1" step="0.8" type="number"/>',
+            str(number),
+        )
 
 
 class DateInputTest(TestCase):
-
     def test_defaults(self):
         input_ = DateInput()
         assert_equal("date", input_.type)
@@ -184,8 +212,10 @@ class DateInputTest(TestCase):
         assert_equal("my-date", input_.name)
         assert_equal(datetime.date(2014, 3, 22), input_.date)
         assert_equal("2014-03-22", input_.value)
-        assert_equal('<input name="my-date" type="date" value="2014-03-22"/>',
-                     str(input_))
+        assert_equal(
+            '<input name="my-date" type="date" value="2014-03-22"/>',
+            str(input_),
+        )
 
     def test_value(self):
         input_ = DateInput()
@@ -200,7 +230,6 @@ class DateInputTest(TestCase):
 
 
 class TimeInputTest(TestCase):
-
     def test_defaults(self):
         time = TimeInput()
         assert_equal("", time.name)
@@ -214,15 +243,18 @@ class TimeInputTest(TestCase):
         time = TimeInput("time-name", datetime.time(14, 30, 12))
         assert_equal("time-name", time.name)
         assert_equal(datetime.time(14, 30, 12), time.time)
-        assert_equal('<input name="time-name" type="time" '
-                     'value="14:30:12"/>', str(time))
+        assert_equal(
+            '<input name="time-name" type="time" ' 'value="14:30:12"/>',
+            str(time),
+        )
 
     def test_minimum_maximum(self):
         time = TimeInput()
         time.minimum = datetime.time(12, 14)
         time.maximum = datetime.time(19, 45)
-        assert_equal('<input max="19:45:00" min="12:14:00" type="time"/>',
-                     str(time))
+        assert_equal(
+            '<input max="19:45:00" min="12:14:00" type="time"/>', str(time)
+        )
         time.minimum = None
         time.maximum = None
         assert_equal('<input type="time"/>', str(time))
@@ -266,7 +298,6 @@ class TimeInputTest(TestCase):
 
 
 class CheckboxTest(TestCase):
-
     def test_defaults(self):
         checkbox = Checkbox()
         assert_equal("checkbox", checkbox.type)
@@ -281,18 +312,19 @@ class CheckboxTest(TestCase):
         assert_equal("my-value", checkbox.value)
         assert_equal(
             '<input name="my-name" type="checkbox" value="my-value"/>',
-            str(checkbox))
+            str(checkbox),
+        )
 
     def test_checked(self):
         checkbox = Checkbox()
         checkbox.checked = True
         assert_true(checkbox.checked)
         assert_equal(
-            '<input checked="checked" type="checkbox"/>', str(checkbox))
+            '<input checked="checked" type="checkbox"/>', str(checkbox)
+        )
 
 
 class RadioButtonTest(TestCase):
-
     def test_defaults(self):
         radio = RadioButton()
         assert_equal("radio", radio.type)
@@ -306,19 +338,17 @@ class RadioButtonTest(TestCase):
         assert_equal("my-name", radio.name)
         assert_equal("my-value", radio.value)
         assert_equal(
-            '<input name="my-name" type="radio" value="my-value"/>',
-            str(radio))
+            '<input name="my-name" type="radio" value="my-value"/>', str(radio)
+        )
 
     def test_checked(self):
         radio = RadioButton()
         radio.checked = True
         assert_true(radio.checked)
-        assert_equal(
-            '<input checked="checked" type="radio"/>', str(radio))
+        assert_equal('<input checked="checked" type="radio"/>', str(radio))
 
 
 class FileInputTest(TestCase):
-
     def test_defaults(self):
         file_input = FileInput()
         assert_equal("", file_input.name)
@@ -346,29 +376,32 @@ class FileInputTest(TestCase):
         file_input.accept.append("image/gif")
         assert_equal(["image/png", "image/jpeg"], file_input.accept)
         assert_equal(
-            "image/png,image/jpeg", file_input.get_attribute("accept"))
-        assert_equal('<input accept="image/png,image/jpeg" type="file"/>',
-                     str(file_input))
+            "image/png,image/jpeg", file_input.get_attribute("accept")
+        )
+        assert_equal(
+            '<input accept="image/png,image/jpeg" type="file"/>',
+            str(file_input),
+        )
 
 
 class HiddenInputTest(TestCase):
-
     def test_construct(self):
         button = SubmitButton("My Label")
         assert_equal("My Label", button.label)
         assert_equal("My Label", button.value)
-        assert_equal([b'<input type="submit" value="My Label"/>'],
-                     list(iter(button)))
+        assert_equal(
+            [b'<input type="submit" value="My Label"/>'], list(iter(button))
+        )
 
 
 class SubmitButtonTest(TestCase):
-    
     def test_construct(self):
         button = SubmitButton("My Label")
         assert_equal("My Label", button.label)
         assert_equal("My Label", button.value)
-        assert_equal([b'<input type="submit" value="My Label"/>'],
-                     list(iter(button)))
+        assert_equal(
+            [b'<input type="submit" value="My Label"/>'], list(iter(button))
+        )
 
     def test_label(self):
         button = SubmitButton("")
@@ -381,25 +414,22 @@ class SubmitButtonTest(TestCase):
 
 
 class ButtonTest(TestCase):
-
     def test_with_children(self):
         button = Button("Foo", "bar")
         assert_equal("<button>Foobar</button>", str(button))
 
 
 class TextAreaTest(TestCase):
-
     def test_with_name(self):
         text_area = TextArea("my-name")
         assert_equal('<textarea name="my-name"></textarea>', str(text_area))
 
     def test_without_name(self):
         text_area = TextArea()
-        assert_equal('<textarea></textarea>', str(text_area))
+        assert_equal("<textarea></textarea>", str(text_area))
 
 
 class SelectTest(TestCase):
-
     def test_attributes(self):
         select = Select()
         assert_false(select.disabled)
@@ -412,35 +442,41 @@ class SelectTest(TestCase):
     def test_without_name(self):
         select = Select()
         assert_equal("", select.name)
-        assert_equal('<select></select>', str(select))
+        assert_equal("<select></select>", str(select))
 
     def test_create_group(self):
         select = Select()
         group = select.create_group("Group Label")
         assert_equal("Group Label", group.label)
-        assert_equal('<select><optgroup label="Group Label"></optgroup>'
-                     '</select>', str(select))
+        assert_equal(
+            '<select><optgroup label="Group Label"></optgroup>' "</select>",
+            str(select),
+        )
 
     def test_create_option(self):
         select = Select()
         select.create_option("Option Label")
-        assert_equal('<select><option>Option Label</option></select>',
-                     str(select))
+        assert_equal(
+            "<select><option>Option Label</option></select>", str(select)
+        )
 
     def test_create_option__selected(self):
         select = Select()
-        option = select.create_option("Option Label", "test-value",
-                                      selected=True)
+        option = select.create_option(
+            "Option Label", "test-value", selected=True
+        )
         assert_is(option, select.selected_option)
         assert_equal(
             '<select><option selected="selected" value="test-value">'
-            'Option Label</option></select>',
-            str(select))
+            "Option Label</option></select>",
+            str(select),
+        )
 
     def test_create_option__option_object(self):
         select = Select()
-        option = select.create_option("Option Label", "test-value",
-                                      selected=True)
+        option = select.create_option(
+            "Option Label", "test-value", selected=True
+        )
         assert_equal("option", option.element_name)
         assert_equal("test-value", option.value)
         assert_true(option.selected)
@@ -557,7 +593,6 @@ class SelectTest(TestCase):
 
 
 class OptionGroupTest(TestCase):
-
     def test_default(self):
         group = OptionGroup("Test Label")
         assert_equal("Test Label", group.label)
@@ -567,54 +602,58 @@ class OptionGroupTest(TestCase):
     def test_disabled(self):
         group = OptionGroup("Test Label")
         group.disabled = True
-        assert_equal('<optgroup disabled="disabled" label="Test Label">'
-                     '</optgroup>', str(group))
+        assert_equal(
+            '<optgroup disabled="disabled" label="Test Label">' "</optgroup>",
+            str(group),
+        )
 
     def create_option(self):
         group = OptionGroup("")
         group.create_option("Option Label")
-        assert_equal('<optgroup label=""><option>Option Label'
-                     '</option></optgroup>', str(group))
+        assert_equal(
+            '<optgroup label=""><option>Option Label' "</option></optgroup>",
+            str(group),
+        )
 
 
 class OptionTest(TestCase):
-
     def test_default_value(self):
         option = Option("Test Label")
         assert_equal("Test Label", option.value)
-        assert_equal('<option>Test Label</option>', str(option))
+        assert_equal("<option>Test Label</option>", str(option))
         assert_false(option.selected)
         assert_false(option.disabled)
 
     def test_with_value(self):
         option = Option("Test Label", "test-value")
         assert_equal("test-value", option.value)
-        assert_equal('<option value="test-value">Test Label</option>',
-                     str(option))
+        assert_equal(
+            '<option value="test-value">Test Label</option>', str(option)
+        )
 
     def test_set_value(self):
         option = Option("Test Label")
         option.value = "test-value"
         assert_equal("test-value", option.value)
-        assert_equal('<option value="test-value">Test Label</option>',
-                     str(option))
+        assert_equal(
+            '<option value="test-value">Test Label</option>', str(option)
+        )
 
     def test_set_value_to_none(self):
         option = Option("Test Label", "test-value")
         option.value = None
         assert_equal("Test Label", option.value)
-        assert_equal('<option>Test Label</option>', str(option))
+        assert_equal("<option>Test Label</option>", str(option))
 
 
 class LabelTest(TestCase):
-
     def test_default(self):
         label = Label()
-        assert_equal('<label></label>', str(label))
+        assert_equal("<label></label>", str(label))
 
     def test_children(self):
         label = Label("Foo", Span())
-        assert_equal('<label>Foo<span></span></label>', str(label))
+        assert_equal("<label>Foo<span></span></label>", str(label))
 
     def test_for(self):
         label = Label()

@@ -6,7 +6,6 @@ from htmlgen import Division, Paragraph, Preformatted
 
 
 class DivisionTest(TestCase):
-
     def test_without_initial_content(self):
         div = Division()
         div.append("Test")
@@ -19,7 +18,6 @@ class DivisionTest(TestCase):
 
 
 class ParagraphTest(TestCase):
-
     def test_without_initial_content(self):
         p = Paragraph()
         p.append("Test")
@@ -28,12 +26,12 @@ class ParagraphTest(TestCase):
     def test_with_initial_content(self):
         p = Paragraph("Initial", "test")
         p.append("content")
-        assert_equal([b"<p>", b"Initial", b"test", b"content", b"</p>"],
-                     list(iter(p)))
+        assert_equal(
+            [b"<p>", b"Initial", b"test", b"content", b"</p>"], list(iter(p))
+        )
 
 
 class PreformattedTest(TestCase):
-
     def test_render(self):
         div = Preformatted()
         div.append("Test")

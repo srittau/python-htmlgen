@@ -4,4 +4,6 @@ from typing import Union
 from htmlgen.element import Element
 
 class Time(Element):
-    def __init__(self, date: Union[datetime.datetime, datetime.date]) -> None: ...
+    def __init__(
+        self, date: Union[datetime.datetime, datetime.date]
+    ) -> None: ...

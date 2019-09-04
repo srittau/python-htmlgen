@@ -8,7 +8,6 @@ from test_htmlgen.util import parse_short_tag
 
 
 class ImageTest(TestCase):
-
     def test_attributes(self):
         image = Image("my-image.png", "Alternate text")
         assert_equal("my-image.png", image.url)

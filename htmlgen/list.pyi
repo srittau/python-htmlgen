@@ -3,10 +3,13 @@ from typing import Optional, Union, List, Tuple
 from htmlgen.element import Element
 from htmlgen.generator import Generator
 
-
 class _ListBase(Element):
-    def create_item(self, child: Optional[Union[str, bytes, Generator]] = ...) -> ListItem: ...
-    def create_items(self, *items: Optional[Union[str, bytes, Generator]]) -> List[ListItem]: ...
+    def create_item(
+        self, child: Optional[Union[str, bytes, Generator]] = ...
+    ) -> ListItem: ...
+    def create_items(
+        self, *items: Optional[Union[str, bytes, Generator]]
+    ) -> List[ListItem]: ...
 
 class OrderedList(_ListBase):
     start: int
@@ -20,7 +23,11 @@ class ListItem(Element):
 
 class DescriptionList(Element):
     def __init__(self) -> None: ...
-    def create_item(self, term: Union[str, bytes, Generator], description: Union[str, bytes, Generator]) -> Tuple["DescriptionTerm", "DescriptionDefinition"]: ...
+    def create_item(
+        self,
+        term: Union[str, bytes, Generator],
+        description: Union[str, bytes, Generator],
+    ) -> Tuple["DescriptionTerm", "DescriptionDefinition"]: ...
 
 class DescriptionTerm(Element):
     def __init__(self, *content: Union[str, bytes, Generator]) -> None: ...

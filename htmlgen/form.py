@@ -1,9 +1,14 @@
 import datetime
 import re
 
-from htmlgen.attribute import (html_attribute, boolean_html_attribute,
-                               int_html_attribute, float_html_attribute,
-                               time_html_attribute, list_html_attribute)
+from htmlgen.attribute import (
+    html_attribute,
+    boolean_html_attribute,
+    int_html_attribute,
+    float_html_attribute,
+    time_html_attribute,
+    list_html_attribute,
+)
 from htmlgen.block import Division
 from htmlgen.element import Element, VoidElement, is_element
 from htmlgen.timeutil import parse_rfc3339_partial_time
@@ -204,8 +209,9 @@ class DateInput(Input):
         match = re.match(r"(\d\d\d\d)-(\d\d)-(\d\d)", v)
         if not match:
             return None
-        return datetime.date(int(match.group(1)), int(match.group(2)),
-                             int(match.group(3)))
+        return datetime.date(
+            int(match.group(1)), int(match.group(2)), int(match.group(3))
+        )
 
 
 class TimeInput(Input):
@@ -281,7 +287,6 @@ class TimeInput(Input):
 
 
 class _CheckableInput(Input):
-
     def __init__(self, type_, name, value):
         super(_CheckableInput, self).__init__(type_, name)
         if value:
@@ -502,8 +507,9 @@ class Select(Element):
                 self.selected_option = option
                 break
         else:
-            raise ValueError("no option with value '{}' found".format(
-                selected_value))
+            raise ValueError(
+                "no option with value '{}' found".format(selected_value)
+            )
 
 
 class OptionGroup(Element):

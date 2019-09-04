@@ -2,9 +2,10 @@ from typing import Optional
 
 from .element import VoidElement
 
-
 class Image(VoidElement):
     url: str
     alternate_text: Optional[str]
     title: Optional[str]
-    def __init__(self, url: str, alternate_text: Optional[str] = ...) -> None: ...
+    def __init__(
+        self, url: str, alternate_text: Optional[str] = ...
+    ) -> None: ...

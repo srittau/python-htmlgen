@@ -4,17 +4,19 @@ from unittest import TestCase
 
 from asserts import assert_equal, assert_raises, assert_is_instance, assert_is
 
-from htmlgen.generator import (Generator,
-                               NullGenerator,
-                               IteratorGenerator,
-                               ChildGenerator,
-                               HTMLChildGenerator,
-                               JoinGenerator,
-                               HTMLJoinGenerator, generate_html_string)
+from htmlgen.generator import (
+    Generator,
+    NullGenerator,
+    IteratorGenerator,
+    ChildGenerator,
+    HTMLChildGenerator,
+    JoinGenerator,
+    HTMLJoinGenerator,
+    generate_html_string,
+)
 
 
 class _TestingGenerator(Generator):
-
     def __init__(self, items):
         self._items = items
 
@@ -23,7 +25,6 @@ class _TestingGenerator(Generator):
 
 
 class GeneratorTest(TestCase):
-
     def test_empty_generate(self):
         generator = _TestingGenerator([])
         assert_equal([], list(iter(generator)))
@@ -66,20 +67,17 @@ class GeneratorTest(TestCase):
 
 
 class NullGeneratorTest(TestCase):
-    
     def test_generate(self):
         assert_equal([], list(iter(NullGenerator())))
 
 
 class IteratorGeneratorTest(TestCase):
-
     def test_generate(self):
         generator = IteratorGenerator(["foo", "bar"])
         assert_equal([b"foo", b"bar"], list(iter(generator)))
 
 
 class ChildGeneratorTest(TestCase):
-
     def test_append(self):
         generator = ChildGenerator()
         generator.append(u"c1")
@@ -135,7 +133,6 @@ class ChildGeneratorTest(TestCase):
 
 
 class HTMLChildGeneratorTest(TestCase):
-
     def test_append(self):
         generator = HTMLChildGenerator()
         generator.append(u"c1&c2")
@@ -152,8 +149,9 @@ class HTMLChildGeneratorTest(TestCase):
         generator = HTMLChildGenerator()
         generator.append(u"c1")
         generator.extend([_TestingGenerator([u"c2", u"c&3"]), u"<c4>"])
-        assert_equal([b"c1", b"c2", b"c&3", b"&lt;c4&gt;"],
-                     list(iter(generator)))
+        assert_equal(
+            [b"c1", b"c2", b"c&3", b"&lt;c4&gt;"], list(iter(generator))
+        )
 
     def test_extend_raw(self):
         generator = HTMLChildGenerator()
@@ -230,7 +228,6 @@ class HTMLChildGeneratorTest(TestCase):
 
 
 class GenerateHTMLStringTest(TestCase):
-
     def test_wrap_string(self):
         generator = generate_html_string("Test")
         assert_is_instance(generator, HTMLChildGenerator)
@@ -250,7 +247,6 @@ class GenerateHTMLStringTest(TestCase):
 
 
 class JoinGeneratorTest(TestCase):
-
     def test_no_pieces(self):
         generator = JoinGenerator(u"!")
         assert_equal([], list(iter(generator)))
@@ -265,18 +261,20 @@ class JoinGeneratorTest(TestCase):
         sub_generator = ChildGenerator()
         sub_generator.append(u"baz")
         generator.extend([sub_generator])
-        assert_equal([b"foo", b"!", b"bar", b"!", b"baz"], list(iter(generator)))
+        assert_equal(
+            [b"foo", b"!", b"bar", b"!", b"baz"], list(iter(generator))
+        )
 
     def test_glue_is_generator(self):
         glue = ChildGenerator()
         glue.append(u", ")
         generator = JoinGenerator(glue, [u"foo", u"bar", u"baz"])
-        assert_equal([b"foo", b", ", b"bar", b", ", b"baz"],
-                     list(iter(generator)))
+        assert_equal(
+            [b"foo", b", ", b"bar", b", ", b"baz"], list(iter(generator))
+        )
 
 
 class HTMLJoinGeneratorTest(TestCase):
-
     def test_no_pieces(self):
         generator = HTMLJoinGenerator(u"!")
         assert_equal([], list(iter(generator)))
@@ -291,12 +289,15 @@ class HTMLJoinGeneratorTest(TestCase):
         sub_generator = ChildGenerator()
         sub_generator.append(u"<baz>")
         generator.extend([sub_generator])
-        assert_equal([b"foo", b"!", b"&lt;bar&gt;", b"!", b"<baz>"],
-                     list(iter(generator)))
+        assert_equal(
+            [b"foo", b"!", b"&lt;bar&gt;", b"!", b"<baz>"],
+            list(iter(generator)),
+        )
 
     def test_glue_is_generator(self):
         glue = ChildGenerator()
         glue.append(u"<")
         generator = JoinGenerator(glue, [u"foo", u"bar", u"baz"])
-        assert_equal([b"foo", b"<", b"bar", b"<", b"baz"],
-                     list(iter(generator)))
+        assert_equal(
+            [b"foo", b"<", b"bar", b"<", b"baz"], list(iter(generator))
+        )

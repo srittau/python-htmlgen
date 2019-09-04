@@ -3,7 +3,6 @@ from typing import Union
 from htmlgen.element import Element, VoidElement
 from htmlgen.generator import Generator
 
-
 class Span(Element):
     def __init__(self, *content: Union[str, bytes, Generator]) -> None: ...
 
