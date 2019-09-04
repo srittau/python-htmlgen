@@ -78,6 +78,7 @@ class SubmitButton(Input):
     def __init__(self, label: str) -> None: ...
 
 class Button(Element):
+    disabled: bool
     def __init__(self, *content: Union[str, bytes, Generator]) -> None: ...
 
 class TextArea(Element):
