@@ -19,7 +19,6 @@ _ENC_TYPE_MULTI_PART = "multipart/form-data"
 
 
 class Form(Element):
-
     """An HTML <form> element.
 
         >>> form = Form("POST", "/feedback")
@@ -60,7 +59,6 @@ class Form(Element):
 
 
 class Input(VoidElement):
-
     """An HTML <input> element.
 
         >>> input_ = Input("text", "description")
@@ -97,7 +95,6 @@ class Input(VoidElement):
 
 
 class TextInput(Input):
-
     """An HTML text input (<input type="text">) element.
 
         >>> input_ = TextInput("description")
@@ -121,7 +118,6 @@ class TextInput(Input):
 
 
 class SearchInput(Input):
-
     """An HTML search (<input type="search">) element."""
 
     def __init__(self, name=""):
@@ -135,7 +131,6 @@ class SearchInput(Input):
 
 
 class PasswordInput(Input):
-
     """An HTML password input (<input type="password">) element."""
 
     def __init__(self, name=""):
@@ -149,7 +144,6 @@ class PasswordInput(Input):
 
 
 class NumberInput(Input):
-
     """An HTML number input (<input type="number">) element."""
 
     def __init__(self, name="", number=None):
@@ -173,7 +167,6 @@ class NumberInput(Input):
 
 
 class DateInput(Input):
-
     """An HTML date input (<input type="date">) element."""
 
     def __init__(self, name="", date=None):
@@ -215,7 +208,6 @@ class DateInput(Input):
 
 
 class TimeInput(Input):
-
     """An HTML time input (<input type="time">) element."""
 
     def __init__(self, name="", time=None):
@@ -296,7 +288,6 @@ class _CheckableInput(Input):
 
 
 class Checkbox(_CheckableInput):
-
     """An HTML checkbox (<input type="checkbox">) element.
 
     >>> cb = Checkbox("my-name", "my-value")
@@ -309,7 +300,6 @@ class Checkbox(_CheckableInput):
 
 
 class RadioButton(_CheckableInput):
-
     """An HTML radio button (<input type="radio">) element.
 
     >>> cb = RadioButton("my-name", "my-value")
@@ -322,7 +312,6 @@ class RadioButton(_CheckableInput):
 
 
 class FileInput(Input):
-
     """An HTML file input (<input type="file">) element."""
 
     def __init__(self, name=""):
@@ -333,7 +322,6 @@ class FileInput(Input):
 
 
 class HiddenInput(Input):
-
     """A hidden HTML input (<input type="hidden"/>) element."""
 
     def __init__(self, name, value):
@@ -342,7 +330,6 @@ class HiddenInput(Input):
 
 
 class SubmitButton(Input):
-
     """An HTML form submit button (<input type="submit">) element.
 
         >>> button = SubmitButton("My Label")
@@ -370,7 +357,6 @@ class SubmitButton(Input):
 
 
 class Button(Element):
-
     """An HTML <button> element.
 
         >>> button = Button("My Label")
@@ -381,9 +367,10 @@ class Button(Element):
         super(Button, self).__init__("button")
         self.extend(content)
 
+    disabled = boolean_html_attribute("disabled")
+
 
 class TextArea(Element):
-
     """An HTML <textarea> element.
 
         >>> area = TextArea("element-name")
@@ -405,7 +392,6 @@ class TextArea(Element):
 
 
 class Select(Element):
-
     """An HTML selection list (<select>) element.
 
     >>> select = Select("element-name")
@@ -513,10 +499,7 @@ class Select(Element):
 
 
 class OptionGroup(Element):
-
-    """An HTML selection list option group (<optgroup>) element.
-
-    """
+    """An HTML selection list option group (<optgroup>) element."""
 
     def __init__(self, label):
         super(OptionGroup, self).__init__("optgroup")
@@ -533,7 +516,6 @@ class OptionGroup(Element):
 
 
 class Option(Element):
-
     """An HTML selection list option (<option>) element.
 
     >>> option = Option("Label")
@@ -579,7 +561,6 @@ class Option(Element):
 
 
 class Label(Element):
-
     """An HTML label (<label>) element.
 
     >>> str(Label(Checkbox(), " My Label"))

@@ -1,6 +1,11 @@
 News in version 2.0.0
 =====================
 
+API Additions
+-------------
+
+* Add ``Button.disabled``.
+
 Incompatible Changes
 --------------------
 

@@ -418,6 +418,11 @@ class ButtonTest(TestCase):
         button = Button("Foo", "bar")
         assert_equal("<button>Foobar</button>", str(button))
 
+    def test_disabled(self):
+        button = Button()
+        button.disabled = True
+        assert_equal('<button disabled="disabled"></button>', str(button))
+
 
 class TextAreaTest(TestCase):
     def test_with_name(self):
