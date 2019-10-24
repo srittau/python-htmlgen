@@ -1,6 +1,7 @@
 # Python HTML 5 Generator
 
 [![License](https://img.shields.io/pypi/l/htmlgen.svg)](https://pypi.python.org/pypi/htmlgen/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/htmlgen)](https://pypi.python.org/pypi/htmlgen/)
 [![Release](https://img.shields.io/github/release/srittau/python-htmlgen/all.svg)](https://github.com/srittau/python-htmlgen/releases/)
 [![PyPI](https://img.shields.io/pypi/v/htmlgen.svg)](https://pypi.python.org/pypi/htmlgen/)
 [![Travis CI](https://travis-ci.org/srittau/python-htmlgen.svg?branch=master)](https://travis-ci.org/srittau/python-htmlgen)
