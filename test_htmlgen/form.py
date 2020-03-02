@@ -39,8 +39,20 @@ class FormTest(TestCase):
         assert_equal("PUT", form.method)
         assert_equal("/test", form.url)
         assert_equal("_self", form.target)
+        assert_is_none(form.autocomplete)
         assert_equal(
             [b'<form action="/test" method="PUT">', b"</form>"],
+            list(iter(form)),
+        )
+
+    def test_arguments(self):
+        form = Form("PUT", "/test")
+        form.autocomplete = "username"
+        assert_equal(
+            [
+                b'<form action="/test" autocomplete="username" method="PUT">',
+                b"</form>",
+            ],
             list(iter(form)),
         )
 
@@ -90,13 +102,14 @@ class InputTest(TestCase):
 
     def test_attributes(self):
         input_ = Input()
-        input_.placeholder = "Foo"
         input_.size = 5
         input_.value = "My Value"
+        input_.autocomplete = "username"
+        input_.placeholder = "Foo"
         assert_equal(
             [
-                b'<input placeholder="Foo" size="5" type="text" '
-                b'value="My Value"/>'
+                b'<input autocomplete="username" placeholder="Foo" size="5" '
+                b'type="text" value="My Value"/>'
             ],
             list(iter(input_)),
         )
@@ -433,11 +446,20 @@ class TextAreaTest(TestCase):
         text_area = TextArea()
         assert_equal("<textarea></textarea>", str(text_area))
 
+    def test_attributes(self):
+        text_area = TextArea()
+        text_area.autocomplete = "username"
+        assert_equal(
+            '<textarea autocomplete="username"></textarea>', str(text_area),
+        )
+
 
 class SelectTest(TestCase):
     def test_attributes(self):
         select = Select()
+        select.autocomplete = "username"
         assert_false(select.disabled)
+        assert_equal('<select autocomplete="username"></select>', str(select))
 
     def test_with_name(self):
         select = Select("my-name")

@@ -34,7 +34,7 @@ class Form(Element):
     """
 
     def __init__(self, method="GET", url=""):
-        super(Form, self).__init__("form")
+        super().__init__("form")
         self.method = method
         self.url = url
 
@@ -42,6 +42,7 @@ class Form(Element):
     url = html_attribute("action", default="")
     target = html_attribute("target", "_self")
     encryption_type = html_attribute("enctype", _ENC_TYPE_URL_ENCODED)
+    autocomplete = html_attribute("autocomplete")
 
     def set_blank_target(self):
         self.target = "_blank"
@@ -80,7 +81,7 @@ class Input(VoidElement):
         submitting a form.
 
         """
-        super(Input, self).__init__("input")
+        super().__init__("input")
         self.type = type_
         self.name = name
 
@@ -89,6 +90,7 @@ class Input(VoidElement):
     readonly = boolean_html_attribute("readonly")
     disabled = boolean_html_attribute("disabled")
     type = html_attribute("type")
+    autocomplete = html_attribute("autocomplete")
     placeholder = html_attribute("placeholder")
     size = int_html_attribute("size")
     focus = boolean_html_attribute("autofocus")
@@ -380,7 +382,7 @@ class TextArea(Element):
     """
 
     def __init__(self, name=""):
-        super(TextArea, self).__init__("textarea")
+        super().__init__("textarea")
         self.name = name
 
     name = html_attribute("name", default="")
@@ -388,6 +390,7 @@ class TextArea(Element):
     disabled = boolean_html_attribute("disabled")
     columns = int_html_attribute("cols")
     rows = int_html_attribute("rows")
+    autocomplete = html_attribute("autocomplete")
     placeholder = html_attribute("placeholder")
 
 
@@ -417,11 +420,12 @@ class Select(Element):
     """
 
     def __init__(self, name=""):
-        super(Select, self).__init__("select")
+        super().__init__("select")
         self.name = name
 
     name = html_attribute("name", default="")
     disabled = boolean_html_attribute("disabled")
+    autocomplete = html_attribute("autocomplete")
 
     def create_group(self, label):
         """Create and append an option group."""

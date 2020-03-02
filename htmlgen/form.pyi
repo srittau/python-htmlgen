@@ -9,6 +9,7 @@ class Form(Element):
     url: str
     target: str
     encryption_type: str
+    autocomplete: Optional[str]
     multipart: bool
     def __init__(self, method: str = ..., url: str = ...) -> None: ...
     def set_blank_target(self) -> None: ...
@@ -19,6 +20,7 @@ class Input(VoidElement):
     readonly: bool
     disabled: bool
     type: str
+    autocomplete: Optional[str]
     placeholder: Optional[str]
     size: Optional[int]
     focus: bool
@@ -87,12 +89,14 @@ class TextArea(Element):
     disabled: bool
     columns: Optional[int]
     rows: Optional[int]
+    autocomplete: Optional[str]
     placeholder: Optional[str]
     def __init__(self, name: str = ...) -> None: ...
 
 class Select(Element):
     name: str
     disabled: bool
+    autocomplete: Optional[str]
     selected_option: Optional[Option]
     selected_value: Optional[str]
     def __init__(self, name: str = ...) -> None: ...
