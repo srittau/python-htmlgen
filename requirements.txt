@@ -1,3 +1,3 @@
 asserts==0.10.0
-mypy==0.770
+mypy==0.780
 wheel==0.34.2
