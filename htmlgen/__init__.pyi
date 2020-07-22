@@ -11,3 +11,4 @@ from .list import *
 from .structure import *
 from .table import *
 from .time import *
+from .video import *

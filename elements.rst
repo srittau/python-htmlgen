@@ -61,3 +61,4 @@ htmlgen currently supports the following HTML elements:
 * <title> - Title
 * <tr> - TableRow
 * <ul> - UnorderedList
+* <video> - Video

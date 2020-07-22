@@ -2,6 +2,7 @@
 
 ## API Additions
 
+* Add `Video` element.
 * Add `Button.disabled`.
 * Add `autocomplete` attribute to `Input`, `TextArea`, `Select`, and `Form`.
 * Add `enum_attribute`.
