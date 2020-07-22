@@ -3,7 +3,6 @@ from .element import VoidElement
 
 
 class Image(VoidElement):
-
     """An HTML image (<img>) element.
 
     Images must have an alternate text description that describes the
@@ -17,11 +16,10 @@ class Image(VoidElement):
         >>> image = Image("whiteboard.jpg",
         ...               "A whiteboard filled with mathematical formulas.")
         >>> image.title = "Whiteboards are a useful tool"
-
     """
 
     def __init__(self, url, alternate_text=""):
-        super(Image, self).__init__("img")
+        super().__init__("img")
         self.url = url
         self.alternate_text = alternate_text
 

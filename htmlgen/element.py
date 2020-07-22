@@ -1,17 +1,6 @@
-import sys
+from html import escape
 
 from htmlgen.generator import Generator, HTMLChildGenerator
-
-if sys.version_info[0] < 3:
-    from cgi import escape
-else:
-    from html import escape
-
-# TODO: Python 3: remove
-if sys.version_info[0] >= 3:
-    str_class = str
-else:
-    str_class = basestring
 
 
 def is_element(o, element_name):
@@ -25,7 +14,7 @@ def is_element(o, element_name):
 
 class ElementBase(Generator):
     def __init__(self, element_name):
-        super(ElementBase, self).__init__()
+        super().__init__()
         self.element_name = element_name
         self._attributes = {}
         self._css_classes = set()
@@ -73,7 +62,7 @@ class ElementBase(Generator):
             '<div title="Test Title"></div>'
 
         """
-        if not isinstance(name, str_class) or not isinstance(value, str_class):
+        if not isinstance(name, str) or not isinstance(value, str):
             raise TypeError("name and value must be strings")
         self._attributes[name] = value
 
@@ -306,7 +295,7 @@ class Element(NonVoidElement):
     """
 
     def __init__(self, element_name):
-        super(Element, self).__init__(element_name)
+        super().__init__(element_name)
         self.children = HTMLChildGenerator()
 
     def __bool__(self):

@@ -3,7 +3,6 @@ from htmlgen.element import Element
 
 
 class Link(Element):
-
     """An HTML inline link (<a>) element.
 
         >>> link = Link("http://www.example.com/", "caption")
@@ -27,11 +26,10 @@ class Link(Element):
         '<a href="/foo/bar" target="my-window"></a>'
 
     Please refer to the HeadLink class for <link> elements.
-
     """
 
     def __init__(self, url, *content):
-        super(Link, self).__init__("a")
+        super().__init__("a")
         self.url = url
         self.extend(content)
 

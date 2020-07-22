@@ -1,18 +1,8 @@
-import sys
+from html import escape
 from typing import Union, Generator as GeneratorType
 
-if sys.version_info[0] < 3:
-    from cgi import escape
-else:
-    from html import escape
 
-
-# TODO: Python 3: remove
-if sys.version_info[0] >= 3:
-    unicode = str
-
-
-class Generator(object):
+class Generator:
     """Base class for HTML generators.
 
     Sub-classes must implement the generate() method, which returns an
@@ -57,7 +47,7 @@ class Generator(object):
                     self._iterator_stack.append(item.generate())
                 elif isinstance(item, bytes):
                     yield item
-                elif isinstance(item, unicode):
+                elif isinstance(item, str):
                     yield item.encode("utf-8")
                 else:
                     raise TypeError("can not generate {}".format(repr(item)))

@@ -2,7 +2,6 @@ from htmlgen.element import Element
 
 
 class Time(Element):
-
     """An HTML date/time (<time>) element.
 
     >>> from datetime import date, datetime
@@ -14,11 +13,10 @@ class Time(Element):
     >>> time2.append("May 17th, quarter past one")
     >>> str(time2)
     '<time datetime="2014-05-17T13:15:00Z">May 17th, quarter past one</time>'
-
     """
 
     def __init__(self, date):
-        super(Time, self).__init__("time")
+        super().__init__("time")
         if hasattr(date, "hour"):
             formatted = date.strftime("%Y-%m-%dT%H:%M:%SZ")
         else:

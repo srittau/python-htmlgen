@@ -15,7 +15,7 @@ def parse_short_tag(string):
     return tag
 
 
-class Tag(object):
+class Tag:
     def __init__(self, name):
         self.name = name
         self.attributes = {}  # type: Dict[str, str]

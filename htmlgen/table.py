@@ -3,7 +3,6 @@ from htmlgen.element import Element
 
 
 class Table(Element):
-
     """An HTML table (<table>) element.
 
         >>> table = Table()
@@ -37,11 +36,10 @@ class Table(Element):
         >>> table = Table()
         >>> head = table.create_simple_header_row("Column 1", "Column 2")
         >>> row = table.create_simple_row("Content 1", "Content 2")
-
     """
 
     def __init__(self):
-        super(Table, self).__init__("table")
+        super().__init__("table")
         self._head = TableHead()
         self._body = TableBody()
 
@@ -213,7 +211,6 @@ class _TableSection(Element):
 
 
 class TableHead(_TableSection):
-
     """An HTML table head (<thead>) element.
 
         >>> head = TableHead()
@@ -221,15 +218,13 @@ class TableHead(_TableSection):
         >>> row.id = "my-row"
         >>> str(head)
         '<thead><tr id="my-row"></tr></thead>'
-
     """
 
     def __init__(self):
-        super(TableHead, self).__init__("thead")
+        super().__init__("thead")
 
 
 class TableBody(_TableSection):
-
     """An HTML table body (<tbody>) element.
 
         >>> body = TableBody()
@@ -237,15 +232,13 @@ class TableBody(_TableSection):
         >>> row.id = "my-row"
         >>> str(body)
         '<tbody><tr id="my-row"></tr></tbody>'
-
     """
 
     def __init__(self):
-        super(TableBody, self).__init__("tbody")
+        super().__init__("tbody")
 
 
 class TableRow(Element):
-
     """An HTML table row (<tr>) element.
 
         >>> row = TableRow()
@@ -254,11 +247,10 @@ class TableRow(Element):
         >>> cell2.append("Cell 2")
         >>> str(row)
         '<tr><td>Cell 1</td><td>Cell 2</td></tr>'
-
     """
 
     def __init__(self):
-        super(TableRow, self).__init__("tr")
+        super().__init__("tr")
 
     def create_cell(self, content=""):
         """Create a TableCell, append it to this row, and return it.
@@ -308,7 +300,7 @@ class TableRow(Element):
 
 class _TableCellBase(Element):
     def __init__(self, element_name, *content):
-        super(_TableCellBase, self).__init__(element_name)
+        super().__init__(element_name)
         self.extend(content)
 
     rows = int_html_attribute("rowspan", 1)
@@ -316,7 +308,6 @@ class _TableCellBase(Element):
 
 
 class TableHeaderCell(_TableCellBase):
-
     """An HTML table header cell (<th>) element.
 
         >>> cell1 = TableHeaderCell("Content")
@@ -324,15 +315,13 @@ class TableHeaderCell(_TableCellBase):
         >>> cell1.rows = 2
         >>> cell2 = TableHeaderCell()
         >>> cell2.append("Content")
-
     """
 
     def __init__(self, *content):
-        super(TableHeaderCell, self).__init__("th", *content)
+        super().__init__("th", *content)
 
 
 class TableCell(_TableCellBase):
-
     """An HTML table cell (<td>) element.
 
         >>> cell1 = TableCell("Content")
@@ -340,25 +329,22 @@ class TableCell(_TableCellBase):
         >>> cell1.rows = 2
         >>> cell2 = TableCell()
         >>> cell2.append("Content")
-
     """
 
     def __init__(self, *content):
-        super(TableCell, self).__init__("td", *content)
+        super().__init__("td", *content)
 
 
 class ColumnGroup(Element):
-
     """An HTML column group (<colgroup>) element.
 
         >>> group = ColumnGroup()
         >>> col = group.create_column()
         >>> col.add_css_classes("column-class")
-
     """
 
     def __init__(self):
-        super(ColumnGroup, self).__init__("colgroup")
+        super().__init__("colgroup")
 
     def create_column(self):
         """Create a column, append it to this group, and return it."""
@@ -378,8 +364,7 @@ class ColumnGroup(Element):
 
 
 class Column(Element):
-
     """An HTML column (<col>) element."""
 
     def __init__(self):
-        super(Column, self).__init__("col")
+        super().__init__("col")

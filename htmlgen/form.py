@@ -115,7 +115,7 @@ class TextInput(Input):
         The value argument determines the initial content of the text field.
 
         """
-        super(TextInput, self).__init__("text", name)
+        super().__init__("text", name)
         self.value = value
 
 
@@ -129,7 +129,7 @@ class SearchInput(Input):
         submitting a form.
 
         """
-        super(SearchInput, self).__init__("search", name)
+        super().__init__("search", name)
 
 
 class PasswordInput(Input):
@@ -142,7 +142,7 @@ class PasswordInput(Input):
         submitting a form.
 
         """
-        super(PasswordInput, self).__init__("password", name)
+        super().__init__("password", name)
 
 
 class NumberInput(Input):
@@ -158,7 +158,7 @@ class NumberInput(Input):
         this input element.
 
         """
-        super(NumberInput, self).__init__("number", name)
+        super().__init__("number", name)
         if number is not None:
             self.number = number
 
@@ -181,7 +181,7 @@ class DateInput(Input):
         empty.
 
         """
-        super(DateInput, self).__init__("date", name)
+        super().__init__("date", name)
         self.date = date
 
     @property
@@ -222,7 +222,7 @@ class TimeInput(Input):
         empty.
 
         """
-        super(TimeInput, self).__init__("time", name)
+        super().__init__("time", name)
         self.time = time
 
     time = time_html_attribute("value")
@@ -282,7 +282,7 @@ class TimeInput(Input):
 
 class _CheckableInput(Input):
     def __init__(self, type_, name, value):
-        super(_CheckableInput, self).__init__(type_, name)
+        super().__init__(type_, name)
         if value:
             self.value = value
 
@@ -298,7 +298,7 @@ class Checkbox(_CheckableInput):
     """
 
     def __init__(self, name="", value=""):
-        super(Checkbox, self).__init__("checkbox", name, value)
+        super().__init__("checkbox", name, value)
 
 
 class RadioButton(_CheckableInput):
@@ -310,14 +310,14 @@ class RadioButton(_CheckableInput):
     """
 
     def __init__(self, name="", value=""):
-        super(RadioButton, self).__init__("radio", name, value)
+        super().__init__("radio", name, value)
 
 
 class FileInput(Input):
     """An HTML file input (<input type="file">) element."""
 
     def __init__(self, name=""):
-        super(FileInput, self).__init__("file", name)
+        super().__init__("file", name)
 
     max_length = int_html_attribute("maxlength")
     accept = list_html_attribute("accept")
@@ -327,7 +327,7 @@ class HiddenInput(Input):
     """A hidden HTML input (<input type="hidden"/>) element."""
 
     def __init__(self, name, value):
-        super(HiddenInput, self).__init__("hidden", name)
+        super().__init__("hidden", name)
         self.value = value
 
 
@@ -346,7 +346,7 @@ class SubmitButton(Input):
     """
 
     def __init__(self, label):
-        super(SubmitButton, self).__init__("submit")
+        super().__init__("submit")
         self.value = label
 
     @property
@@ -366,7 +366,7 @@ class Button(Element):
     """
 
     def __init__(self, *content):
-        super(Button, self).__init__("button")
+        super().__init__("button")
         self.extend(content)
 
     disabled = boolean_html_attribute("disabled")
@@ -506,7 +506,7 @@ class OptionGroup(Element):
     """An HTML selection list option group (<optgroup>) element."""
 
     def __init__(self, label):
-        super(OptionGroup, self).__init__("optgroup")
+        super().__init__("optgroup")
         self.label = label
 
     label = html_attribute("label")
@@ -532,7 +532,7 @@ class Option(Element):
     """
 
     def __init__(self, label, value=None):
-        super(Option, self).__init__("option")
+        super().__init__("option")
         self.value = value
         self.append(label)
 
@@ -573,7 +573,7 @@ class Label(Element):
     """
 
     def __init__(self, *children):
-        super(Label, self).__init__("label")
+        super().__init__("label")
         self.extend(children)
 
     for_ = html_attribute("for")

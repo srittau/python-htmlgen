@@ -8,7 +8,6 @@ MIME_JSON = "application/json"
 
 
 class Document(Generator):
-
     """An HTML document.
 
     A document consists of a doctype declaration and the HTML root tag.
@@ -34,11 +33,10 @@ class Document(Generator):
         >>> doc.add_script("my-script.js")
         >>> doc.add_stylesheet("style.css")
         >>> doc.append_body(Element("div"))
-
     """
 
     def __init__(self, title=None, language="en"):
-        super(Document, self).__init__()
+        super().__init__()
         self.root = HTMLRoot(title=title, language=language)
 
     def generate(self):
@@ -73,7 +71,6 @@ class Document(Generator):
 
 
 class HTMLRoot(NonVoidElement):
-
     """HTML root (<html>) element.
 
         >>> root = HTMLRoot(title="My Page")
@@ -85,11 +82,10 @@ class HTMLRoot(NonVoidElement):
 
         >>> root.head = Head()
         >>> root.body = Body()
-
     """
 
     def __init__(self, title="", language="en"):
-        super(HTMLRoot, self).__init__("html")
+        super().__init__("html")
         self.head = Head(title=title)
         self.body = Body()
         self.set_attribute("xmlns", "http://www.w3.org/1999/xhtml")
@@ -102,7 +98,6 @@ class HTMLRoot(NonVoidElement):
 
 
 class Head(Element):
-
     """HTML document head (<head>) element.
 
     A title element is provided by default, but it can be overwritten:
@@ -116,11 +111,10 @@ class Head(Element):
 
         >>> head.add_stylesheet("style.css")
         >>> head.add_script("script.js")
-
     """
 
     def __init__(self, title=None):
-        super(Head, self).__init__("head")
+        super().__init__("head")
         self._title = Title(title)
         self.append(self._title)
         self.append(Meta.create_charset("utf-8"))
@@ -151,19 +145,17 @@ class Head(Element):
 
 
 class Body(Element):
-
     """HTML body (<body>) element."""
 
     def __init__(self):
-        super(Body, self).__init__("body")
+        super().__init__("body")
 
 
 class Title(NonVoidElement):
-
     """HTML page title (<title>) element."""
 
     def __init__(self, title=None):
-        super(Title, self).__init__("title")
+        super().__init__("title")
         self.title = title or ""
 
     def generate_children(self):
@@ -172,11 +164,10 @@ class Title(NonVoidElement):
 
 
 class Meta(VoidElement):
-
     """HTML meta information (<meta>) element."""
 
     def __init__(self):
-        super(Meta, self).__init__("meta")
+        super().__init__("meta")
 
     @classmethod
     def create_charset(cls, charset):
@@ -186,7 +177,6 @@ class Meta(VoidElement):
 
 
 class Script(NonVoidElement):
-
     """HTML script (<script>) element.
 
     A script element can either point to an external script via the url
@@ -210,12 +200,11 @@ class Script(NonVoidElement):
 
         >>> Script().type
         'text/javascript'
-
     """
 
     def __init__(self, url=None, script=None):
         assert url is None or script is None
-        super(Script, self).__init__("script")
+        super().__init__("script")
         if url:
             self.url = url
         self.script = script
@@ -249,11 +238,10 @@ def json_script(json):
 
 
 class HeadLink(VoidElement):
-
     """HTML meta data link (<link>) element."""
 
     def __init__(self, relation, url):
-        super(HeadLink, self).__init__("link")
+        super().__init__("link")
         self.relation = relation
         self.url = url
 
@@ -266,8 +254,7 @@ class HeadLink(VoidElement):
 
 
 class Main(Element):
-
     """HTML main document content (<main>) element."""
 
     def __init__(self):
-        super(Main, self).__init__("main")
+        super().__init__("main")

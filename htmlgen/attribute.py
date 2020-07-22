@@ -3,8 +3,7 @@ import datetime
 from htmlgen.timeutil import parse_rfc3339_partial_time
 
 
-class html_attribute(object):
-
+class html_attribute:
     """Add an attribute to an HTML element.
 
         >>> from htmlgen import Element
@@ -45,8 +44,7 @@ class html_attribute(object):
             obj.set_attribute(self._attribute_name, value)
 
 
-class boolean_html_attribute(object):
-
+class boolean_html_attribute:
     """Add a boolean attribute to an HTML element.
 
         >>> from htmlgen import Element
@@ -76,8 +74,7 @@ class boolean_html_attribute(object):
             obj.remove_attribute(self._attribute_name)
 
 
-class int_html_attribute(object):
-
+class int_html_attribute:
     """Add an attribute to an HTML element that accepts only integers.
 
         >>> from htmlgen import Element
@@ -121,8 +118,7 @@ class int_html_attribute(object):
             obj.set_attribute(self._attribute_name, str(value))
 
 
-class float_html_attribute(object):
-
+class float_html_attribute:
     """Add an attribute to an HTML element that accepts only numbers.
 
         >>> from htmlgen import Element
@@ -166,8 +162,7 @@ class float_html_attribute(object):
             obj.set_attribute(self._attribute_name, str(value))
 
 
-class time_html_attribute(object):
-
+class time_html_attribute:
     """Add an attribute to an HTML element that accepts only time values.
 
     >>> from htmlgen import Element
@@ -212,8 +207,7 @@ class time_html_attribute(object):
             obj.set_attribute(self._attribute_name, str(value))
 
 
-class list_html_attribute(object):
-
+class list_html_attribute:
     """Add an attribute to an HTML element that accepts a list of strings.
 
     >>> from htmlgen import Element
@@ -250,8 +244,7 @@ class data_attribute(html_attribute):
         super(data_attribute, self).__init__(attribute_name, default)
 
 
-class css_class_attribute(object):
-
+class css_class_attribute:
     """Add a boolean attribute to an HTML element that add a CSS class.
 
     >>> from htmlgen import Element
