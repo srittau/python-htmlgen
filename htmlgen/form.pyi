@@ -14,7 +14,7 @@ class Form(Element):
     url: str
     target: str
     encryption_type: str
-    autocomplete: Optional[str]
+    autocomplete: Optional[Autocomplete]
     multipart: bool
     def __init__(self, method: str = ..., url: str = ...) -> None: ...
     def set_blank_target(self) -> None: ...
