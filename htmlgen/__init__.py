@@ -25,6 +25,7 @@ from .document import (
 )
 from .element import ElementBase, Element, VoidElement, is_element
 from .form import (
+    Autocomplete,
     Form,
     Input,
     TextInput,

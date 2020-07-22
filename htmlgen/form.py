@@ -1,5 +1,6 @@
 import datetime
 import re
+from enum import Enum
 
 from htmlgen.attribute import (
     html_attribute,
@@ -7,7 +8,7 @@ from htmlgen.attribute import (
     int_html_attribute,
     float_html_attribute,
     time_html_attribute,
-    list_html_attribute,
+    list_html_attribute, enum_attribute,
 )
 from htmlgen.block import Division
 from htmlgen.element import Element, VoidElement, is_element
@@ -16,6 +17,11 @@ from htmlgen.timeutil import parse_rfc3339_partial_time
 
 _ENC_TYPE_URL_ENCODED = "application/x-www-form-urlencoded"
 _ENC_TYPE_MULTI_PART = "multipart/form-data"
+
+
+class Autocomplete(Enum):
+    OFF = "off"
+    ON = "on"
 
 
 class Form(Element):
@@ -42,7 +48,7 @@ class Form(Element):
     url = html_attribute("action", default="")
     target = html_attribute("target", "_self")
     encryption_type = html_attribute("enctype", _ENC_TYPE_URL_ENCODED)
-    autocomplete = html_attribute("autocomplete")
+    autocomplete = enum_attribute("autocomplete", Autocomplete)
 
     def set_blank_target(self):
         self.target = "_blank"

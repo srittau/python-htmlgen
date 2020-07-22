@@ -1,15 +1,15 @@
 # News in version 2.0.0
 
+## Incompatible Changes
+
+* Drop support for Python 2.7 and 3.4.
+
 ## API Additions
 
 * Add `Video` element.
 * Add `Button.disabled`.
 * Add `autocomplete` attribute to `Input`, `TextArea`, `Select`, and `Form`.
 * Add `enum_attribute`.
-
-## Incompatible Changes
-
-* Drop support for Python 2.7 and 3.4.
 
 # News in version 1.2.2
 

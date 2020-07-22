@@ -1,8 +1,13 @@
 import datetime
+from enum import Enum
 from typing import List, Union, Optional
 
 from htmlgen.element import Element, VoidElement
 from htmlgen.generator import Generator
+
+class Autocomplete(Enum):
+    OFF: str
+    ON: str
 
 class Form(Element):
     method: str

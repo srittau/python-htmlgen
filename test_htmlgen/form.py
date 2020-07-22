@@ -31,6 +31,7 @@ from htmlgen import (
     Option,
     Label,
 )
+from htmlgen.form import Autocomplete
 
 
 class FormTest(TestCase):
@@ -47,10 +48,10 @@ class FormTest(TestCase):
 
     def test_arguments(self):
         form = Form("PUT", "/test")
-        form.autocomplete = "username"
+        form.autocomplete = Autocomplete.OFF
         assert_equal(
             [
-                b'<form action="/test" autocomplete="username" method="PUT">',
+                b'<form action="/test" autocomplete="off" method="PUT">',
                 b"</form>",
             ],
             list(iter(form)),
