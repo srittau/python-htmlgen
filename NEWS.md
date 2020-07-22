@@ -1,14 +1,10 @@
-# News in version 2.1.0
-
-## API Additions
-
-* Add `autocomplete` attribute to `Input`, `TextArea`, `Select`, and `Form`.
-
 # News in version 2.0.0
 
 ## API Additions
 
 * Add `Button.disabled`.
+* Add `autocomplete` attribute to `Input`, `TextArea`, `Select`, and `Form`.
+* Add `enum_attribute`.
 
 ## Incompatible Changes
 

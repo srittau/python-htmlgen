@@ -1,7 +1,9 @@
 import datetime
+from enum import Enum
 from unittest import TestCase
 
-from asserts import assert_true, assert_false, assert_is_none, assert_equal
+from asserts import assert_true, assert_false, assert_is_none, assert_equal, \
+    assert_raises
 
 from htmlgen.attribute import (
     html_attribute,
@@ -12,6 +14,7 @@ from htmlgen.attribute import (
     list_html_attribute,
     data_attribute,
     css_class_attribute,
+    enum_attribute,
 )
 from htmlgen.element import Element
 
@@ -226,3 +229,51 @@ class HTMLAttributeTest(TestCase):
         assert_true(element.has_css_class("my-class"))
         element.attr = True
         assert_true(element.has_css_class("my-class"))
+
+
+class TestEnum(Enum):
+    FOO = "foo"
+    BAR = "bar"
+
+
+class EnumAttributeTest(TestCase):
+    def test_enum(self):
+        class MyElement(Element):
+            attr = enum_attribute("attr", TestEnum)
+
+        element = MyElement("div")
+        assert_is_none(element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = TestEnum.BAR
+        assert_equal(TestEnum.BAR, element.attr)
+        assert_equal('<div attr="bar"></div>', str(element))
+        element.attr = None
+        assert_is_none(element.attr)
+        assert_equal('<div></div>', str(element))
+
+    def test_default(self):
+        class MyElement(Element):
+            attr = enum_attribute("attr", TestEnum, default=TestEnum.FOO)
+
+        element = MyElement("div")
+        assert_equal(TestEnum.FOO, element.attr)
+        assert_equal("<div></div>", str(element))
+        element.attr = TestEnum.BAR
+        assert_equal(TestEnum.BAR, element.attr)
+        assert_equal('<div attr="bar"></div>', str(element))
+        element.attr = None
+        assert_equal(TestEnum.FOO, element.attr)
+        assert_equal("<div></div>", str(element))
+
+    def test_not_an_enum(self):
+        with assert_raises(TypeError):
+            class MyElement(Element):
+                attr = enum_attribute("attr", "foo")  # type: ignore
+
+    def test_invalid_value(self):
+        class MyElement(Element):
+            attr = enum_attribute("attr", TestEnum)
+
+        element = MyElement("div")
+        with assert_raises(TypeError):
+            element.attr = "foo"  # type: ignore

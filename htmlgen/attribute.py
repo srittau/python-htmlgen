@@ -1,4 +1,5 @@
 import datetime
+from enum import Enum
 
 from htmlgen.timeutil import parse_rfc3339_partial_time
 
@@ -273,3 +274,55 @@ class css_class_attribute:
             obj.add_css_classes(self._css_class)
         else:
             obj.remove_css_classes(self._css_class)
+
+
+class enum_attribute:
+    """Add an attribute to an HTML element that only allows limited values.
+
+        >>> from enum import Enum
+        >>> from htmlgen import Element
+        >>> class MyEnum(Enum):
+        ...     FOO = "foo"
+        ...     BAR = "bar"
+        >>> class MyElement(Element):
+        ...     value = enum_attribute("value", MyEnum)
+        >>> element = MyElement("div")
+        >>> element.value
+        >>> str(element)
+        '<div></div>'
+        >>> element.value = MyEnum.FOO
+        >>> str(element)
+        '<div value="foo"></div>'
+
+    If the optional default argument is given, the attribute will not be
+    included if the value matches it.
+
+        >>> class MyElement(Element):
+        ...     value = enum_attribute("value", MyEnum, default=MyEnum.FOO)
+        >>> element = MyElement("div")
+        >>> element.value
+        MyEnum.FOO
+        >>> str(element)
+        '<div></div>'
+    """
+
+    def __init__(self, attribute_name, enum, default=None):
+        if not issubclass(enum, Enum):
+            raise TypeError("enum must be an Enum class")
+        self._attribute_name = attribute_name
+        self._enum = enum
+        self._default = default
+
+    def __get__(self, obj, _=None):
+        value = obj.get_attribute(self._attribute_name, None)
+        if value is None:
+            return self._default
+        return self._enum(value)
+
+    def __set__(self, obj, value):
+        if value is None:
+            obj.remove_attribute(self._attribute_name)
+        elif not isinstance(value, self._enum):
+            raise TypeError("value must be an {}".format(self._enum))
+        else:
+            obj.set_attribute(self._attribute_name, value.value)
