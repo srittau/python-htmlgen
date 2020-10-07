@@ -15,7 +15,7 @@ setup(
     packages=["htmlgen", "test_htmlgen"],
     package_data={"htmlgen": ["*.pyi", "py.typed"]},
     python_requires=">=3.5",
-    tests_require=["asserts >= 0.8.0, < 0.11"],
+    tests_require=["asserts >= 0.8.0, < 0.12"],
     license="MIT",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
