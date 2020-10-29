@@ -1,3 +1,9 @@
+# News in version 3.0.0
+
+## Incompatible Changes
+
+* Drop support for Python 3.5 and 3.6.
+
 # News in version 2.0.0
 
 ## Incompatible Changes
