@@ -19,6 +19,9 @@ lib
 lib64
 __pycache__
 
+# virtual environments
+.venv*
+
 # mypy
 .mypy_cache
 
