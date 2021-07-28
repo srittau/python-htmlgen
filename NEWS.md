@@ -1,3 +1,9 @@
+# News in version 3.0.1
+
+## Bug Fixes
+
+* Fix import from `collections` instead of `collections.abc` in stubs.
+
 # News in version 3.0.0
 
 ## Incompatible Changes
