@@ -1,2 +1,31 @@
+[tool.poetry]
+name = "htmlgen"
+version = "3.0.0"
+description = "HTML 5 Generator"
+readme = "README.md"
+authors = ["Sebastian Rittau <srittau@rittau.biz>"]
+license = "MIT"
+homepage = "https://github.com/srittau/python-htmlgen"
+repository = "https://github.com/srittau/python-htmlgen"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Text Processing :: Markup :: HTML",
+]
+packages = [{ include = "htmlgen" }, { include = "test_htmlgen" }]
+include = ["*/py.typed", "*.pyi"]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+
+[tool.poetry.dev-dependencies]
+asserts = ">=0.8.0, <0.12"
+mypy = "0.931"
+
 [tool.black]
 line-length = 79
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
