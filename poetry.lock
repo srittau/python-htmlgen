@@ -1,10 +1,10 @@
 [[package]]
 name = "asserts"
-version = "0.11.1"
+version = "0.12.0"
 description = "Stand-alone Assertions"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [[package]]
 name = "mypy"
@@ -60,11 +60,12 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7"
-content-hash = "601b9f8fb4869d770adeef9ecec1231979bf0a73db58932df6766d0e53f62de6"
+content-hash = "49566d959b669ea74a24e4848b53866fba19d5d8df135af1330b86577c0af37a"
 
 [metadata.files]
 asserts = [
-    {file = "asserts-0.11.1-py2.py3-none-any.whl", hash = "sha256:dfe3a45a311c727f516e9375eac85e5f5dd1df846b60ae52f559d8534b24df5d"},
+    {file = "asserts-0.12.0-py3-none-any.whl", hash = "sha256:7009950d1baa3238862ee8410b1fd2842993982e7d8d15fc4b8e1a40f5211469"},
+    {file = "asserts-0.12.0.tar.gz", hash = "sha256:fbf0143dc12132f043ac8296fce6e0a5ab72dbaa0b7369cdd33868426f2487f9"},
 ]
 mypy = [
     {file = "mypy-0.982-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5085e6f442003fa915aeb0a46d4da58128da69325d8213b4b35cc7054090aed5"},
