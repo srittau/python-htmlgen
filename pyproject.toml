@@ -21,7 +21,7 @@ python = ">=3.7"
 
 [tool.poetry.dev-dependencies]
 asserts = ">=0.8.0,<0.13"
-mypy = "0.982"
+mypy = "0.990"
 
 [tool.black]
 line-length = 79
